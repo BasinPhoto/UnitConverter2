@@ -10,10 +10,11 @@ import SwiftUI
 
 class ConverterViewModel: ObservableObject {
     
-    @State var type: UnitType = .volume
-    var amount: Double = 0
-    @State var selectedFrom: Int = 0
-    @State var selectredTo: Int = 0
+    @Published var type: UnitType = .length
+    @Published var amountInString = "0.0"
+    @Published var selectedFrom: Int = 0
+    @Published var selectredTo: Int = 0
+    var temporaryValue: String = ""
     
     var valuesArray: [String : Double] {
         return values[type.rawValue]
@@ -24,6 +25,7 @@ class ConverterViewModel: ObservableObject {
     }
     
     var result: Double {
+        guard let amount = Double(amountInString) else { return 0 }
         let selectedFromKey = keysArray[selectedFrom]
         let selectedToKey = keysArray[selectredTo]
         let valueFrom = valuesArray[selectedFromKey]!

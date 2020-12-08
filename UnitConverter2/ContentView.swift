@@ -7,26 +7,71 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
-    @ObservedObject var unit: ConverterViewModel
-    
+    @StateObject var unit: ConverterViewModel
+
     var body: some View {
-        VStack {
-            Picker(selection: $unit.type, label: Text("Type"), content: {
-                ForEach(0..<unitTypeName.count) {
-                    Text(unitTypeName[$0])
+        
+        ZStack{
+            VStack(spacing: 0){
+                
+                ZStack{
+                    Rectangle()
+                        .foregroundColor(.blue)
+                    HStack{
+                        TextField(unit.amountInString, text: $unit.amountInString)
+                            .font(.system(size: 30, weight: .bold))
+                            .lineLimit(0)
+                            .multilineTextAlignment(.center)
+                            .keyboardType(.decimalPad)
+                            .onTapGesture {
+                                unit.temporaryValue = unit.amountInString
+                                unit.amountInString = ""
+                            }
+                        Spacer()
+                        Picker(selection: $unit.selectedFrom, label: Text("From"), content: {
+                            ForEach(0..<unit.keysArray.count, id: \.self) {
+                                Text(unit.keysArray[$0]).tag($0)
+                            }
+                        })
+                        .fixedSize(horizontal: true, vertical: true)
+                        .frame(width: 250)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
                 }
-            })
-            Picker(selection: $unit.selectedFrom , label: Text("From"), content: {
-                ForEach(unit.keysArray, id: \.self) { key in
-                    Text(key)
+                
+                ZStack{
+                    Rectangle()
+                        .foregroundColor(.white)
+                    HStack{
+                        Text("\(unit.result, specifier: "%g")")
+                            .foregroundColor(.blue)
+                            .font(.system(size: 30, weight: .bold))
+                            .lineLimit(1)
+                        Spacer()
+                        Picker(selection: $unit.selectredTo , label: Text("To"), content: {
+                            ForEach(0..<unit.keysArray.count, id: \.self) {
+                                Text(unit.keysArray[$0]).tag($0)
+                            }
+                        })
+                        .fixedSize(horizontal: true, vertical: true)
+                        .frame(width: 250)
+                    }
+                    .padding()
                 }
-            })
-            Picker(selection: $unit.selectredTo , label: Text("To"), content: {
-                ForEach(unit.keysArray, id: \.self) { key in
-                    Text(key)
-                }
-            })
+            }.ignoresSafeArea(.all)
+    
+            VStack{
+            DropDownMenu(unit: unit)
+                Spacer()
+            }
+        }.onTapGesture {
+            if unit.amountInString == "" {
+                unit.amountInString = unit.temporaryValue
+            }
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }
