@@ -11,7 +11,7 @@ import SwiftUI
 class ConverterViewModel: ObservableObject {
     
     @Published var type: UnitType = .length
-    @Published var amountInString = "0.0"
+    @Published var amountInString = "0"
     @Published var selectedFrom: Int = 0
     @Published var selectredTo: Int = 0
     var temporaryValue: String = ""

@@ -30,13 +30,8 @@ struct ContentView: View {
                                 unit.amountInString = ""
                             }
                         Spacer()
-                        Picker(selection: $unit.selectedFrom, label: Text("From"), content: {
-                            ForEach(0..<unit.keysArray.count, id: \.self) {
-                                Text(unit.keysArray[$0]).tag($0)
-                            }
-                        })
-                        .fixedSize(horizontal: true, vertical: true)
-                        .frame(width: 250)
+                        TypePicker(toVar: $unit.selectedFrom, unit: unit)
+                            .frame(width: 250)
                     }
                     .foregroundColor(.white)
                     .padding()
@@ -49,15 +44,10 @@ struct ContentView: View {
                         Text("\(unit.result, specifier: "%g")")
                             .foregroundColor(.blue)
                             .font(.system(size: 30, weight: .bold))
-                            .lineLimit(1)
+                            .multilineTextAlignment(.center)
                         Spacer()
-                        Picker(selection: $unit.selectredTo , label: Text("To"), content: {
-                            ForEach(0..<unit.keysArray.count, id: \.self) {
-                                Text(unit.keysArray[$0]).tag($0)
-                            }
-                        })
-                        .fixedSize(horizontal: true, vertical: true)
-                        .frame(width: 250)
+                        TypePicker(toVar: $unit.selectredTo, unit: unit)
+                            .frame(width: 250)
                     }
                     .padding()
                 }

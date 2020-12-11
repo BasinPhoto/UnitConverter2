@@ -16,6 +16,7 @@
 		B9E6279925757ADC000419A7 /* UnitConverter2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E6279825757ADC000419A7 /* UnitConverter2UITests.swift */; };
 		B9E627AA25757B4B000419A7 /* UnitConverterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E627A925757B4B000419A7 /* UnitConverterModel.swift */; };
 		B9E627AF25758A92000419A7 /* ConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E627AE25758A92000419A7 /* ConverterViewModel.swift */; };
+		B9F77A3F2583883000859245 /* TypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F77A3E2583883000859245 /* TypePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B9E6279A25757ADC000419A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9E627A925757B4B000419A7 /* UnitConverterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverterModel.swift; sourceTree = "<group>"; };
 		B9E627AE25758A92000419A7 /* ConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewModel.swift; sourceTree = "<group>"; };
+		B9F77A3E2583883000859245 /* TypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				B9E6277B25757AD9000419A7 /* UnitConverter2App.swift */,
 				B9E6277D25757AD9000419A7 /* ContentView.swift */,
+				B9F77A3E2583883000859245 /* TypePicker.swift */,
 				B93064A5257FA5490011228A /* DropDownMenu.swift */,
 				B9E627A925757B4B000419A7 /* UnitConverterModel.swift */,
 				B9E627AE25758A92000419A7 /* ConverterViewModel.swift */,
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9E6277E25757AD9000419A7 /* ContentView.swift in Sources */,
+				B9F77A3F2583883000859245 /* TypePicker.swift in Sources */,
 				B9E627AA25757B4B000419A7 /* UnitConverterModel.swift in Sources */,
 				B93064A6257FA5490011228A /* DropDownMenu.swift in Sources */,
 				B9E6277C25757AD9000419A7 /* UnitConverter2App.swift in Sources */,
