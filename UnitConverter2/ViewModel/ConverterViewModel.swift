@@ -13,9 +13,9 @@ class ConverterViewModel: ObservableObject {
     @Published var type: UnitType = .length
     @Published var amountInString = "0"
     @Published var selectedFrom: Int = 0
-    @Published var selectredTo: Int = 0
+    @Published var selectedTo: Int = 0
     var temporaryValue: String = ""
-    
+
     var valuesArray: [String : Double] {
         return values[type.rawValue]
     }
@@ -27,7 +27,7 @@ class ConverterViewModel: ObservableObject {
     var result: Double {
         guard let amount = Double(amountInString) else { return 0 }
         let selectedFromKey = keysArray[selectedFrom]
-        let selectedToKey = keysArray[selectredTo]
+        let selectedToKey = keysArray[selectedTo]
         let valueFrom = valuesArray[selectedFromKey]!
         let valueTo = valuesArray[selectedToKey]!
         return amount * valueFrom / valueTo

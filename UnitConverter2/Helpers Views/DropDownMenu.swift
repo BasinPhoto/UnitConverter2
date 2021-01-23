@@ -22,7 +22,9 @@ struct DropDownMenu: View {
                     ForEach(UnitType.allCases) { type in
                         Button(type.description) {
                             self.unit.type = type
-                            showAllCategories.toggle()
+                            self.unit.selectedFrom = 0
+                            self.unit.selectedTo = 0
+                            self.showAllCategories.toggle()
                         }.padding(2)
                     }
                 }

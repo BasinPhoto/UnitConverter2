@@ -46,7 +46,7 @@ struct ContentView: View {
                             .font(.system(size: 30, weight: .bold))
                             .multilineTextAlignment(.center)
                         Spacer()
-                        TypePicker(toVar: $unit.selectredTo, unit: unit)
+                        TypePicker(toVar: $unit.selectedTo, unit: unit)
                             .frame(width: 250)
                     }
                     .padding()
