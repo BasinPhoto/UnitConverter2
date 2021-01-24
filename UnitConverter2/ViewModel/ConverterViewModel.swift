@@ -10,7 +10,13 @@ import SwiftUI
 
 class ConverterViewModel: ObservableObject {
     
-    @Published var type: UnitType = .length
+    @Published var type: UnitType = .length {
+        didSet {
+            amountInString = "0"
+            selectedFrom = 0
+            selectedTo = 0
+        }
+    }
     @Published var amountInString = "0"
     @Published var selectedFrom: Int = 0
     @Published var selectedTo: Int = 0

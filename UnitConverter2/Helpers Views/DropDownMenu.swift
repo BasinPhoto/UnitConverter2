@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DropDownMenu: View {
     @State var showAllCategories = false
-    @StateObject var unit: ConverterViewModel
+    @ObservedObject var unit: ConverterViewModel
     
     var body: some View {
         
@@ -22,8 +22,6 @@ struct DropDownMenu: View {
                     ForEach(UnitType.allCases) { type in
                         Button(type.description) {
                             self.unit.type = type
-                            self.unit.selectedFrom = 0
-                            self.unit.selectedTo = 0
                             self.showAllCategories.toggle()
                         }.padding(2)
                     }

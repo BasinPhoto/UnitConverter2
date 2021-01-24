@@ -9,7 +9,8 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @StateObject var unit: ConverterViewModel
+    @State public var inFocus: Bool = false
+    @ObservedObject var unit: ConverterViewModel
 
     var body: some View {
         
@@ -22,18 +23,19 @@ struct ContentView: View {
                     HStack{
                         TextField(unit.amountInString, text: $unit.amountInString)
                             .font(.system(size: 30, weight: .bold))
-                            .lineLimit(0)
-                            .multilineTextAlignment(.center)
                             .keyboardType(.decimalPad)
+                            .background(inFocus ? Color.white : Color.blue)
+                            .cornerRadius(8)
                             .onTapGesture {
                                 unit.temporaryValue = unit.amountInString
                                 unit.amountInString = ""
+                                inFocus = true
                             }
                         Spacer()
                         TypePicker(toVar: $unit.selectedFrom, unit: unit)
                             .frame(width: 250)
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(inFocus ? .blue : .white)
                     .padding()
                 }
                 
@@ -61,6 +63,7 @@ struct ContentView: View {
             if unit.amountInString == "" {
                 unit.amountInString = unit.temporaryValue
             }
+            inFocus = false
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }

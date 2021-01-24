@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TypePicker: View {
     @Binding var toVar: Int
-    @StateObject var unit: ConverterViewModel
+    @ObservedObject var unit: ConverterViewModel
     
     var body: some View {
         Picker(selection: $toVar, label: Text(""), content: {
