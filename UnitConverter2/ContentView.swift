@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State public var inFocus: Bool = false
-    @ObservedObject var unit: ConverterViewModel
+    @StateObject var unit: ConverterViewModel
 
     var body: some View {
         
