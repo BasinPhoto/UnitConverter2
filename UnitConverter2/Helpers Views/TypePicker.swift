@@ -12,10 +12,23 @@ struct TypePicker: View {
     @StateObject var unit: ConverterViewModel
     
     var body: some View {
-        Picker(selection: $toVar, label: Text(""), content: {
-            ForEach(0..<unit.keysArray.count, id: \.self) {
-                Text(unit.keysArray[$0]).tag($0)
+        ScrollView{
+            VStack(alignment: .leading, spacing: 15){
+                ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
+                    Button {
+                        toVar = keyNumber
+                    } label: {
+                        if toVar == keyNumber {
+                            Text(unit.keysArray[keyNumber])
+                                .font(.title3)
+                                .bold()
+                        } else {
+                            Text(unit.keysArray[keyNumber]).opacity(0.5)
+                        }
+                    }
+
+                }
             }
-        })
+        }
     }
 }

@@ -18,8 +18,7 @@ struct ContentView: View {
             VStack(spacing: 0){
                 
                 ZStack{
-                    Rectangle()
-                        .foregroundColor(.blue)
+                    Color.blue
                     HStack{
                         TextField(unit.amountInString, text: $unit.amountInString)
                             .font(.system(size: 30, weight: .bold))
@@ -33,7 +32,6 @@ struct ContentView: View {
                             }
                         Spacer()
                         TypePicker(toVar: $unit.selectedFrom, unit: unit)
-                            .frame(width: 250)
                     }
                     .foregroundColor(inFocus ? .blue : .white)
                     .padding()
@@ -49,7 +47,6 @@ struct ContentView: View {
                             .multilineTextAlignment(.center)
                         Spacer()
                         TypePicker(toVar: $unit.selectedTo, unit: unit)
-                            .frame(width: 250)
                     }
                     .padding()
                 }
