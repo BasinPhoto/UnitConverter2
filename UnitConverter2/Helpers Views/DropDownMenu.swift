@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DropDownMenu: View {
     @State var showAllCategories = false
-    @ObservedObject var unit: ConverterViewModel
+    @StateObject var unit: ConverterViewModel
     
     var body: some View {
         
