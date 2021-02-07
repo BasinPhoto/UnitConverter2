@@ -71,4 +71,29 @@ enum UnitType: Int, CaseIterable, Identifiable {
             return "Энергия"
         }
     }
+    
+    var imageName: String {
+        switch self {
+        case .length:
+            return "length"
+        case .volume:
+            return "volume"
+        case .weight:
+            return "weight"
+        case .time:
+            return "time"
+        case .pressure:
+            return "pressure"
+        case .information:
+            return "information"
+        case .flatAngle:
+            return "flatAngle"
+        case .square:
+            return "square"
+        case .speed:
+            return "speed"
+        case .energy:
+            return "energy"
+        }
+    }
 }

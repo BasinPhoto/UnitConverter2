@@ -13,29 +13,49 @@ struct DropDownMenu: View {
     
     var body: some View {
         
-        VStack {
-                if !showAllCategories {
-                    Button(unit.type.description) {
-                        showAllCategories.toggle()
-                    }
-                } else {
-                    ForEach(UnitType.allCases) { type in
-                        Button(type.description) {
-                            self.unit.type = type
-                            self.showAllCategories.toggle()
-                        }.padding(2)
-                    }
+        VStack(alignment: .trailing) {
+            if !showAllCategories {
+                HStack {
+                    Button(action: {
+                        withAnimation{
+                            showAllCategories.toggle()
+                        }
+                    }, label: {
+                        Image(unit.type.imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .colorInvert()
+                            .frame(width: 35, height: 35)
+                            .padding(10)
+                    }).background(Color("ColorBack"))
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
                 }
+            } else {
+                ForEach(UnitType.allCases) { type in
+                        Button(action: {
+                            self.unit.type = type
+                            withAnimation{
+                                self.showAllCategories.toggle()
+                            }
+                        }, label: {
+                            Text(type.description)
+                                .foregroundColor(.white)
+                                .padding()
+                            Image(type.imageName)
+                                .resizable()
+                                .scaledToFit()
+                                .colorInvert()
+                                .frame(width: 35, height: 35)
+                                .padding(.horizontal)
+                        }).background(Color("ColorBack"))
+                        .clipShape(Capsule())
+                        .overlay(Capsule().stroke(Color.white, lineWidth: 2))
+                        .transition(.move(edge: .trailing))
+                }
+            }
         }
-        .padding()
-        .frame(width: 250)
-        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color(#colorLiteral(red: 0.3833849887, green: 0.6668031643, blue: 1, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-        .foregroundColor(.white)
-        .cornerRadius(15)
-        .shadow(color: Color(#colorLiteral(red: 0.02715317465, green: 0.4165905732, blue: 0.8183051986, alpha: 1)),
-                radius: showAllCategories ? 5 : 0,
-                x: 0.0,
-                y: showAllCategories ? 10 : 0)
+        .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 3, y: 3)
         .animation(.easeIn)
     }
 }

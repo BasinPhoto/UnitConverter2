@@ -12,21 +12,22 @@ struct TypePicker: View {
     @StateObject var unit: ConverterViewModel
     
     var body: some View {
-        ScrollView{
-            VStack(alignment: .leading, spacing: 15){
+        ScrollView(showsIndicators: false){
+            VStack(alignment: .center, spacing: 15){
                 ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
                     Button {
                         toVar = keyNumber
                     } label: {
                         if toVar == keyNumber {
                             Text(unit.keysArray[keyNumber])
-                                .font(.title3)
                                 .bold()
+                                .padding(.horizontal)
+                                .background(Color.gray)
+                                .cornerRadius(10)
                         } else {
                             Text(unit.keysArray[keyNumber]).opacity(0.5)
                         }
                     }
-
                 }
             }
         }

@@ -14,54 +14,78 @@ struct ContentView: View {
 
     var body: some View {
         
-        ZStack{
-            VStack(spacing: 0){
+        GeometryReader { geo in
+            ZStack{
+                VStack(spacing: 0){
+                    Color("ColorBack")
+                    Color.white
+                }.ignoresSafeArea(.all)
                 
-                ZStack{
-                    Color.blue
-                    HStack{
-                        TextField(unit.amountInString, text: $unit.amountInString)
-                            .font(.system(size: 30, weight: .bold))
-                            .keyboardType(.decimalPad)
-                            .background(inFocus ? Color.white : Color.blue)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                unit.temporaryValue = unit.amountInString
-                                unit.amountInString = ""
-                                inFocus = true
-                            }
-                        Spacer()
-                        TypePicker(toVar: $unit.selectedFrom, unit: unit)
-                    }
-                    .foregroundColor(inFocus ? .blue : .white)
-                    .padding()
-                }
-                
-                ZStack{
-                    Rectangle()
+                VStack {
+                    TextField(unit.amountInString, text: $unit.amountInString)
+                        .font(.system(size: 30, weight: .bold))
                         .foregroundColor(.white)
-                    HStack{
-                        Text("\(unit.result, specifier: "%g")")
-                            .foregroundColor(.blue)
-                            .font(.system(size: 30, weight: .bold))
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                        TypePicker(toVar: $unit.selectedTo, unit: unit)
+                        .keyboardType(.decimalPad)
+                        .multilineTextAlignment(.center)
+                        .cornerRadius(8)
+                        .offset(y: geo.size.width / -2.2)
+                        .onTapGesture {
+                            unit.temporaryValue = unit.amountInString
+                            unit.amountInString = ""
+                            inFocus = true
+                        }
+                    
+                    HStack(spacing: 0) {
+                        
+                        Button(action: {
+                            
+                        }, label: {
+                            Text(unit.keysArray[unit.selectedFrom])
+                        })
+                        .padding()
+                        .frame(width: geo.size.width / 2)
+                        .background(Color("ColorBack"))
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                        
+                        Button(action: {
+                            
+                        }, label: {
+                            Text(unit.keysArray[unit.selectedTo])
+                        })
+                        .padding()
+                        .frame(width: geo.size.width / 2)
+                        .background(Color.white)
+                        .foregroundColor(Color("ColorBack"))
+                        .cornerRadius(20)
                     }
-                    .padding()
+                    
+                    Text("\(unit.result, specifier: "%g")")
+                        .frame(width: geo.size.width / 2)
+                        .foregroundColor(Color("ColorBack"))
+                        .font(.system(size: 30, weight: .bold))
+                        .multilineTextAlignment(.center)
+                        .offset(y: geo.size.width / 2.2)
                 }
-            }.ignoresSafeArea(.all)
-    
-            VStack{
-            DropDownMenu(unit: unit)
-                Spacer()
+                
+                VStack(alignment: .trailing){
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        DropDownMenu(unit: unit)
+                            .padding(35)
+                    }
+                }
             }
-        }.onTapGesture {
-            if unit.amountInString == "" {
-                unit.amountInString = unit.temporaryValue
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .onTapGesture {
+                if unit.amountInString == "" {
+                    unit.amountInString = unit.temporaryValue
+                }
+                inFocus = false
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
-            inFocus = false
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }
