@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DropDownMenu: View {
-    @State var showAllCategories = false
+    @Binding var showAllCategories: Bool
     @StateObject var unit: ConverterViewModel
     
     var body: some View {
@@ -25,7 +25,7 @@ struct DropDownMenu: View {
                             .resizable()
                             .scaledToFit()
                             .colorInvert()
-                            .frame(width: 35, height: 35)
+                            .frame(width: 45, height: 45)
                             .padding(10)
                     }).background(Color("ColorBack"))
                     .clipShape(Circle())
@@ -41,14 +41,16 @@ struct DropDownMenu: View {
                         }, label: {
                             Text(type.description)
                                 .foregroundColor(.white)
-                                .padding()
+                                .padding(.leading)
                             Image(type.imageName)
                                 .resizable()
                                 .scaledToFit()
                                 .colorInvert()
                                 .frame(width: 35, height: 35)
-                                .padding(.horizontal)
-                        }).background(Color("ColorBack"))
+                                .padding(.trailing)
+                        })
+                        .padding(.vertical, 8)
+                        .background(Color("ColorBack"))
                         .clipShape(Capsule())
                         .overlay(Capsule().stroke(Color.white, lineWidth: 2))
                         .transition(.move(edge: .trailing))
@@ -56,12 +58,6 @@ struct DropDownMenu: View {
             }
         }
         .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 3, y: 3)
-        .animation(.easeIn)
-    }
-}
-
-struct DropDownMenu_Previews: PreviewProvider {
-    static var previews: some View {
-        DropDownMenu(unit: ConverterViewModel())
+        .animation(.easeOut)
     }
 }

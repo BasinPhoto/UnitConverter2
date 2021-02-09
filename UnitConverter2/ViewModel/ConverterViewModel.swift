@@ -20,7 +20,7 @@ class ConverterViewModel: ObservableObject {
     @Published var amountInString = "0"
     @Published var selectedFrom: Int = 0
     @Published var selectedTo: Int = 0
-    var temporaryValue: String = ""
+    var temporaryValue: String = "0"
 
     var valuesArray: [String : Double] {
         return values[type.rawValue]

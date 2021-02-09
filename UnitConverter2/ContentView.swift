@@ -9,84 +9,140 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @State public var inFocus: Bool = false
+    
+    @State var showAllCategories: Bool = false
+    @State var inFocus: Bool = false
+    @State var showPicker = false
+    @State private var numberOfPicker: Int = 1
+    
     @StateObject var unit: ConverterViewModel
 
     var body: some View {
         
-        GeometryReader { geo in
-            ZStack{
-                VStack(spacing: 0){
-                    Color("ColorBack")
-                    Color.white
-                }.ignoresSafeArea(.all)
+        ZStack{
+            //Background rectangles
+            VStack(spacing: 0){
+                Color("ColorBack")
+                Color.white
+            }.ignoresSafeArea(.all)
+            
+            //All interface logic
+            VStack {
+                TextField(unit.amountInString, text: $unit.amountInString)
+                    .padding(.horizontal)
+                    .font(.system(size: 60, weight: .bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
+                    .offset(y: UIScreen.main.bounds.height / -5)
+                    .disabled(showAllCategories)
+                    .onTapGesture {
+                        unit.temporaryValue = unit.amountInString
+                        unit.amountInString = ""
+                        inFocus = true
+                        showAllCategories = false
+                        showPicker = false
+                    }
                 
-                VStack {
-                    TextField(unit.amountInString, text: $unit.amountInString)
-                        .font(.system(size: 30, weight: .bold))
-                        .foregroundColor(.white)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.center)
-                        .cornerRadius(8)
-                        .offset(y: geo.size.width / -2.2)
-                        .onTapGesture {
-                            unit.temporaryValue = unit.amountInString
-                            unit.amountInString = ""
-                            inFocus = true
-                        }
+                HStack(spacing: 0) {
                     
-                    HStack(spacing: 0) {
-                        
+                    if showPicker && numberOfPicker == 1 {
+                        TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit)
+                    } else {
                         Button(action: {
-                            
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            if showPicker && numberOfPicker == 2 {
+                                numberOfPicker = 1
+                            } else {
+                                numberOfPicker = 1
+                                self.showPicker.toggle()
+                            }
                         }, label: {
                             Text(unit.keysArray[unit.selectedFrom])
+                                .font(Font.custom("Exo2", size: 24))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.3)
                         })
                         .padding()
-                        .frame(width: geo.size.width / 2)
+                        .frame(width: UIScreen.main.bounds.width / 2)
                         .background(Color("ColorBack"))
                         .foregroundColor(.white)
-                        .cornerRadius(20)
-                        
-                        Button(action: {
-                            
-                        }, label: {
-                            Text(unit.keysArray[unit.selectedTo])
-                        })
-                        .padding()
-                        .frame(width: geo.size.width / 2)
-                        .background(Color.white)
-                        .foregroundColor(Color("ColorBack"))
-                        .cornerRadius(20)
+                        .cornerRadius(15)
                     }
                     
-                    Text("\(unit.result, specifier: "%g")")
-                        .frame(width: geo.size.width / 2)
+                    if showPicker && numberOfPicker == 2 {
+                        TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit)
+                    } else {
+                        Button(action: {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            if showPicker && numberOfPicker == 1 {
+                                numberOfPicker = 2
+                            } else {
+                                numberOfPicker = 2
+                                self.showPicker.toggle()
+                            }
+                        }, label: {
+                            Text(unit.keysArray[unit.selectedTo])
+                                .font(.title2)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.3)
+                        })
+                        .padding()
+                        .frame(width: UIScreen.main.bounds.width / 2)
+                        .background(Color.white)
                         .foregroundColor(Color("ColorBack"))
-                        .font(.system(size: 30, weight: .bold))
-                        .multilineTextAlignment(.center)
-                        .offset(y: geo.size.width / 2.2)
+                        .cornerRadius(15)
+                    }
                 }
                 
-                VStack(alignment: .trailing){
-                    Spacer()
-                    
-                    HStack {
+                Text("\(unit.result, specifier: "%g")")
+                    .padding(.horizontal)
+                    .foregroundColor(Color("ColorBack"))
+                    .font(.system(size: 60, weight: .bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
+                    .offset(y: UIScreen.main.bounds.height / 7)
+                    .disabled(showAllCategories)
+            }
+            
+            //Dropdown menu
+            VStack {
+                Spacer()
+                
+                HStack {
+                    if !showPicker {
                         Spacer()
-                        DropDownMenu(unit: unit)
+                        DropDownMenu(showAllCategories: $showAllCategories, unit: unit)
                             .padding(35)
                     }
                 }
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-            .onTapGesture {
-                if unit.amountInString == "" {
-                    unit.amountInString = unit.temporaryValue
-                }
-                inFocus = false
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            }
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onTapGesture {
+            if unit.amountInString == "" {
+                unit.amountInString = unit.temporaryValue
+            }
+            inFocus = false
+            showPicker = false
+            showAllCategories = false
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+        .gesture(
+            DragGesture().onChanged { value in
+                if value.translation.width < 0 {
+                    showAllCategories = true
+                } else {
+                    showAllCategories = false
+                }
+                
+            }
+        )
     }
 }
 

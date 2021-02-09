@@ -60,9 +60,9 @@ enum UnitType: Int, CaseIterable, Identifiable {
         case .pressure:
             return "Давление"
         case .information:
-            return "Объем информации"
+            return "Информация"
         case .flatAngle:
-            return "Плоский угол"
+            return "Угол"
         case .square:
             return "Площадь"
         case .speed:
