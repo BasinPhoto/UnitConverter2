@@ -28,17 +28,18 @@ struct ContentView: View {
             
             //All interface logic
             VStack {
+                if !showAllCategories {
                 TextField(unit.amountInString, text: $unit.amountInString)
                     .padding(.horizontal)
-                    .font(.system(size: 60, weight: .bold))
+                    .font(Font.custom("Exo 2", size: 60))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(.white)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.center)
                     .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                    .offset(y: UIScreen.main.bounds.height / -5)
-                    .disabled(showAllCategories)
+                    .offset(y: UIScreen.main.bounds.height / -7)
+                    .accentColor(.white)
                     .onTapGesture {
                         unit.temporaryValue = unit.amountInString
                         unit.amountInString = ""
@@ -46,6 +47,7 @@ struct ContentView: View {
                         showAllCategories = false
                         showPicker = false
                     }
+                }
                 
                 HStack(spacing: 0) {
                     
@@ -62,15 +64,15 @@ struct ContentView: View {
                             }
                         }, label: {
                             Text(unit.keysArray[unit.selectedFrom])
-                                .font(Font.custom("Exo2", size: 24))
+                                .font(Font.custom("Exo 2", size: 24).bold())
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.3)
                         })
                         .padding()
-                        .frame(width: UIScreen.main.bounds.width / 2)
+                        .frame(width: UIScreen.main.bounds.width / 2, height: 60)
                         .background(Color("ColorBack"))
                         .foregroundColor(.white)
-                        .cornerRadius(15)
+                        .cornerRadius(25)
                     }
                     
                     if showPicker && numberOfPicker == 2 {
@@ -86,28 +88,29 @@ struct ContentView: View {
                             }
                         }, label: {
                             Text(unit.keysArray[unit.selectedTo])
-                                .font(.title2)
+                                .font(Font.custom("Exo 2", size: 24).bold())
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.3)
                         })
                         .padding()
-                        .frame(width: UIScreen.main.bounds.width / 2)
+                        .frame(width: UIScreen.main.bounds.width / 2, height: 60)
                         .background(Color.white)
                         .foregroundColor(Color("ColorBack"))
-                        .cornerRadius(15)
+                        .cornerRadius(25)
                     }
                 }
                 
-                Text("\(unit.result, specifier: "%g")")
-                    .padding(.horizontal)
-                    .foregroundColor(Color("ColorBack"))
-                    .font(.system(size: 60, weight: .bold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .multilineTextAlignment(.center)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                    .offset(y: UIScreen.main.bounds.height / 7)
-                    .disabled(showAllCategories)
+                if !showAllCategories {
+                    Text("\(unit.result, specifier: "%g")")
+                        .padding(.horizontal)
+                        .foregroundColor(Color("ColorBack"))
+                        .font(Font.custom("Exo 2", size: 60))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .multilineTextAlignment(.center)
+                        .frame(width: UIScreen.main.bounds.width - 32, height: 100)
+                        .offset(y: UIScreen.main.bounds.height / 7)
+                }
             }
             
             //Dropdown menu
@@ -115,8 +118,8 @@ struct ContentView: View {
                 Spacer()
                 
                 HStack {
+                    Spacer()
                     if !showPicker {
-                        Spacer()
                         DropDownMenu(showAllCategories: $showAllCategories, unit: unit)
                             .padding(35)
                     }

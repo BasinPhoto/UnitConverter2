@@ -27,7 +27,8 @@ struct DropDownMenu: View {
                             .colorInvert()
                             .frame(width: 45, height: 45)
                             .padding(10)
-                    }).background(Color("ColorBack"))
+                    })
+                    .background(Color("ColorBack"))
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.white, lineWidth: 2))
                 }
@@ -40,6 +41,7 @@ struct DropDownMenu: View {
                             }
                         }, label: {
                             Text(type.description)
+                                .font(Font.custom("Exo 2", size: 18))
                                 .foregroundColor(.white)
                                 .padding(.leading)
                             Image(type.imageName)
@@ -59,5 +61,12 @@ struct DropDownMenu: View {
         }
         .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 3, y: 3)
         .animation(.easeOut)
+    }
+}
+
+
+struct DropDownMenu_Previews: PreviewProvider {
+    static var previews: some View {
+        DropDownMenu(showAllCategories: .constant(true), unit: ConverterViewModel())
     }
 }

@@ -23,7 +23,7 @@ struct TypePicker: View {
                     } label: {
                         if toVar == keyNumber {
                             Text(unit.keysArray[keyNumber])
-                                .bold()
+                                .font(Font.custom("Exo 2", size: 22).bold())
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
                                 .background(Color.white)
@@ -31,12 +31,12 @@ struct TypePicker: View {
                                 .cornerRadius(10)
                         } else {
                             Text(unit.keysArray[keyNumber])
+                                .font(Font.custom("Exo 2", size: 20))
                                 .opacity(0.5)
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
                         }
                     }
-                    .font(.title2)
                     .multilineTextAlignment(.center)
                 }
             }
