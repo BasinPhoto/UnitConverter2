@@ -34,6 +34,8 @@ struct TypePicker: View {
                             Text(unit.keysArray[keyNumber])
                                 .font(Font.custom("Exo 2", size: 22).bold())
                                 .lineLimit(0)
+                                .minimumScaleFactor(0.3)
+                                .frame(height: 25)
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
                                 .background(accentColor)
@@ -43,7 +45,9 @@ struct TypePicker: View {
                             Text(unit.keysArray[keyNumber])
                                 .font(Font.custom("Exo 2", size: 20))
                                 .lineLimit(0)
+                                .minimumScaleFactor(0.3)
                                 .opacity(0.5)
+                                .frame(height: 25)
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
                                 .overlay(
@@ -54,7 +58,7 @@ struct TypePicker: View {
                 }
             }.padding()
         }
-        .frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height / 3)
+        .frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height / 2.5)
         .background(backgroungColor)
         .foregroundColor(accentColor)
     }
@@ -62,6 +66,6 @@ struct TypePicker: View {
 
 struct TypePicker_Previews: PreviewProvider {
     static var previews: some View {
-        TypePicker(toVar: .constant(1), showPicker: .constant(true), unit: ConverterViewModel(), backgroungColor: Color("ColorBack"), accentColor: .white)
+        TypePicker(toVar: .constant(1), showPicker: .constant(true), unit: ConverterViewModel(), backgroungColor: Color("primaryColor"), accentColor: .white)
     }
 }

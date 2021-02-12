@@ -13,7 +13,7 @@ struct ContentView: View {
     @State var showAllCategories: Bool = false
     @State var inFocus: Bool = false
     @State var showPicker = false
-    @State private var numberOfPicker: Int = 1
+    @State private var numberOfPicker: Int = 0
     
     @StateObject var unit: ConverterViewModel
     
@@ -24,62 +24,62 @@ struct ContentView: View {
         ZStack{
             //Background rectangles
             VStack(spacing: 0){
-                Color("ColorBack")
+                Color("primaryColor")
                 Color.white
             }.ignoresSafeArea(.all)
             
             //input and output value fields
             VStack {
-                if !showAllCategories {
-                    if showPicker && numberOfPicker == 1 {
-                        TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroungColor: Color("ColorBack"), accentColor: .white)
-                            .offset(y: -150)
-                    } else {
-                        TextField(unit.amountInString, text: $unit.amountInString)
-                            .padding(.horizontal)
-                            .font(Font.custom("Exo 2", size: 60))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                            .foregroundColor(.white)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.center)
-                            .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                            .offset(y: UIScreen.main.bounds.height / -7)
-                            .accentColor(.white)
-                            .onTapGesture {
-                                unit.temporaryValue = unit.amountInString
-                                unit.amountInString = ""
-                                inFocus = true
-                                showAllCategories = false
-                                showPicker = false
-                            }
+                TextField(unit.amountInString, text: $unit.amountInString)
+                    .padding(.horizontal)
+                    .font(Font.custom("Exo 2", size: 60))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
+                    .offset(y: UIScreen.main.bounds.height / -7)
+                    .accentColor(.white)
+                    .onTapGesture {
+                        unit.temporaryValue = unit.amountInString
+                        unit.amountInString = ""
+                        inFocus = true
+                        showAllCategories = false
+                        showPicker = false
                     }
-                }
                 
-                if !showAllCategories {
-                    if showPicker && numberOfPicker == 2 {
-                        TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroungColor: .white, accentColor: Color("ColorBack"))
-                            .offset(y: 150)
-                    } else {
-                        Text("\(unit.result, specifier: "%g")")
-                            .padding(.horizontal)
-                            .foregroundColor(Color("ColorBack"))
-                            .font(Font.custom("Exo 2", size: 60))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                            .multilineTextAlignment(.center)
-                            .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                            .offset(y: UIScreen.main.bounds.height / 7)
-                            .onTapGesture(count: 2) {
-                                if unit.result != 0 {
-                                    clipboard.string = String(unit.result)
-                                }
-                            }
+                Text("\(unit.result, specifier: "%g")")
+                    .padding(.horizontal)
+                    .foregroundColor(Color("primaryColor"))
+                    .font(Font.custom("Exo 2", size: 60))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .multilineTextAlignment(.center)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
+                    .offset(y: UIScreen.main.bounds.height / 7)
+                    .onTapGesture(count: 2) {
+                        if unit.result != 0 {
+                            clipboard.string = String(unit.result)
+                        }
                     }
-                }
             }
             
             // pickers
+            VStack{
+                if showPicker {
+                    switch numberOfPicker {
+                    case 1:
+                        TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroungColor: Color("primaryColor"), accentColor: .white)
+                            .offset(y: -220)
+                    case 2:
+                        TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroungColor: .white, accentColor: Color("primaryColor"))
+                            .offset(y: 220)
+                    default:
+                        EmptyView()
+                    }
+                }
+            }
             
             //type picker buttons
             HStack(spacing: 0) {
@@ -100,7 +100,7 @@ struct ContentView: View {
                 })
                 .padding()
                 .frame(width: UIScreen.main.bounds.width / 2, height: 60)
-                .background(Color("ColorBack"))
+                .background(Color("primaryColor"))
                 .foregroundColor(.white)
                 .cornerRadius(25)
 
@@ -121,7 +121,7 @@ struct ContentView: View {
                 .padding()
                 .frame(width: UIScreen.main.bounds.width / 2, height: 60)
                 .background(Color.white)
-                .foregroundColor(Color("ColorBack"))
+                .foregroundColor(Color("primaryColor"))
                 .cornerRadius(25)
             }
             

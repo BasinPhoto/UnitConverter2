@@ -28,7 +28,7 @@ struct DropDownMenu: View {
                             .frame(width: 45, height: 45)
                             .padding(10)
                     })
-                    .background(Color("ColorBack"))
+                    .background(Color("primaryColor"))
                     .clipShape(Circle())
                     .overlay(Circle().stroke(Color.white, lineWidth: 2))
                 }
@@ -52,7 +52,7 @@ struct DropDownMenu: View {
                                 .padding(.trailing)
                         })
                         .padding(.vertical, 8)
-                        .background(Color("ColorBack"))
+                        .background(Color("primaryColor"))
                         .clipShape(Capsule())
                         .overlay(Capsule().stroke(Color.white, lineWidth: 2))
                         .transition(.move(edge: .trailing))
