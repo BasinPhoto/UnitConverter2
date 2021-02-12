@@ -12,10 +12,19 @@ struct TypePicker: View {
     @Binding var showPicker: Bool
     @StateObject var unit: ConverterViewModel
     
+    var backgroungColor: Color
+    var accentColor: Color
+    
+    let columns = [
+//        GridItem(.adaptive(minimum: 100)),
+        GridItem(.adaptive(minimum: 100)),
+        GridItem(.adaptive(minimum: 100))
+    ]
+    
     var body: some View {
         
         ScrollView(showsIndicators: false){
-            VStack(alignment: .center, spacing: 15){
+            LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
                     Button {
                         toVar = keyNumber
@@ -24,29 +33,35 @@ struct TypePicker: View {
                         if toVar == keyNumber {
                             Text(unit.keysArray[keyNumber])
                                 .font(Font.custom("Exo 2", size: 22).bold())
+                                .lineLimit(0)
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
-                                .background(Color.white)
-                                .foregroundColor(Color("ColorBack"))
-                                .cornerRadius(10)
+                                .background(accentColor)
+                                .foregroundColor(backgroungColor)
+                                .clipShape(Capsule())
                         } else {
                             Text(unit.keysArray[keyNumber])
                                 .font(Font.custom("Exo 2", size: 20))
+                                .lineLimit(0)
                                 .opacity(0.5)
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
+                                .overlay(
+                                    Capsule().stroke(lineWidth: 2)
+                                )
                         }
                     }
-                    .multilineTextAlignment(.center)
                 }
-            }
+            }.padding()
         }
-        .frame(width: UIScreen.main.bounds.width / 2 - 32)
-        .padding()
-        .background(Color("ColorBack"))
-        .foregroundColor(.white)
-        .cornerRadius(20)
-        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.white, lineWidth: 3))
+        .frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height / 3)
+        .background(backgroungColor)
+        .foregroundColor(accentColor)
     }
 }
 
+struct TypePicker_Previews: PreviewProvider {
+    static var previews: some View {
+        TypePicker(toVar: .constant(1), showPicker: .constant(true), unit: ConverterViewModel(), backgroungColor: Color("ColorBack"), accentColor: .white)
+    }
+}
