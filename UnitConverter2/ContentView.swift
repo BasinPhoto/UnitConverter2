@@ -16,6 +16,8 @@ struct ContentView: View {
     @State private var numberOfPicker: Int = 1
     
     @StateObject var unit: ConverterViewModel
+    
+    let clipboard = UIPasteboard.general
 
     var body: some View {
         
@@ -110,6 +112,11 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.main.bounds.width - 32, height: 100)
                         .offset(y: UIScreen.main.bounds.height / 7)
+                        .onTapGesture(count: 2) {
+                            if unit.result != 0 {
+                                clipboard.string = String(unit.result)
+                            }
+                        }
                 }
             }
             

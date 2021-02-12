@@ -14,8 +14,8 @@ struct TypePicker: View {
     
     var body: some View {
         
-        VStack(alignment: .center, spacing: 15){
-            ScrollView(showsIndicators: false){
+        ScrollView(showsIndicators: false){
+            VStack(alignment: .center, spacing: 15){
                 ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
                     Button {
                         toVar = keyNumber
