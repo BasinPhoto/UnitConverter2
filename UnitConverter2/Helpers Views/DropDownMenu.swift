@@ -13,27 +13,29 @@ struct DropDownMenu: View {
     
     var body: some View {
         
-        VStack(alignment: .trailing) {
-            if !showAllCategories {
-                HStack {
-                    Button(action: {
-                        withAnimation{
-                            showAllCategories.toggle()
-                        }
-                    }, label: {
-                        Image(unit.type.imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .colorInvert()
-                            .frame(width: 45, height: 45)
-                            .padding(10)
-                    })
-                    .background(Color("primaryColor"))
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                }
-            } else {
-                ForEach(UnitType.allCases) { type in
+        ZStack {
+            
+            VStack(alignment: .trailing) {
+                if !showAllCategories {
+                    HStack {
+                        Button(action: {
+                            withAnimation{
+                                showAllCategories.toggle()
+                            }
+                        }, label: {
+                            Image(unit.type.imageName)
+                                .resizable()
+                                .scaledToFit()
+                                .colorInvert()
+                                .frame(width: 45, height: 45)
+                                .padding(10)
+                        })
+                        .background(Color("primaryColor"))
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                    }
+                } else {
+                    ForEach(UnitType.allCases) { type in
                         Button(action: {
                             self.unit.type = type
                             withAnimation{
@@ -56,11 +58,12 @@ struct DropDownMenu: View {
                         .clipShape(Capsule())
                         .overlay(Capsule().stroke(Color.white, lineWidth: 2))
                         .transition(.move(edge: .trailing))
+                    }
                 }
             }
+            .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 3, y: 3)
+            .animation(.easeOut)
         }
-        .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 3, y: 3)
-        .animation(.easeOut)
     }
 }
 
