@@ -58,6 +58,7 @@ struct TypePicker: View {
                     }
                 }
                 .padding(.vertical, 40)
+                .padding(.bottom, 50)
             }
             
             VStack {
@@ -67,11 +68,12 @@ struct TypePicker: View {
                     .disabled(true)
                 Spacer()
                 LinearGradient(gradient: Gradient(colors: [backgroungColor, backgroungColor.opacity(0)]), startPoint: .bottom, endPoint: .top)
-                    .frame(height: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .frame(height: 45, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .offset(y: -35)
                     .ignoresSafeArea()
                     .disabled(true)
             }
+        
         }
         .frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height / 2)
         .background(backgroungColor)
