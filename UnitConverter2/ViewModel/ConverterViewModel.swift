@@ -49,8 +49,11 @@ class ConverterViewModel: ObservableObject {
     
     var result: Double {
         
-        let selectedFromKey = keysArray[selectedFrom ?? 0]
-        let selectedToKey = keysArray[selectedTo ?? 0]
+        guard let selectedFrom = selectedFrom else { return 0 }
+        guard let selectedTo = selectedTo else { return 0 }
+        
+        let selectedFromKey = keysArray[selectedFrom]
+        let selectedToKey = keysArray[selectedTo]
         let valueFrom = valuesDictionary[selectedFromKey]!
         let valueTo = valuesDictionary[selectedToKey]!
         

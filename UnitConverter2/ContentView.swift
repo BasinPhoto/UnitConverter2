@@ -39,7 +39,9 @@ struct ContentView: View {
                     
                     Group {
                         if showPicker && numberOfPicker == .right {
-                            Text("\(unit.keysArray[unit.selectedTo ?? 0])")
+                            if let selectedTo = unit.selectedTo {
+                                Text("\(unit.keysArray[selectedTo])")
+                            }
                         } else {
                             Text("\(unit.result, specifier: "%g")")
                                 .padding(.horizontal)
@@ -61,8 +63,10 @@ struct ContentView: View {
                     
                     Group {
                         if showPicker && numberOfPicker == .left {
-                            Text("\(unit.keysArray[unit.selectedFrom ?? 0])")
-                                .foregroundColor(Color("primaryColor"))
+                            if let selectedFrom = unit.selectedFrom {
+                                Text("\(unit.keysArray[selectedFrom])")
+                                    .foregroundColor(Color("primaryColor"))
+                            }
                         } else {
                             TextField(unit.amountInString, text: $unit.amountInString)
                                 .keyboardType(.decimalPad)
@@ -175,8 +179,8 @@ struct ContentView: View {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
         .gesture(
-            // hide and show dropdown menu by swipe
             DragGesture().onChanged { value in
+                // hide and show dropdown menu by swipe
                 if value.translation.width < 0 && value.translation.width < -100 {
                     showPicker = false
                     inFocus = false
@@ -185,6 +189,14 @@ struct ContentView: View {
                     showAllCategories = false
                 }
                 
+                // copy result to amount
+//                if value.translation.height > 0 && value.translation.height > 200 {
+//                    unit.amountInString = unit.result.description
+//                    unit.selectedFrom = unit.selectedTo
+//                    unit.selectedTo = nil
+//                    numberOfPicker = .left
+//                    showPicker = true
+//                }
             }
         )
         .onAppear(perform: {

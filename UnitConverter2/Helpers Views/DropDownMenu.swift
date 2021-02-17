@@ -37,7 +37,7 @@ struct DropDownMenu: View {
                 } else {
                     ForEach(UnitType.allCases) { type in
                         Button(action: {
-                            if unit.type != type {
+                            if unit.type != type || unit.selectedFrom == nil || unit.selectedTo == nil {
                                 unit.type = type
                                 numberOfPicker = .both
                                 showPicker = true
