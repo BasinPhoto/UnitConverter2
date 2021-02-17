@@ -9,12 +9,12 @@ import SwiftUI
 
 struct DropDownMenu: View {
     @Binding var showAllCategories: Bool
+    @Binding var showPicker: Bool
+    @Binding var numberOfPicker: PickerSide
     @StateObject var unit: ConverterViewModel
     
     var body: some View {
-        
-        ZStack {
-            
+
             VStack(alignment: .trailing) {
                 if !showAllCategories {
                     HStack {
@@ -37,7 +37,11 @@ struct DropDownMenu: View {
                 } else {
                     ForEach(UnitType.allCases) { type in
                         Button(action: {
-                            self.unit.type = type
+                            if unit.type != type {
+                                unit.type = type
+                                numberOfPicker = .both
+                                showPicker = true
+                            }
                             withAnimation{
                                 self.showAllCategories.toggle()
                             }
@@ -61,15 +65,13 @@ struct DropDownMenu: View {
                     }
                 }
             }
-            .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 3, y: 3)
-            .animation(.easeOut)
-        }
+            .shadow(color: Color("primaryColor").opacity(0.8), radius: 10, x: 6, y: 6)
     }
 }
 
 
 struct DropDownMenu_Previews: PreviewProvider {
     static var previews: some View {
-        DropDownMenu(showAllCategories: .constant(true), unit: ConverterViewModel())
+        DropDownMenu(showAllCategories: .constant(true), showPicker: .constant(false), numberOfPicker: .constant(.both), unit: ConverterViewModel())
     }
 }

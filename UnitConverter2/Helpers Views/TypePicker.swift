@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TypePicker: View {
-    @Binding var toVar: Int
+    @Binding var toVar: Int?
     @Binding var showPicker: Bool
     @StateObject var unit: ConverterViewModel
     
@@ -16,8 +16,8 @@ struct TypePicker: View {
     var accentColor: Color
     
     let columns = [
-        GridItem(.adaptive(minimum: 100)),
-        GridItem(.adaptive(minimum: 100))
+        GridItem(.fixed(UIScreen.main.bounds.width / 2)),
+        GridItem(.fixed(UIScreen.main.bounds.width / 2))
     ]
     
     var body: some View {
@@ -28,7 +28,9 @@ struct TypePicker: View {
                     ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
                         Button {
                             toVar = keyNumber
-                            showPicker.toggle()
+                            if unit.isBothValuesSelected {
+                                showPicker.toggle()
+                            }
                         } label: {
                             if toVar == keyNumber {
                                 Text(unit.keysArray[keyNumber])
@@ -41,18 +43,21 @@ struct TypePicker: View {
                                     .background(accentColor)
                                     .foregroundColor(backgroungColor)
                                     .clipShape(Capsule())
+                                    .padding(.horizontal)
+                                    .shadow(color: accentColor, radius: 10, x: 0, y: 0)
                             } else {
                                 Text(unit.keysArray[keyNumber])
-                                    .font(Font.custom("Exo 2", size: 20))
+                                    .font(Font.custom("Exo 2", size: 20).bold())
                                     .lineLimit(0)
                                     .minimumScaleFactor(0.3)
-                                    .opacity(0.5)
+                                    .opacity(0.8)
                                     .frame(height: 25)
                                     .padding(.horizontal)
                                     .padding(.vertical, 8)
                                     .overlay(
                                         Capsule().stroke(lineWidth: 2)
                                     )
+                                    .padding(.horizontal)
                             }
                         }
                     }

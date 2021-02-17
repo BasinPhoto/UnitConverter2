@@ -13,29 +13,52 @@ class ConverterViewModel: ObservableObject {
     @Published var type: UnitType = .length {
         didSet {
             amountInString = "0"
-            selectedFrom = 0
-            selectedTo = 0
+            temporaryValue = "0"
+            selectedFrom = nil
+            selectedTo = nil
         }
     }
     @Published var amountInString = "0"
-    @Published var selectedFrom: Int = 0
-    @Published var selectedTo: Int = 0
+    @Published var selectedFrom: Int?
+    @Published var selectedTo: Int?
+    
+    var isBothValuesSelected: Bool {
+//        set {
+//            if newValue == false {
+//                selectedFrom = nil
+//                selectedTo = nil
+//            }
+//        }
+        
+        get {
+            guard let _ = selectedFrom else { return false }
+            guard let _ = selectedTo else { return false }
+            
+            return true
+        }
+    }
     var temporaryValue: String = "0"
 
-    var valuesArray: [String : Double] {
-        return values[type.rawValue]
+    var valuesDictionary: [String : Double] {
+        return allValues[type.rawValue]
     }
     
     var keysArray: [String] {
-        valuesArray.keys.sorted()
+        valuesDictionary.keys.sorted()
     }
     
     var result: Double {
-        guard let amount = Double(amountInString) else { return 0 }
-        let selectedFromKey = keysArray[selectedFrom]
-        let selectedToKey = keysArray[selectedTo]
-        let valueFrom = valuesArray[selectedFromKey]!
-        let valueTo = valuesArray[selectedToKey]!
+        
+        let selectedFromKey = keysArray[selectedFrom ?? 0]
+        let selectedToKey = keysArray[selectedTo ?? 0]
+        let valueFrom = valuesDictionary[selectedFromKey]!
+        let valueTo = valuesDictionary[selectedToKey]!
+        
+        guard let amount = Double(amountInString) else {
+            if let tmpValue = Double(temporaryValue) { return tmpValue * valueFrom / valueTo }
+            else { return 0 }
+        }
+
         return amount * valueFrom / valueTo
     }
     
