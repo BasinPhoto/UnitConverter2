@@ -23,6 +23,7 @@ struct ContentView: View {
     @StateObject var unit: ConverterViewModel
     
     let clipboard = UIPasteboard.general
+    let generator = UINotificationFeedbackGenerator()
 
     var body: some View {
         
@@ -38,7 +39,7 @@ struct ContentView: View {
                 VStack {
                     
                     Group {
-                        if showPicker && numberOfPicker == .right {
+                        if showPicker && numberOfPicker == .left {
                             if let selectedTo = unit.selectedTo {
                                 Text("\(unit.keysArray[selectedTo])")
                             }
@@ -46,7 +47,6 @@ struct ContentView: View {
                             Text("\(unit.result, specifier: "%g")")
                                 .padding(.horizontal)
                                 .onTapGesture(count: 2) {
-                                    let generator = UINotificationFeedbackGenerator()
                                     if unit.result != 0 {
                                         clipboard.string = String(unit.result)
                                         generator.prepare()
@@ -59,13 +59,14 @@ struct ContentView: View {
                     }
                     .foregroundColor(.white)
                     .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                    .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / -6)
+                    .offset(x: showPicker && numberOfPicker == .right ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / -6)
                     
                     Group {
-                        if showPicker && numberOfPicker == .left {
+                        if showPicker && numberOfPicker == .right {
                             if let selectedFrom = unit.selectedFrom {
-                                Text("\(unit.keysArray[selectedFrom])")
+                                Text("\(unit.amountInString) \(unit.keysArray[selectedFrom])")
                                     .foregroundColor(Color("primaryColor"))
+                                    .lineLimit(2)
                             }
                         } else {
                             TextField(unit.amountInString, text: $unit.amountInString)
@@ -74,7 +75,7 @@ struct ContentView: View {
                                 .accentColor(Color("primaryColor"))
                                 .background(Color.white)
                                 .cornerRadius(30)
-                                .shadow(color: inFocus ? Color("primaryColor").opacity(0.8) : Color.black.opacity(0), radius: inFocus ? 20 : 0, y: inFocus ? 10 : 0)
+                                .shadow(color: inFocus ? Color("primaryColor").opacity(0.7) : Color.blue.opacity(0), radius: inFocus ? 20 : 0, y: inFocus ? 10 : 0)
                                 .disabled(showAllCategories)
                                 .onTapGesture {
                                     inFocus = true
@@ -87,7 +88,7 @@ struct ContentView: View {
                         }
                     }
                     .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                    .offset(x: showPicker && numberOfPicker == .right ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / 7)
+                    .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / 7)
                     
                 }
                 .font(Font.custom("Exo 2", size: 60))
@@ -98,12 +99,12 @@ struct ContentView: View {
                 // pickers
                 VStack{
                     
-                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroungColor: Color("primaryColor"), accentColor: .white)
+                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: .white)
                         .padding(.top, 50)
-                        .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: -15)
+                        .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: -15)
                     
-                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroungColor: .white, accentColor: Color("primaryColor"))
-                        .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: 0)
+                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroundColor: .white, accentColor: Color("primaryColor"))
+                        .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: 0)
                 }
                 
                 //type picker buttons
@@ -111,37 +112,42 @@ struct ContentView: View {
                     
                     Button(action: {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        numberOfPicker = .left
-                        self.showPicker.toggle()
-                    }, label: {
-                        if let selectedTo = unit.selectedTo {
-                            Text(unit.keysArray[selectedTo])
-                        } else {
-                            EmptyView()
+                        if unit.isBothValuesSelected {
+                            numberOfPicker = .left
+                            self.showPicker.toggle()
                         }
-                    })
-                    .padding()
-                    .frame(width: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-                    .background(Color("primaryColor"))
-                    .foregroundColor(.white)
-                    .cornerRadius(25)
-                    
-                    Button(action: {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        numberOfPicker = .right
-                        self.showPicker.toggle()
                     }, label: {
                         if let selectedFrom = unit.selectedFrom {
                             Text(unit.keysArray[selectedFrom])
                         } else {
-                            EmptyView()
+                            Text("(Из...)")
+                        }
+                    })
+                    .padding()
+                    .frame(width: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
+                    .background(Color.white)
+                    .foregroundColor(Color("primaryColor"))
+                    .cornerRadius(25)
+                    
+                    Button(action: {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        if unit.isBothValuesSelected {
+                            numberOfPicker = .right
+                            self.showPicker.toggle()
+                        }
+                    }, label: {
+                        if let selectedTo = unit.selectedTo {
+                            Text(unit.keysArray[selectedTo])
+                        } else {
+                            Text("(В...)")
                         }
                     })
                     .padding()
                     .frame(width: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-                    .background(Color.white)
-                    .foregroundColor(Color("primaryColor"))
+                    .background(Color("primaryColor"))
+                    .foregroundColor(.white)
                     .cornerRadius(25)
+                    
                 }
                 .font(Font.custom("Exo 2", size: 24).bold())
                 .lineLimit(1)
@@ -181,22 +187,28 @@ struct ContentView: View {
         .gesture(
             DragGesture().onChanged { value in
                 // hide and show dropdown menu by swipe
-                if value.translation.width < 0 && value.translation.width < -100 {
+                if value.translation.width < -100 && showAllCategories == false {
                     showPicker = false
                     inFocus = false
                     showAllCategories = true
-                } else if value.translation.width > 0 && value.translation.width > 100 {
+                } else if value.translation.width > 100 && showAllCategories == true {
                     showAllCategories = false
                 }
                 
                 // copy result to amount
-//                if value.translation.height > 0 && value.translation.height > 200 {
-//                    unit.amountInString = unit.result.description
-//                    unit.selectedFrom = unit.selectedTo
-//                    unit.selectedTo = nil
-//                    numberOfPicker = .left
-//                    showPicker = true
-//                }
+                if !showAllCategories {
+                    if value.translation.height > 200 {
+                        if !showPicker {
+                            unit.amountInString = unit.result.description
+                            unit.selectedFrom = unit.selectedTo
+                            unit.selectedTo = nil
+                            numberOfPicker = .right
+                            showPicker = true
+                            generator.prepare()
+                            generator.notificationOccurred(.success)
+                        }
+                    }
+                }
             }
         )
         .onAppear(perform: {
