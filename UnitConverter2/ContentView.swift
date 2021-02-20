@@ -165,6 +165,7 @@ struct ContentView: View {
                 
             }
             .blur(radius: showAllCategories ? 8 : 0)
+            .scaleEffect(showAllCategories ? 1.2 : 1)
             
             //dropdown menu
             VStack {
@@ -219,6 +220,15 @@ struct ContentView: View {
             }
         )
         .onAppear(perform: {
+            
+            NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (result) in
+                DispatchQueue.main.async {
+                    if let fetchingResult = result {
+                        UnitType.allValues.append(fetchingResult.conversionRates)
+                    }
+                }
+            }
+            
             showAllCategories = true
             numberOfPicker = .both
         })

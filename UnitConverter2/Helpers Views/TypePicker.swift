@@ -20,11 +20,18 @@ struct TypePicker: View {
         GridItem(.fixed(UIScreen.main.bounds.width / 2))
     ]
     
+    let columnsForCurrencys = [
+        GridItem(.fixed(UIScreen.main.bounds.width / 4)),
+        GridItem(.fixed(UIScreen.main.bounds.width / 4)),
+        GridItem(.fixed(UIScreen.main.bounds.width / 4)),
+        GridItem(.fixed(UIScreen.main.bounds.width / 4))
+    ]
+    
     var body: some View {
         
         ZStack {
             ScrollView(showsIndicators: false){
-                LazyVGrid(columns: columns, spacing: 10) {
+                LazyVGrid(columns: unit.type == .money ? columnsForCurrencys : columns, spacing: 10) {
                     ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
                         Button {
                             toVar = keyNumber
@@ -74,9 +81,9 @@ struct TypePicker: View {
                     .ignoresSafeArea()
                     .disabled(true)
                 Spacer()
-                LinearGradient(gradient: Gradient(colors: [backgroundColor, backgroundColor.opacity(0)]), startPoint: .bottom, endPoint: .top)
-                    .frame(height: 45, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .offset(y: -35)
+                LinearGradient(gradient: Gradient(colors: [backgroundColor, backgroundColor, backgroundColor.opacity(0)]), startPoint: .bottom, endPoint: .top)
+                    .frame(height: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .offset(y: -25)
                     .ignoresSafeArea()
                     .disabled(true)
             }

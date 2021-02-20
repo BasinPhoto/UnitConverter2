@@ -9,7 +9,7 @@ import Foundation
 
 enum UnitType: Int, CaseIterable, Identifiable {
     
-    static let allValues = [
+    static var allValues = [
         //Длина
         ["Метр" : 1, "Километр" : 1000, "Сантиметр" : 0.01, "Миллиметр" : 0.001, "Миля" : 1609.34, "Ярд" : 0.9144, "Фут" : 0.3048, "Дюйм" : 0.0254, "Морская миля" : 1852],
         //Объем
@@ -31,7 +31,6 @@ enum UnitType: Int, CaseIterable, Identifiable {
         //Энергия
         ["Киловатт-час" : 1, "Джоуль" : 2.7778e-7, "Килоджоуль" : 0.000277778, "Грамм-калория" : 1.1622e-6, "Килокалория" : 0.00116222, "Ватт-час" : 0.001, "Электронвольт" : 4.4505e-26, "Брит.тепловая ед." : 0.000293071, "Амер.терм" : 23.3001, "Фут-фунт" : 3.7662e-7]
     ]
-
     
     var id: String {
         description
@@ -47,6 +46,7 @@ enum UnitType: Int, CaseIterable, Identifiable {
     case square
     case speed
     case energy
+    case money
     
     var description: String {
         switch self {
@@ -70,6 +70,8 @@ enum UnitType: Int, CaseIterable, Identifiable {
             return "Скорость"
         case .energy:
             return "Энергия"
+        case .money:
+            return "Валюта"
         }
     }
     
@@ -95,6 +97,8 @@ enum UnitType: Int, CaseIterable, Identifiable {
             return "speed"
         case .energy:
             return "energy"
+        case .money:
+            return "money"
         }
     }
 }

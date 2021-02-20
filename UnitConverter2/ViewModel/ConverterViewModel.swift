@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftUI
+import Combine
 
 class ConverterViewModel: ObservableObject {
     
@@ -56,7 +56,12 @@ class ConverterViewModel: ObservableObject {
             else { return 0 }
         }
 
-        return amount * valueFrom / valueTo
+        switch type {
+        case .money:
+            return amount * valueTo / valueFrom
+        default:
+            return amount * valueFrom / valueTo
+        }
     }
     
 }
