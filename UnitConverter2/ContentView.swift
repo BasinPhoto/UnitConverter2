@@ -41,7 +41,8 @@ struct ContentView: View {
                     Group {
                         if showPicker && numberOfPicker == .left {
                             if let selectedTo = unit.selectedTo {
-                                Text("\(unit.keysArray[selectedTo])")
+                                Text("Конвертируем в \n \"\(unit.keysArray[selectedTo])\" \n из...")
+                                    .lineLimit(3)
                             }
                         } else {
                             Text("\(unit.result, specifier: "%g")")
@@ -58,15 +59,21 @@ struct ContentView: View {
                         }
                     }
                     .foregroundColor(.white)
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
+                    .frame(width: UIScreen.main.bounds.width - 32)
                     .offset(x: showPicker && numberOfPicker == .right ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / -6)
                     
                     Group {
                         if showPicker && numberOfPicker == .right {
                             if let selectedFrom = unit.selectedFrom {
-                                Text("\(unit.amountInString) \(unit.keysArray[selectedFrom])")
-                                    .foregroundColor(Color("primaryColor"))
-                                    .lineLimit(2)
+                                if let amount = Double(unit.amountInString), amount != 0 {
+                                    Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
+                                        .foregroundColor(Color("primaryColor"))
+                                        .lineLimit(3)
+                                } else {
+                                    Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
+                                        .foregroundColor(Color("primaryColor"))
+                                        .lineLimit(3)
+                                }
                             }
                         } else {
                             TextField(unit.amountInString, text: $unit.amountInString)
@@ -87,8 +94,8 @@ struct ContentView: View {
                             
                         }
                     }
-                    .frame(width: UIScreen.main.bounds.width - 32, height: 100)
-                    .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / 7)
+                    .frame(width: UIScreen.main.bounds.width - 32)
+                    .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : 0 , y: inFocus ? 40 : UIScreen.main.bounds.height / 6)
                     
                 }
                 .font(Font.custom("Exo 2", size: 60))

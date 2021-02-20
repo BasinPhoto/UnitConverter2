@@ -23,24 +23,16 @@ class ConverterViewModel: ObservableObject {
     @Published var selectedTo: Int?
     
     var isBothValuesSelected: Bool {
-//        set {
-//            if newValue == false {
-//                selectedFrom = nil
-//                selectedTo = nil
-//            }
-//        }
-        
-        get {
             guard let _ = selectedFrom else { return false }
             guard let _ = selectedTo else { return false }
             
             return true
-        }
     }
+    
     var temporaryValue: String = "0"
 
     var valuesDictionary: [String : Double] {
-        return allValues[type.rawValue]
+        return UnitType.allValues[type.rawValue]
     }
     
     var keysArray: [String] {
@@ -56,6 +48,8 @@ class ConverterViewModel: ObservableObject {
         let selectedToKey = keysArray[selectedTo]
         let valueFrom = valuesDictionary[selectedFromKey]!
         let valueTo = valuesDictionary[selectedToKey]!
+        
+        guard valueTo != 0 else { return 0 }
         
         guard let amount = Double(amountInString) else {
             if let tmpValue = Double(temporaryValue) { return tmpValue * valueFrom / valueTo }
