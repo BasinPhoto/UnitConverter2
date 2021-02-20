@@ -38,9 +38,13 @@ struct DropDownMenu: View {
                     ForEach(UnitType.allCases) { type in
                         Button(action: {
                             if unit.type != type || unit.selectedFrom == nil || unit.selectedTo == nil {
-                                unit.type = type
-                                numberOfPicker = .both
-                                showPicker = true
+                                if type == .money && UnitType.allValues.count < 10 {
+                                    
+                                } else {
+                                    unit.type = type
+                                    numberOfPicker = .both
+                                    showPicker = true
+                                }
                             }
                             withAnimation{
                                 self.showAllCategories.toggle()

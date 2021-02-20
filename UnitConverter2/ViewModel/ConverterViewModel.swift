@@ -52,7 +52,10 @@ class ConverterViewModel: ObservableObject {
         guard valueTo != 0 else { return 0 }
         
         guard let amount = Double(amountInString) else {
-            if let tmpValue = Double(temporaryValue) { return tmpValue * valueFrom / valueTo }
+            if let tmpValue = Double(temporaryValue) {
+                if type != .money { return tmpValue * valueFrom / valueTo }
+                else { return tmpValue * valueTo / valueFrom }
+            }
             else { return 0 }
         }
 
