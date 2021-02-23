@@ -61,9 +61,9 @@ class ConverterViewModel: ObservableObject {
 
         switch type {
         case .money:
-            return amount * valueTo / valueFrom
+            return (amount * valueTo / valueFrom)
         default:
-            return amount * valueFrom / valueTo
+            return (amount * valueFrom / valueTo)
         }
     }
     

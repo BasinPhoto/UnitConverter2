@@ -42,10 +42,53 @@ struct ContentView: View {
                 VStack {
                     
                     Group {
+                        if showPicker && numberOfPicker == .right {
+                            if let selectedFrom = unit.selectedFrom {
+                                if let amount = Double(unit.amountInString), amount != 0 {
+                                    Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
+                                        .foregroundColor(.white)
+                                        .lineLimit(3)
+                                        .onTapGesture(count: 2) {
+                                            guard let tmpValue = Double(unit.amountInString) else { return }
+                                            unit.amountInString = String(Int(tmpValue))
+                                            generator.prepare()
+                                            generator.notificationOccurred(.success)
+                                        }
+                                } else {
+                                    Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в")
+                                        .foregroundColor(.white)
+                                        .lineLimit(2)
+                                }
+                            }
+                        } else {
+                            TextField(unit.amountInString, text: $unit.amountInString)
+                                .keyboardType(.decimalPad)
+                                .foregroundColor(inFocus ? Color("primaryColor") : .white)
+                                .accentColor(Color("primaryColor"))
+                                .background(inFocus ? Color.white : Color("primaryColor"))
+                                .cornerRadius(30)
+                                .shadow(color: inFocus ? Color.black.opacity(0.4) : Color.blue.opacity(0), radius: inFocus ? 20 : 0, y: inFocus ? 10 : 0)
+                                .disabled(showAllCategories)
+                                .onTapGesture {
+                                    inFocus = true
+                                    showAllCategories = false
+                                    showPicker = false
+                                    unit.temporaryValue = unit.amountInString
+                                    unit.amountInString = ""
+                                }
+                            
+                        }
+                    }
+                    .disabled(showAllCategories)
+                    .frame(width: UIScreen.main.bounds.width - 32)
+                    .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0,
+                            y: UIScreen.main.bounds.height / -6)
+                    
+                    Group {
                         if showPicker && numberOfPicker == .left {
                             if let selectedTo = unit.selectedTo {
-                                Text("Конвертируем в \n \"\(unit.keysArray[selectedTo])\" \n из...")
-                                    .lineLimit(3)
+                                Text("конвертируем в \n \"\(unit.keysArray[selectedTo])\"")
+                                    .lineLimit(2)
                             }
                         } else {
                             Text("\(unit.result, specifier: "%g")")
@@ -61,67 +104,25 @@ struct ContentView: View {
                                 }
                         }
                     }
-                    .foregroundColor(.white)
+                    .foregroundColor(Color("primaryColor"))
                     .frame(width: UIScreen.main.bounds.width - 32)
-                    .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / -6)
-                    
-                    Group {
-                        if showPicker && numberOfPicker == .right {
-                            if let selectedFrom = unit.selectedFrom {
-                                if let amount = Double(unit.amountInString), amount != 0 {
-                                    Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
-                                        .foregroundColor(Color("primaryColor"))
-                                        .lineLimit(3)
-                                        .onTapGesture(count: 2) {
-                                            guard let tmpValue = Double(unit.amountInString) else { return }
-                                            unit.amountInString = String(Int(tmpValue))
-                                            generator.prepare()
-                                            generator.notificationOccurred(.success)
-                                        }
-                                } else {
-                                    Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
-                                        .foregroundColor(Color("primaryColor"))
-                                        .lineLimit(3)
-                                }
-                            }
-                        } else {
-                            TextField(unit.amountInString, text: $unit.amountInString)
-                                .keyboardType(.decimalPad)
-                                .foregroundColor(Color("primaryColor"))
-                                .accentColor(Color("primaryColor"))
-                                .background(Color.white)
-                                .cornerRadius(30)
-                                .shadow(color: inFocus ? Color("primaryColor").opacity(0.7) : Color.blue.opacity(0), radius: inFocus ? 20 : 0, y: inFocus ? 10 : 0)
-                                .disabled(showAllCategories)
-                                .onTapGesture {
-                                    inFocus = true
-                                    showAllCategories = false
-                                    showPicker = false
-                                    unit.temporaryValue = unit.amountInString
-                                    unit.amountInString = ""
-                                }
-                            
-                        }
-                    }
-                    .disabled(showAllCategories)
-                    .frame(width: UIScreen.main.bounds.width - 32)
-                    .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0,
-                            y: inFocus ? 50 : UIScreen.main.bounds.height / 6)
+                    .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / 6)
                     
                 }
                 .font(Font.custom("Exo 2", size: 60))
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(0.3)
                 
                 // pickers
                 VStack {
                     
-                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: .white)
-                        .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: -15)
+                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: .white)
+                        .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: -15)
                     
-                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroundColor: .white, accentColor: Color("primaryColor"))
-                        .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: 0)
+                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroundColor: .white, accentColor: Color("primaryColor"))
+                        .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: 0)
+                    
                 }
                 
                 //type picker buttons
@@ -142,8 +143,8 @@ struct ContentView: View {
                     })
                     .padding()
                     .frame(width: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-                    .background(Color.white)
-                    .foregroundColor(Color("primaryColor"))
+                    .background(Color("primaryColor"))
+                    .foregroundColor(Color.white)
                     .cornerRadius(25)
                     
                     Button(action: {
@@ -161,8 +162,8 @@ struct ContentView: View {
                     })
                     .padding()
                     .frame(width: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-                    .background(Color("primaryColor"))
-                    .foregroundColor(.white)
+                    .background(Color.white)
+                    .foregroundColor(Color("primaryColor"))
                     .cornerRadius(25)
                     
                 }
@@ -214,7 +215,7 @@ struct ContentView: View {
                 
                 // copy result to amount
                 if !showAllCategories {
-                    if value.translation.height > 200 && unit.result > 0 {
+                    if value.translation.height < -200 && unit.result > 0 {
                         if !showPicker {
                             unit.amountInString = unit.result.description
                             unit.selectedFrom = unit.selectedTo
