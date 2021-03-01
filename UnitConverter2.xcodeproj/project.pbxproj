@@ -17,6 +17,9 @@
 		B9E627AA25757B4B000419A7 /* ConverterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E627A925757B4B000419A7 /* ConverterModel.swift */; };
 		B9E627AF25758A92000419A7 /* ConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E627AE25758A92000419A7 /* ConverterViewModel.swift */; };
 		B9F77A3F2583883000859245 /* TypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F77A3E2583883000859245 /* TypePicker.swift */; };
+		C228C72B25ED166E0052BB12 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C72A25ED166E0052BB12 /* BackgroundView.swift */; };
+		C228C73025ED176A0052BB12 /* IOFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C72F25ED176A0052BB12 /* IOFieldsView.swift */; };
+		C228C73525ED19640052BB12 /* TypePickerButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C73425ED19640052BB12 /* TypePickerButtonsView.swift */; };
 		C251278E25D29D4400F0B32B /* Exo2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C251278D25D29D4400F0B32B /* Exo2.ttf */; };
 		C253775525E151E900B7C806 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253775425E151E900B7C806 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +58,9 @@
 		B9E627A925757B4B000419A7 /* ConverterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterModel.swift; sourceTree = "<group>"; };
 		B9E627AE25758A92000419A7 /* ConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewModel.swift; sourceTree = "<group>"; };
 		B9F77A3E2583883000859245 /* TypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePicker.swift; sourceTree = "<group>"; };
+		C228C72A25ED166E0052BB12 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		C228C72F25ED176A0052BB12 /* IOFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOFieldsView.swift; sourceTree = "<group>"; };
+		C228C73425ED19640052BB12 /* TypePickerButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePickerButtonsView.swift; sourceTree = "<group>"; };
 		C251278D25D29D4400F0B32B /* Exo2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Exo2.ttf; sourceTree = "<group>"; };
 		C253775425E151E900B7C806 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +157,9 @@
 			children = (
 				B9F77A3E2583883000859245 /* TypePicker.swift */,
 				B93064A5257FA5490011228A /* DropDownMenu.swift */,
+				C228C72A25ED166E0052BB12 /* BackgroundView.swift */,
+				C228C72F25ED176A0052BB12 /* IOFieldsView.swift */,
+				C228C73425ED19640052BB12 /* TypePickerButtonsView.swift */,
 			);
 			path = "Helpers Views";
 			sourceTree = "<group>";
@@ -302,9 +311,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C228C73525ED19640052BB12 /* TypePickerButtonsView.swift in Sources */,
 				B9E6277E25757AD9000419A7 /* ContentView.swift in Sources */,
 				B9F77A3F2583883000859245 /* TypePicker.swift in Sources */,
+				C228C72B25ED166E0052BB12 /* BackgroundView.swift in Sources */,
 				B9E627AA25757B4B000419A7 /* ConverterModel.swift in Sources */,
+				C228C73025ED176A0052BB12 /* IOFieldsView.swift in Sources */,
 				C253775525E151E900B7C806 /* NetworkManager.swift in Sources */,
 				B93064A6257FA5490011228A /* DropDownMenu.swift in Sources */,
 				B9E6277C25757AD9000419A7 /* UnitConverter2App.swift in Sources */,

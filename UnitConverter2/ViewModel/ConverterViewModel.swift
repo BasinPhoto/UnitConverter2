@@ -49,22 +49,37 @@ class ConverterViewModel: ObservableObject {
         let valueFrom = valuesDictionary[selectedFromKey]!
         let valueTo = valuesDictionary[selectedToKey]!
         
+        var tmpResult : Double = 0
+        
         guard valueTo != 0 else { return 0 }
         
         guard let amount = Double(amountInString) else {
             if let tmpValue = Double(temporaryValue) {
-                if type != .money { return tmpValue * valueFrom / valueTo }
-                else { return tmpValue * valueTo / valueFrom }
+                if type != .money { return roundTo(tmpValue * valueFrom / valueTo, toDecimalPlaces: 4) }
+                else { return roundTo(tmpValue * valueTo / valueFrom, toDecimalPlaces: 4) }
             }
             else { return 0 }
         }
 
         switch type {
         case .money:
-            return (amount * valueTo / valueFrom)
+            tmpResult = (amount * valueTo / valueFrom)
         default:
-            return (amount * valueFrom / valueTo)
+            tmpResult =  (amount * valueFrom / valueTo)
         }
+        
+        let roundedValue = roundTo(tmpResult, toDecimalPlaces: 4)
+        if roundedValue != 0 {
+            return roundedValue
+        }
+        else {
+            return tmpResult
+        }
+    }
+    
+    func roundTo(_ value: Double, toDecimalPlaces places: Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return round(value * divisor) / divisor
     }
     
 }

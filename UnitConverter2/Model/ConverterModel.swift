@@ -121,3 +121,9 @@ struct CurrencyRates: Codable {
         case conversionRates = "conversion_rates"
     }
 }
+
+enum PickerSide: Int {
+    case both
+    case left
+    case right
+}

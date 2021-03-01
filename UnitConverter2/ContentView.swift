@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-enum PickerSide: Int {
-    case both
-    case left
-    case right
-}
-
 struct ContentView: View {
     
     @State var showAllCategories: Bool = false
@@ -31,88 +25,10 @@ struct ContentView: View {
             Group {
                 
                 //Background rectangles
-                VStack(spacing: 0){
-                    Color("primaryColor")
-                        .ignoresSafeArea()
-                    Color.white
-                        .ignoresSafeArea()
-                }
+                Background()
                 
                 //input and output value fields
-                VStack {
-                    
-                    Group {
-                        if showPicker && numberOfPicker == .right {
-                            if let selectedFrom = unit.selectedFrom {
-                                if let amount = Double(unit.amountInString), amount != 0 {
-                                    Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
-                                        .foregroundColor(.white)
-                                        .lineLimit(3)
-                                        .onTapGesture(count: 2) {
-                                            guard let tmpValue = Double(unit.amountInString) else { return }
-                                            unit.amountInString = String(Int(tmpValue))
-                                            generator.prepare()
-                                            generator.notificationOccurred(.success)
-                                        }
-                                } else {
-                                    Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в")
-                                        .foregroundColor(.white)
-                                        .lineLimit(2)
-                                }
-                            }
-                        } else {
-                            TextField(unit.amountInString, text: $unit.amountInString)
-                                .keyboardType(.decimalPad)
-                                .foregroundColor(inFocus ? Color("primaryColor") : .white)
-                                .accentColor(Color("primaryColor"))
-                                .background(inFocus ? Color.white : Color("primaryColor"))
-                                .cornerRadius(30)
-                                .shadow(color: inFocus ? Color.black.opacity(0.4) : Color.blue.opacity(0), radius: inFocus ? 20 : 0, y: inFocus ? 10 : 0)
-                                .disabled(showAllCategories)
-                                .onTapGesture {
-                                    inFocus = true
-                                    showAllCategories = false
-                                    showPicker = false
-                                    unit.temporaryValue = unit.amountInString
-                                    unit.amountInString = ""
-                                }
-                            
-                        }
-                    }
-                    .disabled(showAllCategories)
-                    .frame(width: UIScreen.main.bounds.width - 32)
-                    .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0,
-                            y: UIScreen.main.bounds.height / -6)
-                    
-                    Group {
-                        if showPicker && numberOfPicker == .left {
-                            if let selectedTo = unit.selectedTo {
-                                Text("конвертируем в \n \"\(unit.keysArray[selectedTo])\"")
-                                    .lineLimit(2)
-                            }
-                        } else {
-                            Text("\(unit.result, specifier: "%g")")
-                                .padding(.horizontal)
-                                .onTapGesture(count: 2) {
-                                    if unit.result != 0 {
-                                        clipboard.string = String(unit.result)
-                                        generator.prepare()
-                                        generator.notificationOccurred(.success)
-                                    } else {
-                                        generator.notificationOccurred(.error)
-                                    }
-                                }
-                        }
-                    }
-                    .foregroundColor(Color("primaryColor"))
-                    .frame(width: UIScreen.main.bounds.width - 32)
-                    .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / 6)
-                    
-                }
-                .font(Font.custom("Exo 2", size: 60))
-                .multilineTextAlignment(.center)
-                .lineLimit(1)
-                .minimumScaleFactor(0.3)
+                IOFieldsView(showAllCategories: $showAllCategories, inFocus: $inFocus, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
                 
                 // pickers
                 VStack {
@@ -126,53 +42,7 @@ struct ContentView: View {
                 }
                 
                 //type picker buttons
-                HStack(spacing: 0) {
-                    
-                    Button(action: {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        if unit.isBothValuesSelected {
-                            numberOfPicker = .left
-                            self.showPicker.toggle()
-                        }
-                    }, label: {
-                        if let selectedFrom = unit.selectedFrom {
-                            Text(unit.keysArray[selectedFrom])
-                        } else {
-                            Text("(Из...)")
-                        }
-                    })
-                    .padding()
-                    .frame(width: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-                    .background(Color("primaryColor"))
-                    .foregroundColor(Color.white)
-                    .cornerRadius(25)
-                    
-                    Button(action: {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        if unit.isBothValuesSelected {
-                            numberOfPicker = .right
-                            self.showPicker.toggle()
-                        }
-                    }, label: {
-                        if let selectedTo = unit.selectedTo {
-                            Text(unit.keysArray[selectedTo])
-                        } else {
-                            Text("(В...)")
-                        }
-                    })
-                    .padding()
-                    .frame(width: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-                    .background(Color.white)
-                    .foregroundColor(Color("primaryColor"))
-                    .cornerRadius(25)
-                    
-                }
-                .font(Font.custom("Exo 2", size: 24).bold())
-                .lineLimit(1)
-                .minimumScaleFactor(0.3)
-                .disabled(showAllCategories)
-                .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width / 4 : 0)
-                .offset(x: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width / -4 : 0)
+                TypePickerButtonsView(showAllCategories: $showAllCategories, inFocus: $inFocus, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
                 
             }
             .blur(radius: showAllCategories ? 4 : 0)
@@ -225,6 +95,11 @@ struct ContentView: View {
                             generator.prepare()
                             generator.notificationOccurred(.success)
                         }
+                    } else if value.translation.height > 200 {
+                        if !showPicker {
+                            numberOfPicker = .both
+                            showPicker = true
+                        }
                     }
                 }
             }
@@ -239,8 +114,8 @@ struct ContentView: View {
                 }
             }
             
-            showAllCategories = true
             numberOfPicker = .both
+            showAllCategories = true
         })
     }
 }

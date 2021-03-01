@@ -13,6 +13,8 @@ struct DropDownMenu: View {
     @Binding var numberOfPicker: PickerSide
     @StateObject var unit: ConverterViewModel
     
+    let generator = UIImpactFeedbackGenerator(style: .light)
+    
     var body: some View {
         
         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
@@ -25,6 +27,7 @@ struct DropDownMenu: View {
                                 withAnimation{
                                     showAllCategories.toggle()
                                 }
+                                generator.impactOccurred()
                             }, label: {
                                 Image(unit.type.imageName)
                                     .resizable()
@@ -42,7 +45,7 @@ struct DropDownMenu: View {
                 } else {
                     ForEach(UnitType.allCases) { type in
                         if type == .money && UnitType.allValues.count < 11 {
-                            EmptyView() // если не подгрузились валюты то кнопка валют не отображается
+                            EmptyView()
                         } else {
                             Button(action: {
                                 if unit.type != type || unit.selectedFrom == nil || unit.selectedTo == nil {
