@@ -61,7 +61,7 @@ struct TypePickerButtonsView: View {
         .font(Font.custom("Exo 2", size: 24).bold())
         .lineLimit(1)
         .minimumScaleFactor(0.3)
-        .disabled(showAllCategories)
+        .disabled(showAllCategories || inFocus)
         .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width / 4 : 0)
         .offset(x: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width / -4 : 0)
     }

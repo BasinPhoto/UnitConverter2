@@ -59,7 +59,7 @@ struct IOFieldsView: View {
                                 unit.amountInString = ""
                             }
                         }
-                        .onChange(of: unit.amountInString, perform: { value in
+                        .onChange(of: unit.amountInString, perform: { _ in
                             unit.amountInString = unit.amountInString.replacingOccurrences(of: ",", with: ".")
                         })
                     
