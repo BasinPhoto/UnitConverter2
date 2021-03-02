@@ -35,7 +35,7 @@ struct TypePickerButtonsView: View {
             .padding()
             .frame(width: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
             .background(Color("primaryColor"))
-            .foregroundColor(Color.white)
+            .foregroundColor(Color("secondaryColor"))
             .cornerRadius(25)
             
             Button(action: {
@@ -53,7 +53,7 @@ struct TypePickerButtonsView: View {
             })
             .padding()
             .frame(width: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width : UIScreen.main.bounds.width / 2, height: 60)
-            .background(Color.white)
+            .background(Color("secondaryColor"))
             .foregroundColor(Color("primaryColor"))
             .cornerRadius(25)
             

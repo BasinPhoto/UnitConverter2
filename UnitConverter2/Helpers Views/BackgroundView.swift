@@ -13,7 +13,7 @@ struct Background: View {
         VStack(spacing: 0){
             Color("primaryColor")
                 .ignoresSafeArea()
-            Color.white
+            Color("secondaryColor")
                 .ignoresSafeArea()
         }
     }

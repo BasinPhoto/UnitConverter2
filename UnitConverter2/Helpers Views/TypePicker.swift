@@ -55,7 +55,7 @@ struct TypePicker: View {
                                     .foregroundColor(backgroundColor)
                                     .clipShape(Capsule())
                                     .padding(.horizontal)
-                                    .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 3)
+                                    .shadow(color: Color("shadowColor").opacity(0.3), radius: 5, x: 0, y: 3)
                             } else {
                                 let disButton: Bool = keyNumber == unit.selectedFrom || keyNumber == unit.selectedTo
                                 Text(unit.keysArray[keyNumber])
@@ -102,6 +102,6 @@ struct TypePicker: View {
 
 struct TypePicker_Previews: PreviewProvider {
     static var previews: some View {
-        TypePicker(toVar: .constant(1), showPicker: .constant(true), unit: ConverterViewModel(), backgroundColor: Color("primaryColor"), accentColor: .white)
+        TypePicker(toVar: .constant(1), showPicker: .constant(true), unit: ConverterViewModel(), backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
     }
 }

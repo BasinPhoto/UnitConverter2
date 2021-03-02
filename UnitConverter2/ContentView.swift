@@ -33,10 +33,10 @@ struct ContentView: View {
                 // pickers
                 VStack {
                     
-                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: .white)
+                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
                         .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: -15)
                     
-                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroundColor: .white, accentColor: Color("primaryColor"))
+                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroundColor: Color("secondaryColor"), accentColor: Color("primaryColor"))
                         .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: 0)
                     
                 }
@@ -85,7 +85,7 @@ struct ContentView: View {
                 
                 // copy result to amount
                 if !showAllCategories {
-                    if value.translation.height < -200 && unit.result > 0 {
+                    if value.translation.height < -150 && unit.result > 0 {
                         if !showPicker {
                             unit.amountInString = unit.result.description
                             unit.selectedFrom = unit.selectedTo
@@ -95,7 +95,7 @@ struct ContentView: View {
                             generator.prepare()
                             generator.notificationOccurred(.success)
                         }
-                    } else if value.translation.height > 200 {
+                    } else if value.translation.height > 150 {
                         if !showPicker {
                             numberOfPicker = .both
                             showPicker = true
