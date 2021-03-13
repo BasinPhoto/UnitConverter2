@@ -40,6 +40,7 @@ struct DropDownMenu: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
                             .padding(.trailing, 30)
+                            .transition(.move(edge: .bottom))
                         }
                     }
                 } else {
@@ -55,6 +56,7 @@ struct DropDownMenu: View {
                                 }
                                 withAnimation {
                                     self.showAllCategories.toggle()
+                                    generator.impactOccurred()
                                 }
                             }, label: {
                                 Text(type.description)

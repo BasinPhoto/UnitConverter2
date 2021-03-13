@@ -10,7 +10,6 @@ import SwiftUI
 struct IOFieldsView: View {
     
     @Binding var showAllCategories: Bool
-    @Binding var inFocus: Bool
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
     
@@ -44,20 +43,16 @@ struct IOFieldsView: View {
                 } else {
                     TextField(unit.amountInString, text: $unit.amountInString)
                         .keyboardType(.decimalPad)
-                        .foregroundColor(inFocus ? Color("primaryColor") : Color("secondaryColor"))
-                        .accentColor(Color("primaryColor"))
-                        .background(inFocus ? Color("secondaryColor") : Color("primaryColor"))
+                        .accentColor(Color("secondaryColor"))
+                        .background(Color("primaryColor"))
+                        .foregroundColor(Color("secondaryColor"))
                         .cornerRadius(30)
-                        .shadow(color: Color("shadowColor").opacity(0.7), radius: inFocus ? 20 : 0, y: inFocus ? 10 : 0)
                         .disabled(showAllCategories)
                         .onTapGesture {
-                            if !inFocus {
-                                inFocus = true
-                                showAllCategories = false
-                                showPicker = false
-                                unit.temporaryValue = unit.amountInString
-                                unit.amountInString = ""
-                            }
+                            showAllCategories = false
+                            showPicker = false
+                            unit.temporaryValue = unit.amountInString
+                            unit.amountInString = ""
                         }
                         .onChange(of: unit.amountInString, perform: { _ in
                             unit.amountInString = unit.amountInString.replacingOccurrences(of: ",", with: ".")
@@ -105,6 +100,6 @@ struct IOFieldsView: View {
 
 struct IOFieldsView_Previews: PreviewProvider {
     static var previews: some View {
-        IOFieldsView(showAllCategories: .constant(false), inFocus: .constant(false), showPicker: .constant(false), numberOfPicker: .constant(.both), unit: ConverterViewModel())
+        IOFieldsView(showAllCategories: .constant(false), showPicker: .constant(false), numberOfPicker: .constant(.both), unit: ConverterViewModel())
     }
 }

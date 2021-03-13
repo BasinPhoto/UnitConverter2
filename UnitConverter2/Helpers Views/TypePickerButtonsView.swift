@@ -10,7 +10,6 @@ import SwiftUI
 struct TypePickerButtonsView: View {
     
     @Binding var showAllCategories: Bool
-    @Binding var inFocus: Bool
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
     
@@ -61,7 +60,7 @@ struct TypePickerButtonsView: View {
         .font(Font.custom("Exo 2", size: 24).bold())
         .lineLimit(1)
         .minimumScaleFactor(0.3)
-        .disabled(showAllCategories || inFocus)
+        .disabled(showAllCategories)
         .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width / 4 : 0)
         .offset(x: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width / -4 : 0)
     }
@@ -69,6 +68,6 @@ struct TypePickerButtonsView: View {
 
 struct TypePickerButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        TypePickerButtonsView(showAllCategories: .constant(true), inFocus: .constant(false), showPicker: .constant(true), numberOfPicker: .constant(.both), unit: ConverterViewModel())
+        TypePickerButtonsView(showAllCategories: .constant(true), showPicker: .constant(true), numberOfPicker: .constant(.both), unit: ConverterViewModel())
     }
 }

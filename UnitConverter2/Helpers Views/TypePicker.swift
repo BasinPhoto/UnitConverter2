@@ -15,6 +15,8 @@ struct TypePicker: View {
     var backgroundColor: Color
     var accentColor: Color
     
+    let generator = UIImpactFeedbackGenerator(style: .light)
+    
     let columns = [
         GridItem(.fixed(UIScreen.main.bounds.width / 2)),
         GridItem(.fixed(UIScreen.main.bounds.width / 2))
@@ -39,6 +41,7 @@ struct TypePicker: View {
                                 if unit.isBothValuesSelected {
                                     if unit.selectedFrom != unit.selectedTo {
                                         showPicker.toggle()
+                                        generator.impactOccurred()
                                     }
                                 }
                             }

@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     
     @State var showAllCategories: Bool = false
-    @State var inFocus: Bool = false
     @State var showPicker = false
     @State var numberOfPicker: PickerSide = .left
     
@@ -28,7 +27,7 @@ struct ContentView: View {
                 Background()
                 
                 //input and output value fields
-                IOFieldsView(showAllCategories: $showAllCategories, inFocus: $inFocus, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
+                IOFieldsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
                 
                 // pickers
                 VStack {
@@ -42,7 +41,7 @@ struct ContentView: View {
                 }
                 
                 //type picker buttons
-                TypePickerButtonsView(showAllCategories: $showAllCategories, inFocus: $inFocus, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
+                TypePickerButtonsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
                 
             }
             .blur(radius: showAllCategories ? 4 : 0)
@@ -63,7 +62,6 @@ struct ContentView: View {
             if unit.amountInString == "" {
                 unit.amountInString = unit.temporaryValue
             }
-            inFocus = false
             showAllCategories = false
             if unit.isBothValuesSelected {
                 showPicker = false
@@ -77,7 +75,6 @@ struct ContentView: View {
                 // hide and show dropdown menu by swipe
                 if value.translation.width < -100 && showAllCategories == false {
                     showPicker = false
-                    inFocus = false
                     showAllCategories = true
                 } else if value.translation.width > 100 && showAllCategories == true {
                     showAllCategories = false

@@ -22,6 +22,7 @@
 		C228C73525ED19640052BB12 /* TypePickerButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C73425ED19640052BB12 /* TypePickerButtonsView.swift */; };
 		C251278E25D29D4400F0B32B /* Exo2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C251278D25D29D4400F0B32B /* Exo2.ttf */; };
 		C253775525E151E900B7C806 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253775425E151E900B7C806 /* NetworkManager.swift */; };
+		C2E8A2FB25FD332F008C43D6 /* OnBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E8A2FA25FD332F008C43D6 /* OnBoardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		C228C73425ED19640052BB12 /* TypePickerButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePickerButtonsView.swift; sourceTree = "<group>"; };
 		C251278D25D29D4400F0B32B /* Exo2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Exo2.ttf; sourceTree = "<group>"; };
 		C253775425E151E900B7C806 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		C2E8A2FA25FD332F008C43D6 /* OnBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				B9F77A3E2583883000859245 /* TypePicker.swift */,
+				C2E8A2FA25FD332F008C43D6 /* OnBoardView.swift */,
 				B93064A5257FA5490011228A /* DropDownMenu.swift */,
 				C228C72A25ED166E0052BB12 /* BackgroundView.swift */,
 				C228C72F25ED176A0052BB12 /* IOFieldsView.swift */,
@@ -316,6 +319,7 @@
 				B9F77A3F2583883000859245 /* TypePicker.swift in Sources */,
 				C228C72B25ED166E0052BB12 /* BackgroundView.swift in Sources */,
 				B9E627AA25757B4B000419A7 /* ConverterModel.swift in Sources */,
+				C2E8A2FB25FD332F008C43D6 /* OnBoardView.swift in Sources */,
 				C228C73025ED176A0052BB12 /* IOFieldsView.swift in Sources */,
 				C253775525E151E900B7C806 /* NetworkManager.swift in Sources */,
 				B93064A6257FA5490011228A /* DropDownMenu.swift in Sources */,
