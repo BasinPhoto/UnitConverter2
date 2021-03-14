@@ -8,58 +8,42 @@
 import SwiftUI
 
 struct OnBoardView: View {
+    @Environment(\.presentationMode) var presentationMode
     
-    let images: [String] = ["onb1", "onb2", "onb2"]
+    let images: [String] = ["onb1", "onb2", "onb3", "onb4", "onb5"]
     let description: [String] = [
         "Свайп влево для выбора категории",
-        "Свайп снизу вверх переносит результат в поле ввода",
+        "Нажмите для ввода значения",
+        "Свайп снизу вверх переносит результат в поле ввода значения",
+        "Двойной тап по полю округляет значение до целого числа",
         "Двойной тап по результату копирует его в буфер обмена"
     ]
     
     @State private var offset: CGFloat = 0
+    @State private var selectedIndex = 0
     
     var body: some View {
         
         ScrollView(.init()) {
-            TabView {
+            TabView(selection: $selectedIndex) {
                 ForEach(images.indices, id: \.self) { index in
                     VStack{
-                        if index == 0 {
-                            Image(images[index])
-                                .overlay(
-                                    GeometryReader { proxy -> Color in
-                                        let midX = proxy.frame(in: .global).midX
-                                        DispatchQueue.main.async {
-                                            withAnimation(.default) {
-                                                self.offset = -midX + (getWidth()/2)
-                                            }
-                                        }
-                                        return Color.clear
-                                    }
-                                    .frame(width: 0, height: 0)
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 25))
-                                .scaleEffect(0.7)
-                                .shadow(color: Color.black.opacity(0.2), radius: 20, y: 20)
-                                .offset(y: -20)
-                        } else {
-                            Image(images[index])
-                                .clipShape(RoundedRectangle(cornerRadius: 25))
-                                .scaleEffect(0.7)
-                                .shadow(color: Color.black.opacity(0.2), radius: 20, y: 20)
-                                .offset(y: -20)
-                        }
+                        Image(images[index])
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                            .padding(40)
+                            .shadow(color: Color.black.opacity(0.2), radius: 20, y: 20)
                         
                         Text(description[index])
                             .foregroundColor(Color("primaryColor"))
-                            .font(Font.custom("Exo 2", size: 24))
+                            .font(Font.custom("Exo 2", size: 20))
                             .fontWeight(.bold)
                             .frame(height: 100)
-                            .offset(y: -150)
+                            .offset(y: -60)
                             .multilineTextAlignment(.leading)
                             .padding()
                     }
-                    .frame(width: .infinity, height: UIScreen.main.bounds.height)
                 }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -70,14 +54,15 @@ struct OnBoardView: View {
                     ForEach(images.indices, id: \.self) {index in
                         Capsule()
                             .fill(Color("primaryColor"))
-                            .frame(width: getIndex() == index ? 20 : 7, height: 7)
+                            .frame(width: selectedIndex == index ? 20 : 7, height: 7)
                     }
                 }
                 .overlay(
                     Capsule()
                         .fill(Color("primaryColor"))
                         .frame(width: 20, height: 7)
-                        .offset(x: getOffset())
+                        .offset(x: 22 * CGFloat(selectedIndex))
+                        .animation(.default)
                     , alignment: .leading
                 )
                 .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
@@ -86,17 +71,11 @@ struct OnBoardView: View {
                 , alignment: .bottom
             )
         }
+        .onTapGesture {
+            UserDefaults.standard.setValue(false, forKey: "onboard")
+            presentationMode.wrappedValue.dismiss()
+        }
         .ignoresSafeArea()
-    }
-    
-    func getIndex() -> Int {
-        let index = Int(round(Double(offset / getWidth())))
-        return index
-    }
-    
-    func getOffset() -> CGFloat {
-        let progress = offset / getWidth()
-        return progress * 22
     }
 }
 

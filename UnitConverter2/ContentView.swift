@@ -17,6 +17,9 @@ struct ContentView: View {
     
     let clipboard = UIPasteboard.general
     let generator = UINotificationFeedbackGenerator()
+    
+    @State private var isPresented = false
+    @AppStorage("onboard") var onboard = true
 
     var body: some View {
         
@@ -43,6 +46,31 @@ struct ContentView: View {
                 //type picker buttons
                 TypePickerButtonsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
                 
+                if !showAllCategories, !showPicker {
+                    VStack {
+                        Spacer()
+                        
+                        HStack {
+                            Button(action: {
+                                isPresented.toggle()
+                            }, label: {
+                                Text("?")
+                                    .font(Font.custom("Exo 2", size: 46, relativeTo: .largeTitle))
+                                    .frame(width: 45, height: 45)
+                                    .padding(10)
+                                    .foregroundColor(Color("secondaryColor"))
+                                    .background(Color("primaryColor"))
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
+                                    .padding(.leading, 30)
+                                    .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
+                            })
+                            .offset(y: -45)
+                            Spacer()
+                        }
+                        
+                    }
+                }
             }
             .blur(radius: showAllCategories ? 4 : 0)
             .scaleEffect(showAllCategories ? 1.2 : 1)
@@ -113,7 +141,12 @@ struct ContentView: View {
             
             numberOfPicker = .both
             showAllCategories = true
+            
+            isPresented = onboard
         })
+        .fullScreenCover(isPresented: $isPresented) {
+            OnBoardView()
+        }
     }
 }
 
