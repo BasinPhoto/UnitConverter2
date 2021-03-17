@@ -72,17 +72,22 @@ struct IOFieldsView: View {
                             .lineLimit(2)
                     }
                 } else {
-                    Text("\(unit.result, specifier: "%g")")
-                        .padding(.horizontal)
-                        .onTapGesture(count: 2) {
-                            if unit.result != 0 {
-                                clipboard.string = String(unit.result)
-                                generator.prepare()
-                                generator.notificationOccurred(.success)
-                            } else {
-                                generator.notificationOccurred(.error)
+                    if let result = unit.result, result > 0 {
+                        Text("\(result, specifier: "%g")")
+                            .padding(.horizontal)
+                            .onTapGesture(count: 2) {
+                                if unit.result != 0 {
+                                    clipboard.string = String(result)
+                                    generator.prepare()
+                                    generator.notificationOccurred(.success)
+                                } else {
+                                    generator.notificationOccurred(.error)
+                                }
                             }
-                        }
+                    } else {
+                        Text("?")
+                            .padding(.horizontal)
+                    }
                 }
             }
             .foregroundColor(Color("primaryColor"))

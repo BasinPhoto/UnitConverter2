@@ -39,10 +39,10 @@ class ConverterViewModel: ObservableObject {
         valuesDictionary.keys.sorted()
     }
     
-    var result: Double {
+    var result: Double? {
         
-        guard let selectedFrom = selectedFrom else { return 0 }
-        guard let selectedTo = selectedTo else { return 0 }
+        guard let selectedFrom = selectedFrom else { return nil }
+        guard let selectedTo = selectedTo else { return nil }
         
         let selectedFromKey = keysArray[selectedFrom]
         let selectedToKey = keysArray[selectedTo]
@@ -51,14 +51,14 @@ class ConverterViewModel: ObservableObject {
         
         var tmpResult : Double = 0
         
-        guard valueTo != 0 else { return 0 }
+        guard valueTo != 0 else { return nil }
         
         guard let amount = Double(amountInString) else {
             if let tmpValue = Double(temporaryValue) {
                 if type != .money { return roundTo(tmpValue * valueFrom / valueTo, toDecimalPlaces: 4) }
                 else { return roundTo(tmpValue * valueTo / valueFrom, toDecimalPlaces: 4) }
             }
-            else { return 0 }
+            else { return nil }
         }
 
         switch type {

@@ -40,8 +40,8 @@ struct DropDownMenu: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
                             .padding(.trailing, 30)
-                            .transition(.move(edge: .bottom))
                         }
+                        .transition(.scale)
                     }
                 } else {
                     ForEach(UnitType.allCases) { type in

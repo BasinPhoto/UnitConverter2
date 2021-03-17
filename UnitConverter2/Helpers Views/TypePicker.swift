@@ -35,7 +35,7 @@ struct TypePicker: View {
             ScrollView(.vertical, showsIndicators: false){
                 LazyVGrid(columns: unit.type == .money ? columnsForCurrencys : columns, spacing: 16) {
                     ForEach(0..<unit.keysArray.count, id: \.self) { keyNumber in
-                        Button {
+                        Button (action: {
                             if !(keyNumber == unit.selectedFrom || keyNumber == unit.selectedTo) {
                                 toVar = keyNumber
                                 if unit.isBothValuesSelected {
@@ -45,7 +45,7 @@ struct TypePicker: View {
                                     }
                                 }
                             }
-                        } label: {
+                        }, label: {
                             if toVar == keyNumber {
                                 Text(unit.keysArray[keyNumber])
                                     .font(Font.custom("Exo 2", size: 22).bold())
@@ -74,7 +74,7 @@ struct TypePicker: View {
                                     )
                                     .padding(.horizontal)
                             }
-                        }
+                        })
                     }
                 }
                 .padding(.vertical, 60)
@@ -89,7 +89,7 @@ struct TypePicker: View {
                     .disabled(true)
                 Spacer()
                 LinearGradient(gradient: Gradient(colors: [backgroundColor, backgroundColor, backgroundColor.opacity(0)]), startPoint: .bottom, endPoint: .top)
-                    .frame(height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .frame(height: 60)
                     .ignoresSafeArea()
                     .disabled(true)
             }

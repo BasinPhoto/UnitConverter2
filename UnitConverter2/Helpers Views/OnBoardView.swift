@@ -54,15 +54,15 @@ struct OnBoardView: View {
                     ForEach(images.indices, id: \.self) {index in
                         Capsule()
                             .fill(Color("primaryColor"))
-                            .frame(width: selectedIndex == index ? 20 : 7, height: 7)
+                            .frame(width: 7, height: 7)
                     }
                 }
                 .overlay(
                     Capsule()
                         .fill(Color("primaryColor"))
                         .frame(width: 20, height: 7)
-                        .offset(x: 22 * CGFloat(selectedIndex))
-                        .animation(.default)
+                        .offset(x: (22 * CGFloat(selectedIndex)) - 7)
+                        .animation(.linear)
                     , alignment: .leading
                 )
                 .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var showAllCategories: Bool = false
-    @State var showPicker = false
-    @State var numberOfPicker: PickerSide = .left
+    @State private var showAllCategories: Bool = false
+    @State private var showPicker = false
+    @State private var numberOfPicker: PickerSide = .left
     
     @StateObject var unit: ConverterViewModel
     
@@ -54,8 +54,8 @@ struct ContentView: View {
                             Button(action: {
                                 isPresented.toggle()
                             }, label: {
-                                Text("?")
-                                    .font(Font.custom("Exo 2", size: 46, relativeTo: .largeTitle))
+                                Image(systemName: "info")
+                                    .font(.system(size: 46))
                                     .frame(width: 45, height: 45)
                                     .padding(10)
                                     .foregroundColor(Color("secondaryColor"))
@@ -64,11 +64,11 @@ struct ContentView: View {
                                     .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
                                     .padding(.leading, 30)
                                     .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
+                                    .transition(.scale)
                             })
                             .offset(y: -45)
                             Spacer()
                         }
-                        
                     }
                 }
             }
@@ -110,9 +110,9 @@ struct ContentView: View {
                 
                 // copy result to amount
                 if !showAllCategories {
-                    if value.translation.height < -150 && unit.result > 0 {
+                    if let result = unit.result, value.translation.height < -150 && result > 0 {
                         if !showPicker {
-                            unit.amountInString = unit.result.description
+                            unit.amountInString = result.description
                             unit.selectedFrom = unit.selectedTo
                             unit.selectedTo = nil
                             numberOfPicker = .right
@@ -131,9 +131,9 @@ struct ContentView: View {
         )
         .onAppear(perform: {
             
-            NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (result) in
+            NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (requestResult) in
                 DispatchQueue.main.async {
-                    if let fetchingResult = result {
+                    if let fetchingResult = requestResult {
                         UnitType.allValues.append(fetchingResult.conversionRates)
                     }
                 }
