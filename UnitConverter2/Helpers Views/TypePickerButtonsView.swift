@@ -26,9 +26,9 @@ struct TypePickerButtonsView: View {
                 }
             }, label: {
                 if let selectedFrom = unit.selectedFrom {
-                    Text(unit.keysArray[selectedFrom])
+                    Text(unit.keysArray[selectedFrom]).transition(.identity)
                 } else {
-                    Text("(Из...)")
+                    Text("(Из...)").transition(.identity)
                 }
             })
             .padding()
@@ -45,9 +45,9 @@ struct TypePickerButtonsView: View {
                 }
             }, label: {
                 if let selectedTo = unit.selectedTo {
-                    Text(unit.keysArray[selectedTo])
+                    Text(unit.keysArray[selectedTo]).transition(.identity)
                 } else {
-                    Text("(В...)")
+                    Text("(В...)").transition(.identity)
                 }
             })
             .padding()

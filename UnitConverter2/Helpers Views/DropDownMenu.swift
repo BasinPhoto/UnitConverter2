@@ -40,6 +40,7 @@ struct DropDownMenu: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
                             .padding(.trailing, 30)
+                            .zIndex(1)
                         }
                         .transition(.move(edge: .bottom))
                     }
@@ -54,10 +55,8 @@ struct DropDownMenu: View {
                                     numberOfPicker = .both
                                     showPicker = true
                                 }
-                                withAnimation {
-                                    self.showAllCategories.toggle()
-                                    generator.impactOccurred()
-                                }
+                                self.showAllCategories.toggle()
+                                generator.impactOccurred()
                             }, label: {
                                 Text(type.description)
                                     .font(Font.custom("Exo 2", size: 18))
@@ -75,6 +74,7 @@ struct DropDownMenu: View {
                             .clipShape(Capsule())
                             .overlay(Capsule().stroke(Color("secondaryColor"), lineWidth: 2))
                             .transition(.move(edge: .trailing))
+                            .zIndex(2)
                         }
                     }
                     .padding(.vertical, 3)

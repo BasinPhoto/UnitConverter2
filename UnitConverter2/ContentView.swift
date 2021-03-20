@@ -147,7 +147,7 @@ struct ContentView: View {
             
             isPresented = onboard
         })
-        .fullScreenCover(isPresented: $isPresented) {
+        .sheet(isPresented: $isPresented) {
             OnBoardView()
         }
     }

@@ -71,9 +71,8 @@ struct OnBoardView: View {
                 , alignment: .bottom
             )
         }
-        .onTapGesture {
+        .onDisappear {
             UserDefaults.standard.setValue(false, forKey: "onboard")
-            presentationMode.wrappedValue.dismiss()
         }
         .ignoresSafeArea()
     }
