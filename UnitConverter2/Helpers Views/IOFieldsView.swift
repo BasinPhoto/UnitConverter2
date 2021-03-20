@@ -85,7 +85,7 @@ struct IOFieldsView: View {
                                 }
                             }
                     } else {
-                        Text("?")
+                        Text("...")
                             .padding(.horizontal)
                     }
                 }
