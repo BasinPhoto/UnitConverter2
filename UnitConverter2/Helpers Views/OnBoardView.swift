@@ -53,23 +53,14 @@ struct OnBoardView: View {
                     
                     ForEach(images.indices, id: \.self) {index in
                         Capsule()
-                            .fill(Color("primaryColor"))
+                            .fill(index == selectedIndex ? Color("primaryColor") : Color("primaryColor").opacity(0.5))
                             .frame(width: 7, height: 7)
                     }
                 }
-                .overlay(
-                    Capsule()
-                        .fill(Color("primaryColor"))
-                        .frame(width: 20, height: 7)
-                        .offset(x: (22 * CGFloat(selectedIndex)) - 7)
-                        .animation(.linear)
-                    , alignment: .leading
-                )
-                .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
-                .padding(.bottom, 10)
-                
                 , alignment: .bottom
             )
+            .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
+            .padding(.bottom, 10)
         }
         .onDisappear {
             UserDefaults.standard.setValue(false, forKey: "onboard")

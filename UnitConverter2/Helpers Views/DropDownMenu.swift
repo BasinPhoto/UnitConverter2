@@ -75,6 +75,7 @@ struct DropDownMenu: View {
                             .overlay(Capsule().stroke(Color("secondaryColor"), lineWidth: 2))
                             .transition(.move(edge: .trailing))
                             .zIndex(2)
+                            .animation(Animation.easeOut(duration: 0.1).delay(Double(type.rawValue) * 0.02))
                         }
                     }
                     .padding(.vertical, 3)

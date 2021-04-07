@@ -117,8 +117,8 @@
 			children = (
 				B9E6277B25757AD9000419A7 /* UnitConverter2App.swift */,
 				B9E6277D25757AD9000419A7 /* ContentView.swift */,
-				C2B2BC3925BCAEC300AE48E1 /* Helpers Views */,
 				C2B2BC3D25BCAEE400AE48E1 /* Model */,
+				C2B2BC3925BCAEC300AE48E1 /* Helpers Views */,
 				C2B2BC4125BCAEEE00AE48E1 /* ViewModel */,
 				B9E6277F25757ADC000419A7 /* Assets.xcassets */,
 				C251278D25D29D4400F0B32B /* Exo2.ttf */,
