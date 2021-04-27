@@ -24,44 +24,42 @@ struct OnBoardView: View {
     
     var body: some View {
         
-        ScrollView(.init()) {
-            TabView(selection: $selectedIndex) {
-                ForEach(images.indices, id: \.self) { index in
-                    VStack{
-                        Image(images[index])
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: 25))
-                            .padding(40)
-                            .shadow(color: Color.black.opacity(0.2), radius: 20, y: 20)
-                        
-                        Text(description[index])
-                            .foregroundColor(Color("primaryColor"))
-                            .font(Font.custom("Exo 2", size: 20))
-                            .fontWeight(.bold)
-                            .frame(height: 100)
-                            .offset(y: -60)
-                            .multilineTextAlignment(.leading)
-                            .padding()
-                    }
+        TabView(selection: $selectedIndex) {
+            ForEach(images.indices, id: \.self) { index in
+                VStack{
+                    Image(images[index])
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                        .padding(40)
+                        .shadow(color: Color.black.opacity(0.2), radius: 20, y: 20)
+                    
+                    Text(description[index])
+                        .foregroundColor(Color("primaryColor"))
+                        .font(Font.custom("Exo 2", size: 20))
+                        .fontWeight(.bold)
+                        .frame(height: 100)
+                        .offset(y: -60)
+                        .multilineTextAlignment(.leading)
+                        .padding()
                 }
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .overlay(
-                
-                HStack(spacing: 15) {
-                    
-                    ForEach(images.indices, id: \.self) {index in
-                        Capsule()
-                            .fill(index == selectedIndex ? Color("primaryColor") : Color("primaryColor").opacity(0.5))
-                            .frame(width: 7, height: 7)
-                    }
-                }
-                , alignment: .bottom
-            )
-            .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
-            .padding(.bottom, 10)
         }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+        .overlay(
+
+            HStack(spacing: 15) {
+
+                ForEach(images.indices, id: \.self) {index in
+                    Capsule()
+                        .fill(index == selectedIndex ? Color("primaryColor") : Color("primaryColor").opacity(0.5))
+                        .frame(width: 7, height: 7)
+                }
+            }
+            , alignment: .bottom
+        )
+        .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
+        .padding(.bottom, 10)
         .onDisappear {
             UserDefaults.standard.setValue(false, forKey: "onboard")
         }
