@@ -10,6 +10,7 @@ import SwiftUI
 struct TypePicker: View {
     @Binding var toVar: Int?
     @Binding var showPicker: Bool
+    @Binding var numberOfPicker: PickerSide
     @StateObject var unit: ConverterViewModel
     
     var backgroundColor: Color
@@ -38,6 +39,7 @@ struct TypePicker: View {
                         Button (action: {
                             if !(keyNumber == unit.selectedFrom || keyNumber == unit.selectedTo) {
                                 toVar = keyNumber
+                                numberOfPicker = .both
                                 if unit.isBothValuesSelected {
                                     if unit.selectedFrom != unit.selectedTo {
                                         showPicker.toggle()
@@ -105,6 +107,6 @@ struct TypePicker: View {
 
 struct TypePicker_Previews: PreviewProvider {
     static var previews: some View {
-        TypePicker(toVar: .constant(1), showPicker: .constant(true), unit: ConverterViewModel(), backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
+        TypePicker(toVar: .constant(1), showPicker: .constant(true), numberOfPicker: .constant(.both), unit: ConverterViewModel(), backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
     }
 }

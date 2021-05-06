@@ -35,10 +35,10 @@ struct ContentView: View {
                 // pickers
                 VStack {
                     
-                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
+                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
                         .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: -15)
                     
-                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, unit: unit, backgroundColor: Color("secondaryColor"), accentColor: Color("primaryColor"))
+                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit, backgroundColor: Color("secondaryColor"), accentColor: Color("primaryColor"))
                         .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: 0)
                     
                 }
@@ -70,7 +70,7 @@ struct ContentView: View {
                                 .padding(.leading, 30)
                                 .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
                         })
-                        .offset(y: -45)
+                        .padding(.bottom, 45)
                         .transition(.move(edge: .bottom))
                         
                         Spacer()
@@ -78,13 +78,13 @@ struct ContentView: View {
                 }
             }
             
-            //dropdown menu
+            //dropdown menu button
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
                     DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
-                        .offset(y: -45)
+                        .padding(.bottom, 45)
                 }
             }
         }

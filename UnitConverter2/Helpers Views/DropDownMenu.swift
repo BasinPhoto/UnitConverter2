@@ -16,33 +16,29 @@ struct DropDownMenu: View {
     let generator = UIImpactFeedbackGenerator(style: .light)
     
     var body: some View {
-        
-        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
 
             VStack(alignment: .trailing) {
                 if !showAllCategories {
                     if !showPicker {
-                        HStack {
-                            Button(action: {
-                                withAnimation{
-                                    showAllCategories.toggle()
-                                }
-                                generator.impactOccurred()
-                            }, label: {
-                                Image(unit.type.imageName)
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 45, height: 45)
-                                    .padding(10)
-                            })
-                            .background(Color("primaryColor"))
-                            .foregroundColor(Color("secondaryColor"))
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
-                            .padding(.trailing, 30)
-                            .zIndex(1)
-                        }
+                        Button(action: {
+                            withAnimation{
+                                showAllCategories.toggle()
+                            }
+                            generator.impactOccurred()
+                        }, label: {
+                            Image(unit.type.imageName)
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 45, height: 45)
+                                .padding(10)
+                        })
+                        .background(Color("primaryColor"))
+                        .foregroundColor(Color("secondaryColor"))
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
+                        .padding(.trailing, 30)
+                        .zIndex(1)
                         .transition(.move(edge: .bottom))
                     }
                 } else {
@@ -84,7 +80,6 @@ struct DropDownMenu: View {
                 }
             }
             .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
-        }
     }
 }
 
