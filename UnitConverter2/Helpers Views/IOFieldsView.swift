@@ -17,90 +17,92 @@ struct IOFieldsView: View {
     
     let clipboard = UIPasteboard.general
     let generator = UINotificationFeedbackGenerator()
-
+    
     var body: some View {
-        VStack {
-            
-            Group {
-                if showPicker && numberOfPicker == .right {
-                    if let selectedFrom = unit.selectedFrom {
-                        if let amount = Double(unit.amountInString), amount != 0 {
-                            Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
-                                .foregroundColor(Color("secondaryColor"))
-                                .lineLimit(3)
-                                .onTapGesture(count: 2) {
-                                    guard let tmpValue = Double(unit.amountInString), tmpValue > 1 else { return }
-                                    unit.amountInString = String(Int(tmpValue))
-                                    generator.prepare()
-                                    generator.notificationOccurred(.success)
-                                }
-                        } else {
-                            Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в")
-                                .foregroundColor(Color("secondaryColor"))
+        GeometryReader { geoProxy in
+            VStack {
+                
+                Group {
+                    if showPicker && numberOfPicker == .right {
+                        if let selectedFrom = unit.selectedFrom {
+                            if let amount = Double(unit.amountInString), amount != 0 {
+                                Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
+                                    .foregroundColor(Color("secondaryColor"))
+                                    .lineLimit(3)
+                                    .onTapGesture(count: 2) {
+                                        guard let tmpValue = Double(unit.amountInString), tmpValue > 1 else { return }
+                                        unit.amountInString = String(Int(tmpValue))
+                                        generator.prepare()
+                                        generator.notificationOccurred(.success)
+                                    }
+                            } else {
+                                Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в")
+                                    .foregroundColor(Color("secondaryColor"))
+                                    .lineLimit(2)
+                            }
+                        }
+                    } else {
+                        TextField(unit.amountInString, text: $unit.amountInString)
+                            .keyboardType(.decimalPad)
+                            .accentColor(Color("secondaryColor"))
+                            .background(Color("primaryColor"))
+                            .foregroundColor(Color("secondaryColor"))
+                            .cornerRadius(30)
+                            .disabled(showAllCategories)
+                            .onTapGesture {
+                                showAllCategories = false
+                                showPicker = false
+                                unit.temporaryValue = unit.amountInString
+                                unit.amountInString = ""
+                            }
+                            .onChange(of: unit.amountInString, perform: { _ in
+                                unit.amountInString = unit.amountInString.replacingOccurrences(of: ",", with: ".")
+                            })
+                        
+                    }
+                }
+                .disabled(showAllCategories)
+                .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
+                .padding(16)
+                .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0)
+                .transition(.identity)
+                
+                Group {
+                    if showPicker && numberOfPicker == .left {
+                        if let selectedTo = unit.selectedTo {
+                            Text("конвертируем в \n \"\(unit.keysArray[selectedTo])\"")
                                 .lineLimit(2)
                         }
-                    }
-                } else {
-                    TextField(unit.amountInString, text: $unit.amountInString)
-                        .keyboardType(.decimalPad)
-                        .accentColor(Color("secondaryColor"))
-                        .background(Color("primaryColor"))
-                        .foregroundColor(Color("secondaryColor"))
-                        .cornerRadius(30)
-                        .disabled(showAllCategories)
-                        .onTapGesture {
-                            showAllCategories = false
-                            showPicker = false
-                            unit.temporaryValue = unit.amountInString
-                            unit.amountInString = ""
-                        }
-                        .onChange(of: unit.amountInString, perform: { _ in
-                            unit.amountInString = unit.amountInString.replacingOccurrences(of: ",", with: ".")
-                        })
-                    
-                }
-            }
-            .disabled(showAllCategories)
-            .frame(width: UIScreen.main.bounds.width - 32)
-            .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0,
-                    y: UIScreen.main.bounds.height / -6)
-            .transition(.identity)
-            
-            Group {
-                if showPicker && numberOfPicker == .left {
-                    if let selectedTo = unit.selectedTo {
-                        Text("конвертируем в \n \"\(unit.keysArray[selectedTo])\"")
-                            .lineLimit(2)
-                    }
-                } else {
-                    if let result = unit.result, result > 0 {
-                        Text("\(result, specifier: "%g")")
-                            .padding(.horizontal)
-                            .onTapGesture(count: 2) {
-                                if unit.result != 0 {
-                                    clipboard.string = String(result)
-                                    generator.prepare()
-                                    generator.notificationOccurred(.success)
-                                } else {
-                                    generator.notificationOccurred(.error)
-                                }
-                            }
                     } else {
-                        Text("...")
-                            .padding(.horizontal)
+                        if let result = unit.result, result > 0 {
+                            Text("\(result, specifier: "%g")")
+                                .padding(.horizontal)
+                                .onTapGesture(count: 2) {
+                                    if unit.result != 0 {
+                                        clipboard.string = String(result)
+                                        generator.prepare()
+                                        generator.notificationOccurred(.success)
+                                    } else {
+                                        generator.notificationOccurred(.error)
+                                    }
+                                }
+                        } else {
+                            Text("...")
+                                .padding(.horizontal)
+                        }
                     }
                 }
+                .foregroundColor(Color("primaryColor"))
+                .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
+                .padding(16)
+                .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0)
+                .transition(.identity)
+                
             }
-            .foregroundColor(Color("primaryColor"))
-            .frame(width: UIScreen.main.bounds.width - 32)
-            .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0 , y: UIScreen.main.bounds.height / 6)
-            .transition(.identity)
-            
+            .font(Font.custom("Exo 2", size: 60))
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.3)
         }
-        .font(Font.custom("Exo 2", size: 60))
-        .multilineTextAlignment(.center)
-        .lineLimit(1)
-        .minimumScaleFactor(0.3)
     }
 }
 
