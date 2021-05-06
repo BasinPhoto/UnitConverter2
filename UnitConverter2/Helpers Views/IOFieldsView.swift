@@ -64,7 +64,7 @@ struct IOFieldsView: View {
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
                 .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0)
-//                .transition(.identity)
+                .transition(.identity)
                 
                 Group {
                     if showPicker && numberOfPicker == .left {
@@ -96,7 +96,7 @@ struct IOFieldsView: View {
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
                 .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0)
-//                .transition(.identity)
+                .transition(.identity)
                 
             }
             .font(Font.custom("Exo 2", size: 60))
