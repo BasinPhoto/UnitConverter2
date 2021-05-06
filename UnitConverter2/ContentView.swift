@@ -45,7 +45,7 @@ struct ContentView: View {
                 
                 //type picker buttons
                 TypePickerButtonsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
-        
+                
             }
             .blur(radius: showAllCategories ? 4 : 0)
             .scaleEffect(showAllCategories ? 1.2 : 1)
@@ -71,7 +71,7 @@ struct ContentView: View {
                                 .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
                         })
                         .padding(.bottom, 45)
-                        .transition(.scale)
+                        .transition(.move(edge: .leading))
                         
                         Spacer()
                     }
@@ -79,8 +79,11 @@ struct ContentView: View {
             }
             
             //dropdown menu button
-                    DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
-                        .padding(.bottom, 45)
+            HStack {
+                Spacer()
+                DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
+                    .padding(.bottom, 45)
+            }
         }
         .animation(.default)
         .onTapGesture {

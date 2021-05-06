@@ -17,8 +17,6 @@ struct DropDownMenu: View {
     
     var body: some View {
 
-        HStack {
-            Spacer()
             VStack(alignment: .trailing) {
                     Spacer()
                     if !showAllCategories {
@@ -42,7 +40,7 @@ struct DropDownMenu: View {
                             .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
                             .padding(.trailing, 30)
                             .zIndex(1)
-                            .transition(.scale)
+                            .transition(.move(edge: .trailing))
                         }
                     } else {
                         ForEach(UnitType.allCases) { type in
@@ -83,8 +81,7 @@ struct DropDownMenu: View {
                     }
             }
             .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
-        }
-        .ignoresSafeArea()
+            .ignoresSafeArea()
     }
 }
 

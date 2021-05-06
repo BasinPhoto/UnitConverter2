@@ -41,30 +41,31 @@ struct IOFieldsView: View {
                             }
                         }
                     } else {
-                        TextField(unit.amountInString, text: $unit.amountInString)
-                            .keyboardType(.decimalPad)
-                            .accentColor(Color("primaryColor"))
-                            .background(Color("secondaryColor"))
-                            .foregroundColor(Color("primaryColor"))
-                            .cornerRadius(15)
-                            .disabled(showAllCategories)
-                            .onTapGesture {
-                                showAllCategories = false
-                                showPicker = false
-                                unit.temporaryValue = unit.amountInString
-                                unit.amountInString = ""
-                            }
-                            .onChange(of: unit.amountInString, perform: { _ in
-                                unit.amountInString = unit.amountInString.replacingOccurrences(of: ",", with: ".")
-                            })
-                        
+                        if !showPicker {
+                            TextField(unit.amountInString, text: $unit.amountInString)
+                                .keyboardType(.decimalPad)
+                                .accentColor(Color("primaryColor"))
+                                .background(Color("secondaryColor"))
+                                .foregroundColor(Color("primaryColor"))
+                                .cornerRadius(15)
+                                .disabled(showAllCategories)
+                                .onTapGesture {
+                                    showAllCategories = false
+                                    showPicker = false
+                                    unit.temporaryValue = unit.amountInString
+                                    unit.amountInString = ""
+                                }
+                                .onChange(of: unit.amountInString, perform: { _ in
+                                    unit.amountInString = unit.amountInString.replacingOccurrences(of: ",", with: ".")
+                                })
+                            
+                        } else { Spacer() }
                     }
                 }
                 .disabled(showAllCategories)
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
-                .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0)
-                .transition(.identity)
+                .transition(.move(edge: numberOfPicker == .left ? .trailing : .top))
                 
                 Group {
                     if showPicker && numberOfPicker == .left {
@@ -73,30 +74,32 @@ struct IOFieldsView: View {
                                 .lineLimit(2)
                         }
                     } else {
-                        if let result = unit.result, result > 0 {
-                            Text("\(result, specifier: "%g")")
-                                .padding(.horizontal)
-                                .lineLimit(1)
-                                .onTapGesture(count: 2) {
-                                    if unit.result != 0 {
-                                        clipboard.string = String(result)
-                                        generator.prepare()
-                                        generator.notificationOccurred(.success)
-                                    } else {
-                                        generator.notificationOccurred(.error)
+                        if !showPicker {
+                            if let result = unit.result, result > 0 {
+                                Text("\(result, specifier: "%g")")
+                                    .padding(.horizontal)
+                                    .lineLimit(1)
+                                    .onTapGesture(count: 2) {
+                                        if unit.result != 0 {
+                                            clipboard.string = String(result)
+                                            generator.prepare()
+                                            generator.notificationOccurred(.success)
+                                        } else {
+                                            generator.notificationOccurred(.error)
+                                        }
                                     }
-                                }
-                        } else {
-                            Text("...")
-                                .padding(.horizontal)
-                        }
+                            } else {
+                                Text("...")
+                                    .padding(.horizontal)
+                                    .frame(maxWidth: .infinity)
+                            }
+                        } else { Spacer() }
                     }
                 }
                 .foregroundColor(Color("primaryColor"))
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
-                .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0)
-                .transition(.identity)
+                .transition(.move(edge: numberOfPicker == .right ? .leading : .bottom))
                 
             }
             .font(Font.custom("Exo 2", size: 60))

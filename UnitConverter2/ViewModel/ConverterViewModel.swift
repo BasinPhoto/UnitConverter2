@@ -57,13 +57,7 @@ class ConverterViewModel: ObservableObject {
         
         var tmpResult : Double = 0
         
-        guard let amount = Double(amountInString) else {
-            if let tmpValue = Double(temporaryValue) {
-                if type != .money { return roundTo(tmpValue * valueFrom / valueTo, toDecimalPlaces: 4) }
-                else { return roundTo(tmpValue * valueTo / valueFrom, toDecimalPlaces: 4) }
-            }
-            else { return nil }
-        }
+        guard let amount = Double(amountInString) else { return nil }
 
         switch type {
         case .money:
