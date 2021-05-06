@@ -80,9 +80,12 @@ struct ContentView: View {
             
             //dropdown menu button
             VStack {
+                
                 Spacer()
+                
                 HStack {
                     Spacer()
+                    
                     DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
                         .padding(.bottom, 45)
                 }
@@ -96,6 +99,7 @@ struct ContentView: View {
             showAllCategories = false
             if unit.isBothValuesSelected {
                 showPicker = false
+                numberOfPicker = .both
             } else {
                 showPicker = true
             }
