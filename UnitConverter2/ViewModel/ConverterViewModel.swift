@@ -12,13 +12,13 @@ class ConverterViewModel: ObservableObject {
     
     @Published var type: UnitType = .length {
         didSet {
-            amountInString = "0"
-            temporaryValue = "0"
+            amountInString = "Введите число"
+            temporaryValue = ""
             selectedFrom = nil
             selectedTo = nil
         }
     }
-    @Published var amountInString = "0"
+    @Published var amountInString = "Введите число"
     @Published var selectedFrom: Int?
     @Published var selectedTo: Int?
     
@@ -29,7 +29,11 @@ class ConverterViewModel: ObservableObject {
             return true
     }
     
-    var temporaryValue: String = "0"
+    var temporaryValue: String = "" {
+        didSet {
+            print(temporaryValue)
+        }
+    }
 
     var valuesDictionary: [String : Double] {
         return UnitType.allValues[type.rawValue]
@@ -49,9 +53,9 @@ class ConverterViewModel: ObservableObject {
         let valueFrom = valuesDictionary[selectedFromKey]!
         let valueTo = valuesDictionary[selectedToKey]!
         
-        var tmpResult : Double = 0
-        
         guard valueTo != 0 else { return nil }
+        
+        var tmpResult : Double = 0
         
         guard let amount = Double(amountInString) else {
             if let tmpValue = Double(temporaryValue) {

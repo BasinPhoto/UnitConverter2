@@ -98,7 +98,7 @@ struct TypePicker: View {
         
         }
         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
-        .background(backgroundColor)
+        .background(Color.clear)
         .foregroundColor(accentColor)
 
 

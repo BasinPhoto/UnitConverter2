@@ -21,7 +21,6 @@ struct IOFieldsView: View {
     var body: some View {
         GeometryReader { geoProxy in
             VStack {
-                
                 Group {
                     if showPicker && numberOfPicker == .right {
                         if let selectedFrom = unit.selectedFrom {
@@ -44,10 +43,10 @@ struct IOFieldsView: View {
                     } else {
                         TextField(unit.amountInString, text: $unit.amountInString)
                             .keyboardType(.decimalPad)
-                            .accentColor(Color("secondaryColor"))
-                            .background(Color("primaryColor"))
-                            .foregroundColor(Color("secondaryColor"))
-                            .cornerRadius(30)
+                            .accentColor(Color("primaryColor"))
+                            .background(Color("secondaryColor"))
+                            .foregroundColor(Color("primaryColor"))
+                            .cornerRadius(15)
                             .disabled(showAllCategories)
                             .onTapGesture {
                                 showAllCategories = false
@@ -65,7 +64,7 @@ struct IOFieldsView: View {
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
                 .offset(x: showPicker && (numberOfPicker == .left || numberOfPicker == .both) ? UIScreen.main.bounds.width : 0)
-                .transition(.identity)
+//                .transition(.identity)
                 
                 Group {
                     if showPicker && numberOfPicker == .left {
@@ -77,6 +76,7 @@ struct IOFieldsView: View {
                         if let result = unit.result, result > 0 {
                             Text("\(result, specifier: "%g")")
                                 .padding(.horizontal)
+                                .lineLimit(1)
                                 .onTapGesture(count: 2) {
                                     if unit.result != 0 {
                                         clipboard.string = String(result)
@@ -96,11 +96,12 @@ struct IOFieldsView: View {
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
                 .offset(x: showPicker && (numberOfPicker == .right || numberOfPicker == .both) ? -UIScreen.main.bounds.width : 0)
-                .transition(.identity)
+//                .transition(.identity)
                 
             }
             .font(Font.custom("Exo 2", size: 60))
             .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .minimumScaleFactor(0.3)
         }
     }

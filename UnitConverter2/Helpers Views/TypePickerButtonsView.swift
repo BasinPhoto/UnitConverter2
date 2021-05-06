@@ -70,8 +70,6 @@ struct TypePickerButtonsView: View {
         .frame(maxWidth: .infinity)
         .minimumScaleFactor(0.3)
         .disabled(showAllCategories)
-//        .offset(x: showPicker && numberOfPicker == .left ? UIScreen.main.bounds.width / 4 : 0)
-//        .offset(x: showPicker && numberOfPicker == .right ? UIScreen.main.bounds.width / -4 : 0)
     }
 }
 

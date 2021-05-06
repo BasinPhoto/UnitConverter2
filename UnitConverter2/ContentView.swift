@@ -71,7 +71,7 @@ struct ContentView: View {
                                 .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
                         })
                         .padding(.bottom, 45)
-                        .transition(.move(edge: .bottom))
+                        .transition(.scale)
                         
                         Spacer()
                     }
@@ -79,19 +79,10 @@ struct ContentView: View {
             }
             
             //dropdown menu button
-            VStack {
-                
-                Spacer()
-                
-                HStack {
-                    Spacer()
-                    
                     DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
                         .padding(.bottom, 45)
-                }
-            }
         }
-        .animation(.easeInOut)
+        .animation(.default)
         .onTapGesture {
             if unit.amountInString == "" {
                 unit.amountInString = unit.temporaryValue
