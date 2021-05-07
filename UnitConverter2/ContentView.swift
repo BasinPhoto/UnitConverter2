@@ -53,7 +53,6 @@ struct ContentView: View {
             //info button
             VStack {
                 Spacer()
-                
                 HStack {
                     if !showAllCategories, !showPicker {
                         Button(action: {
@@ -72,17 +71,19 @@ struct ContentView: View {
                         })
                         .padding(.bottom, 45)
                         .transition(.move(edge: .leading))
-                        
                         Spacer()
                     }
                 }
             }
             
             //dropdown menu button
-            HStack {
+            VStack {
                 Spacer()
-                DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
+                HStack {
+                    Spacer()
+                    DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
                     .padding(.bottom, 45)
+                }
             }
         }
         .animation(.default)

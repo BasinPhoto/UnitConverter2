@@ -64,8 +64,8 @@ struct IOFieldsView: View {
                 }
                 .disabled(showAllCategories)
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
-                .padding(16)
-                .transition(.move(edge: numberOfPicker == .left ? .trailing : .top))
+                .padding(.horizontal, 16)
+                .transition(.move(edge: .top))
                 
                 Group {
                     if showPicker && numberOfPicker == .left {
@@ -99,10 +99,10 @@ struct IOFieldsView: View {
                 .foregroundColor(Color("primaryColor"))
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
-                .transition(.move(edge: numberOfPicker == .right ? .leading : .bottom))
+                .transition(.move(edge: .bottom))
                 
             }
-            .font(Font.custom("Exo 2", size: 60))
+            .font(Font.custom("Exo 2", size: 50))
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .minimumScaleFactor(0.3)
