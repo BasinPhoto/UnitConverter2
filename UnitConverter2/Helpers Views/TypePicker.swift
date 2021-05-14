@@ -48,32 +48,45 @@ struct TypePicker: View {
                             }
                         }, label: {
                             if toVar == keyNumber {
-                                Text(unit.keysArray[keyNumber])
-                                    .font(Font.custom("Exo 2", size: 22).bold())
-                                    .lineLimit(0)
-                                    .minimumScaleFactor(0.3)
-                                    .frame(height: 25)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 8)
-                                    .background(accentColor)
-                                    .foregroundColor(backgroundColor)
-                                    .clipShape(Capsule())
-                                    .padding(.horizontal)
-                                    .shadow(color: Color("shadowColor").opacity(0.3), radius: 5, x: 0, y: 3)
+                                ZStack {
+                                    if let flag = UnitType.flags[unit.keysArray[keyNumber]] {
+                                        Text(flag)
+                                            .font(.system(size: 102))
+                                    }
+                                    Text(unit.keysArray[keyNumber])
+                                        .font(Font.custom("Exo 2", size: 20).bold())
+                                        .padding(.horizontal)
+                                        .minimumScaleFactor(0.3)
+                                }
+                                .frame(height: 25)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 8)
+                                .background(accentColor)
+                                .foregroundColor(backgroundColor)
+                                .clipShape(Capsule())
+                                .shadow(color: Color("shadowColor").opacity(0.3), radius: 5, x: 0, y: 3)
+                                .padding(.horizontal)
                             } else {
                                 let disButton: Bool = keyNumber == unit.selectedFrom || keyNumber == unit.selectedTo
-                                Text(unit.keysArray[keyNumber])
-                                    .font(Font.custom("Exo 2", size: 20).bold())
-                                    .lineLimit(0)
-                                    .minimumScaleFactor(0.3)
-                                    .opacity(disButton ? 0.3 : 0.8)
-                                    .frame(height: 25)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 8)
-                                    .overlay(
-                                        Capsule().stroke(lineWidth: disButton ? 0 : 2)
-                                    )
-                                    .padding(.horizontal)
+                                ZStack {
+                                    if let flag = UnitType.flags[unit.keysArray[keyNumber]] {
+                                        Text(flag)
+                                            .font(.system(size: 102))
+                                    }
+                                    Text(unit.keysArray[keyNumber])
+                                        .font(Font.custom("Exo 2", size: 20).bold())
+                                        .padding(.horizontal)
+                                        .minimumScaleFactor(0.3)
+                                }
+                                .opacity(disButton ? 0.3 : 1)
+                                .frame(height: 25)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 8)
+                                .clipShape(Capsule())
+                                .overlay(
+                                    Capsule().stroke(lineWidth: disButton ? 0 : 2)
+                                )
+                                .padding(.horizontal)
                             }
                         })
                     }
@@ -101,11 +114,5 @@ struct TypePicker: View {
         .foregroundColor(accentColor)
 
 
-    }
-}
-
-struct TypePicker_Previews: PreviewProvider {
-    static var previews: some View {
-        TypePicker(toVar: .constant(1), showPicker: .constant(true), numberOfPicker: .constant(.both), unit: ConverterViewModel(), backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
     }
 }
