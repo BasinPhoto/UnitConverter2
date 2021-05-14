@@ -24,10 +24,9 @@ struct TypePicker: View {
     ]
     
     let columnsForCurrencys = [
-        GridItem(.fixed(UIScreen.main.bounds.width / 4)),
-        GridItem(.fixed(UIScreen.main.bounds.width / 4)),
-        GridItem(.fixed(UIScreen.main.bounds.width / 4)),
-        GridItem(.fixed(UIScreen.main.bounds.width / 4))
+        GridItem(.fixed(UIScreen.main.bounds.width / 3)),
+        GridItem(.fixed(UIScreen.main.bounds.width / 3)),
+        GridItem(.fixed(UIScreen.main.bounds.width / 3))
     ]
     
     var body: some View {
