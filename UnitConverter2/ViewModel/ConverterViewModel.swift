@@ -80,4 +80,10 @@ class ConverterViewModel: ObservableObject {
         return round(value * divisor) / divisor
     }
     
+    func swapValues() {
+        amountInString = result?.description ?? "0"
+        selectedFrom = selectedTo
+        selectedTo = nil
+    }
+    
 }

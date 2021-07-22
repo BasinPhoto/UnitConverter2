@@ -48,10 +48,13 @@ struct TypePicker: View {
                             }
                         }, label: {
                             if toVar == keyNumber {
-                                ZStack {
+                                HStack (spacing: 0) {
                                     if let flag = UnitType.flags[unit.keysArray[keyNumber]] {
                                         Text(flag)
-                                            .font(.system(size: 102))
+                                            .font(.system(size: 24))
+                                            .frame(width: 40, height: 40)
+                                            .background(accentColor)
+                                            .clipShape(Circle())
                                     }
                                     Text(unit.keysArray[keyNumber])
                                         .font(Font.custom("Exo 2", size: 20).bold())
@@ -68,15 +71,19 @@ struct TypePicker: View {
                                 .padding(.horizontal)
                             } else {
                                 let disButton: Bool = keyNumber == unit.selectedFrom || keyNumber == unit.selectedTo
-                                ZStack {
+                                HStack (spacing: 0) {
                                     if let flag = UnitType.flags[unit.keysArray[keyNumber]] {
                                         Text(flag)
-                                            .font(.system(size: 102))
+                                            .font(.system(size: 24))
+                                            .frame(width: 40, height: 40)
+                                            .background(accentColor)
+                                            .clipShape(Circle())
                                     }
                                     Text(unit.keysArray[keyNumber])
                                         .font(Font.custom("Exo 2", size: 20).bold())
                                         .padding(.horizontal)
                                         .minimumScaleFactor(0.3)
+                                        .lineLimit(1)
                                 }
                                 .opacity(disButton ? 0.3 : 1)
                                 .frame(height: 25)

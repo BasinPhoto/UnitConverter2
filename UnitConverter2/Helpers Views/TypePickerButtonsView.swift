@@ -13,7 +13,7 @@ struct TypePickerButtonsView: View {
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
     
-    @StateObject var unit: ConverterViewModel
+    @ObservedObject var unit: ConverterViewModel
     
     var body: some View {
         HStack(spacing: 0) {

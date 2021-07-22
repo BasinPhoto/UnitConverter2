@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var showPicker = false
     @State private var numberOfPicker: PickerSide = .left
     
-    @StateObject var unit: ConverterViewModel
+    @ObservedObject var unit: ConverterViewModel
     
     let clipboard = UIPasteboard.general
     let generator = UINotificationFeedbackGenerator()
@@ -45,7 +45,32 @@ struct ContentView: View {
                 
                 //type picker buttons
                 TypePickerButtonsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
-                
+                    
+                //SwapButton
+                if !showPicker {
+                    Button(action: {
+                        unit.swapValues()
+                        numberOfPicker = .right
+                        showPicker.toggle()
+                    }, label: {
+                        HStack(spacing: -25, content: {
+                            Image("arrow")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(Color("secondaryColor"))
+                                .frame(width: 45, height: 45)
+                            
+                            Image("arrow")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(Color("primaryColor"))
+                                .frame(width: 45, height: 45)
+                                .rotationEffect(.degrees(180))
+                        })
+                    })
+                    .rotationEffect(.degrees(-45))
+                    .transition(.scale)
+                }
             }
             .blur(radius: showAllCategories ? 4 : 0)
             .scaleEffect(showAllCategories ? 1.2 : 1)
@@ -137,6 +162,7 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     if let fetchingResult = requestResult {
                         UnitType.allValues.append(fetchingResult.conversionRates)
+                        unit.objectWillChange.send()
                     }
                 }
             }
