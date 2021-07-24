@@ -11,7 +11,7 @@ struct TypePicker: View {
     @Binding var toVar: Int?
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
-    @StateObject var unit: ConverterViewModel
+    @EnvironmentObject var unit: ConverterViewModel
     
     var backgroundColor: Color
     var accentColor: Color

@@ -11,7 +11,7 @@ struct DropDownMenu: View {
     @Binding var showAllCategories: Bool
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
-    @StateObject var unit: ConverterViewModel
+    @EnvironmentObject var unit: ConverterViewModel
     
     let generator = UIImpactFeedbackGenerator(style: .light)
     
@@ -86,6 +86,7 @@ struct DropDownMenu: View {
 
 struct DropDownMenu_Previews: PreviewProvider {
     static var previews: some View {
-        DropDownMenu(showAllCategories: .constant(true), showPicker: .constant(false), numberOfPicker: .constant(.both), unit: ConverterViewModel())
+        DropDownMenu(showAllCategories: .constant(true), showPicker: .constant(false), numberOfPicker: .constant(.both))
+            .environmentObject(ConverterViewModel())
     }
 }

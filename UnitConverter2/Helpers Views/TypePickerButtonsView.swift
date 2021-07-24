@@ -13,7 +13,7 @@ struct TypePickerButtonsView: View {
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
     
-    @ObservedObject var unit: ConverterViewModel
+    @EnvironmentObject var unit: ConverterViewModel
     
     var body: some View {
         HStack(spacing: 0) {
@@ -75,6 +75,7 @@ struct TypePickerButtonsView: View {
 
 struct TypePickerButtonsView_Previews: PreviewProvider {
     static var previews: some View {
-        TypePickerButtonsView(showAllCategories: .constant(true), showPicker: .constant(true), numberOfPicker: .constant(.both), unit: ConverterViewModel())
+        TypePickerButtonsView(showAllCategories: .constant(true), showPicker: .constant(true), numberOfPicker: .constant(.both))
+            .environmentObject(ConverterViewModel())
     }
 }

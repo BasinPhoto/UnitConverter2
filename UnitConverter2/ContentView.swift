@@ -29,26 +29,27 @@ struct ContentView: View {
                 //Background rectangles
                 Background()
                 
-                //input and output value fields
-                IOFieldsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
-                
                 // pickers
                 VStack {
                     
-                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit, backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
+                    TypePicker(toVar: $unit.selectedFrom, showPicker: $showPicker, numberOfPicker: $numberOfPicker, backgroundColor: Color("primaryColor"), accentColor: Color("secondaryColor"))
+                        .environmentObject(unit)
                         .offset(x: !showPicker || numberOfPicker == .right ? -UIScreen.main.bounds.width : 0, y: -15)
                     
-                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit, backgroundColor: Color("secondaryColor"), accentColor: Color("primaryColor"))
+                    TypePicker(toVar: $unit.selectedTo, showPicker: $showPicker, numberOfPicker: $numberOfPicker, backgroundColor: Color("secondaryColor"), accentColor: Color("primaryColor"))
+                        .environmentObject(unit)
                         .offset(x: !showPicker || numberOfPicker == .left ? UIScreen.main.bounds.width : 0, y: 0)
                     
                 }
                 
                 //type picker buttons
-                TypePickerButtonsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker, unit: unit)
+                TypePickerButtonsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker)
+                    .environmentObject(unit)
                     
                 //SwapButton
                 if !showPicker {
                     Button(action: {
+                        guard let _ = unit.result else { return }
                         unit.swapValues()
                         numberOfPicker = .right
                         showPicker.toggle()
@@ -58,19 +59,23 @@ struct ContentView: View {
                                 .resizable()
                                 .renderingMode(.template)
                                 .foregroundColor(Color("secondaryColor"))
-                                .frame(width: 45, height: 45)
+                                .frame(width: 35, height: 35)
                             
                             Image("arrow")
                                 .resizable()
                                 .renderingMode(.template)
                                 .foregroundColor(Color("primaryColor"))
-                                .frame(width: 45, height: 45)
+                                .frame(width: 35, height: 35)
                                 .rotationEffect(.degrees(180))
                         })
                     })
                     .rotationEffect(.degrees(-45))
                     .transition(.scale)
                 }
+                
+                //input and output value fields
+                IOFieldsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker)
+                    .environmentObject(unit)
             }
             .blur(radius: showAllCategories ? 4 : 0)
             .scaleEffect(showAllCategories ? 1.2 : 1)
@@ -106,8 +111,9 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker ,unit: unit)
-                    .padding(.bottom, 45)
+                    DropDownMenu(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker)
+                        .environmentObject(unit)
+                        .padding(.bottom, 45)
                 }
             }
         }
@@ -135,23 +141,10 @@ struct ContentView: View {
                     showAllCategories = false
                 }
                 
-                // copy result to amount
-                if !showAllCategories {
-                    if let result = unit.result, value.translation.height < -150 && result > 0 {
-                        if !showPicker {
-                            unit.amountInString = result.description
-                            unit.selectedFrom = unit.selectedTo
-                            unit.selectedTo = nil
-                            numberOfPicker = .right
-                            showPicker = true
-                            generator.prepare()
-                            generator.notificationOccurred(.success)
-                        }
-                    } else if value.translation.height > 150 {
-                        if !showPicker {
-                            numberOfPicker = .both
-                            showPicker = true
-                        }
+                if !showAllCategories && value.translation.height > 150 {
+                    if !showPicker {
+                        numberOfPicker = .both
+                        showPicker = true
                     }
                 }
             }

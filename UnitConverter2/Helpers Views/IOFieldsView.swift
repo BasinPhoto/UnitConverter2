@@ -13,10 +13,13 @@ struct IOFieldsView: View {
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
     
-    @StateObject var unit: ConverterViewModel
+    @State var movePosition: CGSize = .zero
+    
+    @EnvironmentObject var unit: ConverterViewModel
     
     let clipboard = UIPasteboard.general
     let generator = UINotificationFeedbackGenerator()
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
     
     var body: some View {
         GeometryReader { geoProxy in
@@ -100,7 +103,28 @@ struct IOFieldsView: View {
                 .frame(idealWidth: geoProxy.size.width, maxHeight: .infinity)
                 .padding(16)
                 .transition(.move(edge: .bottom))
-                
+                .shadow(radius: movePosition == .zero ? 0 : 10)
+                .offset(movePosition)
+                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                            .onChanged { value in
+                                guard unit.result != nil else { return }
+                                
+                                if value.translation.height <= -220 {
+                                    feedbackGenerator.prepare()
+                                    feedbackGenerator.impactOccurred()
+                                    movePosition = .zero
+                                    unit.swapValues()
+                                    numberOfPicker = .right
+                                    showPicker.toggle()
+                                } else {
+                                    movePosition.width = value.translation.width
+                                    movePosition.height = value.translation.height
+                                }
+                            }
+                            .onEnded { value in
+                                movePosition = .zero
+                            }
+                )
             }
             .font(Font.custom("Exo 2", size: 50))
             .multilineTextAlignment(.center)
@@ -113,6 +137,7 @@ struct IOFieldsView: View {
 
 struct IOFieldsView_Previews: PreviewProvider {
     static var previews: some View {
-        IOFieldsView(showAllCategories: .constant(false), showPicker: .constant(false), numberOfPicker: .constant(.both), unit: ConverterViewModel())
+        IOFieldsView(showAllCategories: .constant(false), showPicker: .constant(false), numberOfPicker: .constant(.both))
+            .environmentObject(ConverterViewModel())
     }
 }
