@@ -28,7 +28,8 @@ struct IOFieldsView: View {
                     if showPicker && numberOfPicker == .right {
                         if let selectedFrom = unit.selectedFrom {
                             if let amount = Double(unit.amountInString), amount != 0 {
-                                Text("\(unit.amountInString) \n \"\(unit.keysArray[selectedFrom])\" \n конвертируем в...")
+                                let message: String = unit.amountInString + " " + unit.keysArray[selectedFrom].localized() + " " + "converting to".localized() + "..."
+                                Text(message)
                                     .foregroundColor(Color("secondaryColor"))
                                     .lineLimit(3)
                                     .onTapGesture(count: 2) {
@@ -38,7 +39,7 @@ struct IOFieldsView: View {
                                         generator.notificationOccurred(.success)
                                     }
                             } else {
-                                Text("\"\(unit.keysArray[selectedFrom])\" \n конвертируем в")
+                                Text(unit.keysArray[selectedFrom].localized() + " " + "converting to".localized())
                                     .foregroundColor(Color("secondaryColor"))
                                     .lineLimit(2)
                             }
@@ -73,7 +74,7 @@ struct IOFieldsView: View {
                 Group {
                     if showPicker && numberOfPicker == .left {
                         if let selectedTo = unit.selectedTo {
-                            Text("конвертируем в \n \"\(unit.keysArray[selectedTo])\"")
+                            Text("converting to".localized() + " " + unit.keysArray[selectedTo].localized())
                                 .lineLimit(2)
                         }
                     } else {

@@ -79,7 +79,7 @@ struct TypePicker: View {
                                             .background(accentColor)
                                             .clipShape(Circle())
                                     }
-                                    Text(unit.keysArray[keyNumber])
+                                    Text(unit.keysArray[keyNumber].localized())
                                         .font(Font.custom("Exo 2", size: 20).bold())
                                         .padding(.horizontal)
                                         .minimumScaleFactor(0.3)

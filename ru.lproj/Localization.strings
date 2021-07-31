@@ -1,0 +1,147 @@
+/* 
+  Localization.strings
+  UnitConverter2
+
+  Created by Sergey Basin on 26.07.2021.
+  
+*/
+
+//Единицы измерения
+"Lenth"                     = "Длина"               ;
+"Volume"                    = "Объем"              ;
+"Weight"                    = "Вес"              ;
+"Time"                      = "Время"                ;
+"Pressure"                  = "Давление"            ;
+"Information"               = "Информация"         ;
+"FlatAngle"                 = "Плоский угол"          ;
+"Square"                    = "Площадь"              ;
+"Speed"                     = "Скорость"               ;
+"Energy"                    = "Энергия"              ;
+"Currency"                  = "Валюта"            ;
+
+//Длина
+"Meter"                     = "Метр"               ;
+"Kilometer"                 = "Километр"           ;
+"Centimeter"                = "Сантиметр"          ;
+"Millimeter"                = "Миллиметр"          ;
+"Mile"                      = "Миля"                ;
+"Yard"                      = "Ярд"                ;
+"Foot"                      = "Фут"                ;
+"Inch"                      = "Дюйм"                ;
+"Admiralty Mile"            = "Морская миля"      ;
+
+//Объем
+"Liter"                     = "Лит"               ;
+"American Gallon"           = "Ам. галлон"     ;
+"American Liquid Quart"     = "Ам. жидкая кварта";
+"American Liquid Pint"      = "Ам. жидкая пинта";
+"American Cup"              = "Ам. чашка"        ;
+"American Fluid Ounce"      = "Ам. жидкая унция";
+"American Table Spoon"      = "Ам. столовая ложка";
+"American Teaspoon"         = "Ам. чайная ложка";
+"Cubic Meter"               = "Кубический метр"         ;
+"Milliliter"                = "Миллилитр"          ;
+"Imp. Gallon"               = "Имп. галлон"          ;
+"Imp. Quart"                = "Имп. кварта"           ;
+"Imp. Pint"                 = "Имп. пинта"            ;
+"Imp. Fluid Ounce"          = "Имп. жидкая унция"     ;
+"British Tablespoon"        = "Брит. столовая ложка";
+"British Teaspoon"          = "Брит. чайная ложка";
+"Cubic Feet"                = "Кубический фут"          ;
+"Cubic Inch"                = "Кубический дюйм"          ;
+
+//Масса
+"Kilogram"                  = "Килограмм"            ;
+"Ton"                       = "Тонна"                 ;
+"Gram"                      = "Грамм"                ;
+"English Ton"               = "Англ. тонна"         ;
+"American Ton"              = "Ам. тонна"        ;
+"Stone"                     = "Стоун"               ;
+"Pound"                     = "Фунт"               ;
+"Ounce"                     = "Унция"               ;
+
+//Время
+"Second"                    = "Секунда"              ;
+"Millisecond"               = "Миллисекунда"         ;
+"Minute"                    = "Минута"              ;
+"Hour"                      = "Час"                ;
+"Day"                       = "День"                 ;
+"Week"                      = "Неделя"                ;
+"Month"                     = "Месяц"               ;
+"Year"                      = "Год"                ;
+"Decade"                    = "Десятилетие"              ;
+"Century"                   = "Век"             ;
+
+//Давление
+"Atmosphere"                = "Атмосфера"          ;
+"Bar"                       = "Бар"                 ;
+"Pascal"                    = "Паскаль"              ;
+"Torr"                      = "Тор"                ;
+"Pound Force Per Square Inch"   = "Фунт-сила на кв. дюйм";
+
+//Объем информации
+"Byte"                      = "Байт"                ;
+"Bit"                       = "Бит"                 ;
+"Kilobit"                   = "Килобит"             ;
+"Kibibit"                   = "Кибибит"             ;
+"Megabit"                   = "Мегабит"             ;
+"Mebibit"                   = "Мебибит"             ;
+"Gigabit"                   = "Гигабит"             ;
+"Gibibit"                   = "Гибибит"             ;
+"Terabit"                   = "Терабит"             ;
+"Tebibit"                   = "Тебибит"             ;
+"Petabit"                   = "Петабит"             ;
+"Pebibit"                   = "Пебибит"             ;
+"Kilobyte"                  = "Килобайт"            ;
+"Kibibyte"                  = "Кибибайт"            ;
+"Megabyte"                  = "Мегабайт"            ;
+"Mebibyte"                  = "Мебибайт"            ;
+"Gigabyte"                  = "Гигабайт"            ;
+"Gibibyte"                  = "Гибибайт"            ;
+"Terabyte"                  = "Терабайт"            ;
+"Tebibayt"                  = "Тебибайт"            ;
+"Petabyte"                  = "Петабайт"            ;
+"Pebibyte"                  = "Пебибайт"            ;
+
+//Плоский угол
+"Degree"                    = "Угол"              ;
+"Radian"                    = "Радиан"              ;
+"Grad"                      = "Град"                ;
+"ArcMinute"                 = "Минута дуги"          ;
+"Thousandth"                = "Тысячная"          ;
+"Angular Second"            = "Угловая секунда"      ;
+
+//Площадь
+"Square Meter"               = "Кв. метр"        ;
+"Square Kilometer"           = "Кв. километр"    ;
+"Square Mile"                = "Кв. миля"         ;
+"Square Yard"                = "Кв. ярд"         ;
+"Square Feet"                = "Кв. фут"         ;
+"Square Inch"                = "Кв. дюйм"         ;
+"Hectare"                   = "Гектар"             ;
+"Acre"                      = "Акр"                ;
+
+//Скорость
+"Meter Per Second"            = "Метр в сек."    ;
+"Km Per Hour"                 = "Километр в час"         ;
+"Knot"                      = "Узел"                ;
+"Feet Per Second"             = "Фут в сек."     ;
+"Mile Per Hour"               = "Миль в час"       ;
+
+//Энергия
+"Kilowatt-Hour"              = "Киловатт-час"       ;
+"Joule"                     = "Джоуль"               ;
+"Kilojoule"                 = "Килоджоуль"           ;
+"Gram-Calorie"               = "Грамм-калория"        ;
+"Kilocalorie"               = "Килокаллория"         ;
+"Watt-Hour"                  = "Ватт-час"           ;
+"Electron-Volt"              = "Электрон-вольт"       ;
+"British Thermal Unit"        = "Брит. термальная единица";
+"American Therm"             = "Ам. терм"      ;
+"Feet-Pound"                 = "Футо-фунт"          ;
+
+//Interface
+"(from...)" = "(из...)";
+"(to...)" = "(в...)";
+"converting to" = "конвертируем в";
+"Value" = "Значение";

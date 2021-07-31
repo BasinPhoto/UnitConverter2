@@ -1,0 +1,141 @@
+
+//Единицы измерения
+"Lenth"                     = "Lenth"               ;
+"Volume"                    = "Volume"              ;
+"Weight"                    = "Weight"              ;
+"Time"                      = "Time"                ;
+"Pressure"                  = "Pressure"            ;
+"Information"               = "Information"         ;
+"FlatAngle"                 = "Flat Angle"          ;
+"Square"                    = "Square"              ;
+"Speed"                     = "Speed"               ;
+"Energy"                    = "Energy"              ;
+"Currency"                  = "Currency"            ;
+
+//Длина
+"Meter"                     = "Meter"               ;
+"Kilometer"                 = "Kilometer"           ;
+"Centimeter"                = "Centimeter"          ;
+"Millimeter"                = "Millimeter"          ;
+"Mile"                      = "Mile"                ;
+"Yard"                      = "Yard"                ;
+"Foot"                      = "Foot"                ;
+"Inch"                      = "Inch"                ;
+"Admiralty Mile"            = "Admiralty Mile"      ;
+
+//Объем
+"Liter"                     = "Liter"               ;
+"American Gallon"           = "Am. gallon"     ;
+"American Liquid Quart"     = "Am. liquid quart";
+"American Liquid Pint"      = "Am. liquid pint";
+"American Cup"              = "Am. cup"        ;
+"American Fluid Ounce"      = "Am. fluid ounce";
+"American Table Spoon"      = "Am. table spoon";
+"American Teaspoon"         = "Am. teaspoon";
+"Cubic Meter"               = "Cubic meter"         ;
+"Milliliter"                = "Milliliter"          ;
+"Imp. Gallon"               = "Imp. Gallon"          ;
+"Imp. Quart"                = "Imp. Quart"           ;
+"Imp. Pint"                 = "Imp. Pint"            ;
+"Imp. Fluid Ounce"          = "Imp. Fluid Ounce"     ;
+"British Tablespoon"        = "British tablespoon";
+"British Teaspoon"          = "British teaspoon";
+"Cubic Feet"                = "Cubic feet"          ;
+"Cubic Inch"                = "Cubic inch"          ;
+
+//Масса
+"Kilogram"                  = "Kilogram"            ;
+"Ton"                       = "Ton"                 ;
+"Gram"                      = "Gram"                ;
+"English Ton"               = "English ton"         ;
+"American Ton"              = "American ton"        ;
+"Stone"                     = "Stone"               ;
+"Pound"                     = "Pound"               ;
+"Ounce"                     = "Ounce"               ;
+
+//Время
+"Second"                    = "Second"              ;
+"Millisecond"               = "Millisecond"         ;
+"Minute"                    = "Minute"              ;
+"Hour"                      = "Hour"                ;
+"Day"                       = "Day"                 ;
+"Week"                      = "Week"                ;
+"Month"                     = "Month"               ;
+"Year"                      = "Year"                ;
+"Decade"                    = "Decade"              ;
+"Century"                   = "Century"             ;
+
+//Давление
+"Atmosphere"                = "Atmosphere"          ;
+"Bar"                       = "Bar"                 ;
+"Pascal"                    = "Pascal"              ;
+"Torr"                      = "Torr"                ;
+"Pound Force Per Square Inch"   = "Pound-force per square inch";
+
+//Объем информации
+"Byte"                      = "Byte"                ;
+"Bit"                       = "Bit"                 ;
+"Kilobit"                   = "Kilobit"             ;
+"Kibibit"                   = "Kibibit"             ;
+"Megabit"                   = "Megabit"             ;
+"Mebibit"                   = "Mebibit"             ;
+"Gigabit"                   = "Gigabit"             ;
+"Gibibit"                   = "Gibibit"             ;
+"Terabit"                   = "Terabit"             ;
+"Tebibit"                   = "Tebibit"             ;
+"Petabit"                   = "Petabit"             ;
+"Pebibit"                   = "Pebibit"             ;
+"Kilobyte"                  = "Kilobyte"            ;
+"Kibibyte"                  = "Kibibyte"            ;
+"Megabyte"                  = "Megabyte"            ;
+"Mebibyte"                  = "Mebibyte"            ;
+"Gigabyte"                  = "Gigabyte"            ;
+"Gibibyte"                  = "Gibibyte"            ;
+"Terabyte"                  = "Terabyte"            ;
+"Tebibayt"                  = "Tebibayt"            ;
+"Petabyte"                  = "Petabyte"            ;
+"Pebibyte"                  = "Pebibyte"            ;
+
+//Плоский угол
+"Degree"                    = "Degree"              ;
+"Radian"                    = "Radian"              ;
+"Grad"                      = "Grad"                ;
+"ArcMinute"                 = "Arc minute"          ;
+"Thousandth"                = "Thousandth"          ;
+"Angular Second"            = "Angular second"      ;
+
+//Площадь
+"Square Meter"               = "Square meter"        ;
+"Square Kilometer"           = "Square kilometer"    ;
+"Square Mile"                = "Square mile"         ;
+"Square Yard"                = "Square yard"         ;
+"Square Feet"                = "Square feet"         ;
+"Square Inch"                = "Square inch"         ;
+"Hectare"                   = "Hectare"             ;
+"Acre"                      = "Acre"                ;
+
+//Скорость
+"Meter Per Second"            = "Meter per second"    ;
+"Km Per Hour"                 = "Km per hour"         ;
+"Knot"                      = "Knot"                ;
+"Feet Per Second"             = "Feet per second"     ;
+"Mile Per Hour"               = "Mile per hour"       ;
+
+//Энергия
+"Kilowatt-Hour"              = "Kilowatt-hour"       ;
+"Joule"                     = "Joule"               ;
+"Kilojoule"                 = "Kilojoule"           ;
+"Gram-Calorie"               = "Gram-calorie"        ;
+"Kilocalorie"               = "Kilocalorie"         ;
+"Watt-Hour"                  = "Watt hour"           ;
+"Electron-Volt"              = "Electron-volt"       ;
+"British Thermal Unit"        = "British thermal unit";
+"American Therm"             = "American therm"      ;
+"Feet-Pound"                 = "Feet-pound"          ;
+
+
+//Интерфейс
+"(from...)" = "(from...)";
+"(to...)" = "(to...)";
+"converting to" = "converting to";
+"Value" = "Value";

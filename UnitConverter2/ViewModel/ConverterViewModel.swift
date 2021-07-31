@@ -12,13 +12,13 @@ class ConverterViewModel: ObservableObject {
     
     @Published var type: UnitType = .length {
         didSet {
-            amountInString = "Введите число"
+            amountInString = "Value".localized()
             temporaryValue = ""
             selectedFrom = nil
             selectedTo = nil
         }
     }
-    @Published var amountInString = "Введите число"
+    @Published var amountInString = "Value".localized()
     @Published var selectedFrom: Int?
     @Published var selectedTo: Int?
     

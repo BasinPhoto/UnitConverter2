@@ -26,10 +26,10 @@ struct TypePickerButtonsView: View {
                     }
                 }, label: {
                     if let selectedFrom = unit.selectedFrom {
-                        Text(unit.keysArray[selectedFrom])
+                        Text(unit.keysArray[selectedFrom].localized())
                             .transition(.identity)
                     } else {
-                        Text("(Из...)")
+                        Text("(from...)".localized())
                             .transition(.identity)
                     }
                 })
@@ -50,10 +50,10 @@ struct TypePickerButtonsView: View {
                     }
                 }, label: {
                     if let selectedTo = unit.selectedTo {
-                        Text(unit.keysArray[selectedTo])
+                        Text(unit.keysArray[selectedTo].localized())
                             .transition(.identity)
                     } else {
-                        Text("(В...)").transition(.identity)
+                        Text("(to...)".localized()).transition(.identity)
                     }
                 })
                 .padding()

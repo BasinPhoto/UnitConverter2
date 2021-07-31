@@ -54,7 +54,7 @@ struct DropDownMenu: View {
                             self.showAllCategories.toggle()
                             generator.impactOccurred()
                         }, label: {
-                            Text(type.description)
+                            Text(type.description.localized())
                                 .font(Font.custom("Exo 2", size: 18))
                                 .padding(.leading)
                             Image(type.imageName)
