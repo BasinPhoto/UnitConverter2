@@ -82,7 +82,9 @@ struct IOFieldsView: View {
                         if !showPicker {
                             if let result = unit.result, result > 0 {
                                 Text("\(result, specifier: "%g")")
-                                    .padding(.horizontal)
+                                    .padding()
+                                    .background(Color("secondaryColor"))
+                                    .cornerRadius(15)
                                     .lineLimit(1)
                                     .onTapGesture(count: 2) {
                                         if unit.result != 0 {
