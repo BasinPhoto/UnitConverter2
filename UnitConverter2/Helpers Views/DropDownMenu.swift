@@ -47,9 +47,20 @@ struct DropDownMenu: View {
                     } else {
                         Button(action: {
                             if unit.type != type || unit.selectedFrom == nil || unit.selectedTo == nil {
-                                unit.type = type
-                                numberOfPicker = .both
-                                showPicker = true
+                                if type != .money {
+                                    unit.type = type
+                                    numberOfPicker = .both
+                                    showPicker = true
+                                } else {
+                                    unit.type = .money
+                                    unit.selectedFrom = unit.keysArray.firstIndex(where: {$0 == "USD"})
+                                    if unit.localeCurrencyCode != nil {
+                                        unit.selectedTo = unit.keysArray.firstIndex(where: {$0 == unit.localeCurrencyCode})
+                                    } else {
+                                        numberOfPicker = .right
+                                        showPicker = true
+                                    }
+                                }
                             }
                             self.showAllCategories.toggle()
                             generator.impactOccurred()

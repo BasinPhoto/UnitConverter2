@@ -22,6 +22,8 @@ class ConverterViewModel: ObservableObject {
     @Published var selectedFrom: Int?
     @Published var selectedTo: Int?
     
+    let localeCurrencyCode = Locale.current.currencyCode
+    
     var isBothValuesSelected: Bool {
             guard let _ = selectedFrom else { return false }
             guard let _ = selectedTo else { return false }

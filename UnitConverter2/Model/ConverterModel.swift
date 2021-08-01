@@ -9,7 +9,7 @@ import Foundation
 
 enum UnitType: Int, CaseIterable, Identifiable {
     
-    static var allValues = [
+    static var allValues: [[String : Double]] = [
         //Длина
         ["Meter" : 1, "Kilometer" : 1000, "Centimeter" : 0.01, "Millimeter" : 0.001, "Mile" : 1609.34, "Yard" : 0.9144, "Feet" : 0.3048, "Inch" : 0.0254, "Admiralty Mile" : 1852],
         //Объем
