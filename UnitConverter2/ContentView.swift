@@ -49,10 +49,13 @@ struct ContentView: View {
                 //SwapButton
                 if !showPicker {
                     Button(action: {
-                        guard let _ = unit.result else { return }
-                        unit.swapValues()
-                        numberOfPicker = .right
-                        showPicker.toggle()
+                        if unit.result != nil {
+                            unit.swapValues()
+                            numberOfPicker = .right
+                            showPicker.toggle()
+                        } else {
+                            unit.swapValues()
+                        }
                     }, label: {
                         HStack(spacing: -25, content: {
                             Image("arrow")

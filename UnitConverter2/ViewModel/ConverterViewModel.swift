@@ -81,9 +81,15 @@ class ConverterViewModel: ObservableObject {
     }
     
     func swapValues() {
-        amountInString = result?.description ?? "0"
-        selectedFrom = selectedTo
-        selectedTo = nil
+        if result != nil {
+            amountInString = result!.description
+            selectedFrom = selectedTo
+            selectedTo = nil
+        } else {
+            let tmp = selectedFrom
+            selectedFrom = selectedTo
+            selectedTo = tmp
+        }
     }
     
 }

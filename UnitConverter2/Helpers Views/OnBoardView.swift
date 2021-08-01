@@ -12,12 +12,12 @@ struct OnBoardView: View {
     
     let images: [String] = ["onb1", "onb2", "onb3", "onb4", "onb5", "onb6"]
     let description: [String] = [
-        "Свайп влево для выбора категории",
-        "Выберите из чего и во что конвертировать",
-        "Вверху введите значение и внизу отобразится результат",
-        "Свайп снизу копирует результат в поле ввода",
-        "Двойной тап округляет значение до целого",
-        "Двойной тап по результату копирует его в буфер обмена"
+        "Swipe left to select a category".localized(),
+        "Choose from what and what to convert".localized(),
+        "Enter the value at the top and the result will be displayed at the bottom".localized(),
+        "Swipe from below copies the result into the input field".localized(),
+        "Double tap rounds the value to the nearest integer".localized(),
+        "Double tap on the result copies it to the clipboard".localized()
     ]
     
     @State private var offset: CGFloat = 0

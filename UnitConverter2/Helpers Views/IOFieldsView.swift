@@ -12,6 +12,7 @@ struct IOFieldsView: View {
     @Binding var showAllCategories: Bool
     @Binding var showPicker: Bool
     @Binding var numberOfPicker: PickerSide
+    @State var showHUD: Bool = false
     
     @State var movePosition: CGSize = .zero
     
@@ -88,6 +89,7 @@ struct IOFieldsView: View {
                                             clipboard.string = String(result)
                                             generator.prepare()
                                             generator.notificationOccurred(.success)
+                                            showHUD.toggle()
                                         } else {
                                             generator.notificationOccurred(.error)
                                         }
@@ -131,6 +133,16 @@ struct IOFieldsView: View {
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .minimumScaleFactor(0.3)
+        }
+        
+        VStack {
+            Spacer()
+            
+            HUDView(showHUD: $showHUD, textHUD: .constant("Copied to clipboard".localized()))
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, 130)
+                .transition(.opacity)
+                .animation(.spring())
         }
     }
 }

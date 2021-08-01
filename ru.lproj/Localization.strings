@@ -26,12 +26,12 @@
 "Millimeter"                = "Миллиметр"          ;
 "Mile"                      = "Миля"                ;
 "Yard"                      = "Ярд"                ;
-"Foot"                      = "Фут"                ;
+"Feet"                      = "Фут"                ;
 "Inch"                      = "Дюйм"                ;
 "Admiralty Mile"            = "Морская миля"      ;
 
 //Объем
-"Liter"                     = "Лит"               ;
+"Liter"                     = "Литр"               ;
 "American Gallon"           = "Ам. галлон"     ;
 "American Liquid Quart"     = "Ам. жидкая кварта";
 "American Liquid Pint"      = "Ам. жидкая пинта";
@@ -145,3 +145,11 @@
 "(to...)" = "(в...)";
 "converting to" = "конвертируем в";
 "Value" = "Значение";
+
+//OnBoard
+"Swipe left to select a category" = "Свайп влево для выбора категории";
+"Choose from what and what to convert" = "Выберите из чего и во что конвертировать";
+"Enter the value at the top and the result will be displayed at the bottom" = "Вверху введите значение и внизу отобразится результат";
+"Swipe from below copies the result into the input field" = "Свайп снизу копирует результат в поле ввода";
+"Double tap rounds the value to the nearest integer" = "Двойной тап округляет значение до целого";
+"Double tap on the result copies it to the clipboard" = "Двойной тап по результату копирует его в буфер обмена";
