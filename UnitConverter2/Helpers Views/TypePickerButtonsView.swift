@@ -15,11 +15,15 @@ struct TypePickerButtonsView: View {
     
     @EnvironmentObject var unit: ConverterViewModel
     
-    var body: some View {
-        HStack(spacing: 0) {
+    fileprivate func resignResponder() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    var LeftButton: some View {
+        Group {
             if numberOfPicker == .left || numberOfPicker == .both {
                 Button(action: {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    resignResponder()
                     if unit.isBothValuesSelected {
                         numberOfPicker = numberOfPicker == .left ? .both : .left
                         self.showPicker.toggle()
@@ -40,10 +44,14 @@ struct TypePickerButtonsView: View {
                 .cornerRadius(25)
                 .transition(.move(edge: .leading))
             }
-            
+        }
+    }
+    
+    var rightButton: some View {
+        Group {
             if numberOfPicker == .right || numberOfPicker == .both {
                 Button(action: {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    resignResponder()
                     if unit.isBothValuesSelected {
                         numberOfPicker = numberOfPicker == .right ? .both : .right
                         self.showPicker.toggle()
@@ -63,6 +71,14 @@ struct TypePickerButtonsView: View {
                 .cornerRadius(25)
                 .transition(.move(edge: .trailing))
             }
+        }
+    }
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            LeftButton
+            
+            rightButton
             
         }
         .font(Font.custom("Exo 2", size: 24).bold())

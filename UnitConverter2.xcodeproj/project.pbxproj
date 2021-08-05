@@ -15,6 +15,8 @@
 		B9E627AA25757B4B000419A7 /* ConverterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E627A925757B4B000419A7 /* ConverterModel.swift */; };
 		B9E627AF25758A92000419A7 /* ConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E627AE25758A92000419A7 /* ConverterViewModel.swift */; };
 		B9F77A3F2583883000859245 /* TypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F77A3E2583883000859245 /* TypePicker.swift */; };
+		C2094CC826BB1A27005EA678 /* SwapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2094CC726BB1A27005EA678 /* SwapButton.swift */; };
+		C2094CCA26BB1B24005EA678 /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2094CC926BB1B24005EA678 /* InfoButton.swift */; };
 		C21204F726B6AAFA00F1D65A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21204F626B6AAFA00F1D65A /* HUDView.swift */; };
 		C228C72B25ED166E0052BB12 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C72A25ED166E0052BB12 /* BackgroundView.swift */; };
 		C228C73025ED176A0052BB12 /* IOFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C72F25ED176A0052BB12 /* IOFieldsView.swift */; };
@@ -42,6 +44,8 @@
 		B9E627A925757B4B000419A7 /* ConverterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterModel.swift; sourceTree = "<group>"; };
 		B9E627AE25758A92000419A7 /* ConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewModel.swift; sourceTree = "<group>"; };
 		B9F77A3E2583883000859245 /* TypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypePicker.swift; sourceTree = "<group>"; };
+		C2094CC726BB1A27005EA678 /* SwapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapButton.swift; sourceTree = "<group>"; };
+		C2094CC926BB1B24005EA678 /* InfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoButton.swift; sourceTree = "<group>"; };
 		C21204F626B6AAFA00F1D65A /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		C228C72A25ED166E0052BB12 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		C228C72F25ED176A0052BB12 /* IOFieldsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOFieldsView.swift; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 				C228C72F25ED176A0052BB12 /* IOFieldsView.swift */,
 				C228C73425ED19640052BB12 /* TypePickerButtonsView.swift */,
 				C21204F626B6AAFA00F1D65A /* HUDView.swift */,
+				C2094CC726BB1A27005EA678 /* SwapButton.swift */,
+				C2094CC926BB1B24005EA678 /* InfoButton.swift */,
 			);
 			path = "Helpers Views";
 			sourceTree = "<group>";
@@ -243,6 +249,7 @@
 				C21204F726B6AAFA00F1D65A /* HUDView.swift in Sources */,
 				C228C73525ED19640052BB12 /* TypePickerButtonsView.swift in Sources */,
 				B9E6277E25757AD9000419A7 /* ContentView.swift in Sources */,
+				C2094CCA26BB1B24005EA678 /* InfoButton.swift in Sources */,
 				B9F77A3F2583883000859245 /* TypePicker.swift in Sources */,
 				C228C72B25ED166E0052BB12 /* BackgroundView.swift in Sources */,
 				B9E627AA25757B4B000419A7 /* ConverterModel.swift in Sources */,
@@ -253,6 +260,7 @@
 				B9E6277C25757AD9000419A7 /* UnitConverter2App.swift in Sources */,
 				B9E627AF25758A92000419A7 /* ConverterViewModel.swift in Sources */,
 				C2935B4226B5C41100AA020B /* StringExtension.swift in Sources */,
+				C2094CC826BB1A27005EA678 /* SwapButton.swift in Sources */,
 				C2FA64E52643E5BD0022284C /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,7 +412,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = photo.basin.UnitConverter2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -428,7 +436,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = photo.basin.UnitConverter2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

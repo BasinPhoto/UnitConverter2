@@ -21,6 +21,55 @@ struct ContentView: View {
     @State private var isPresented = false
     @AppStorage("onboard") var onboard = true
 
+    fileprivate func onTap() {
+        if unit.amountInString == "" {
+            unit.amountInString = unit.temporaryValue
+        }
+        showAllCategories = false
+        if unit.isBothValuesSelected {
+            showPicker = false
+            numberOfPicker = .both
+        } else {
+            showPicker = true
+        }
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    fileprivate func DragHandle() -> _ChangedGesture<DragGesture> {
+        return DragGesture().onChanged { value in
+            // hide and show dropdown menu by swipe
+            if value.translation.width < -100 && showAllCategories == false {
+                showPicker = false
+                showAllCategories = true
+            } else if value.translation.width > 100 && showAllCategories == true {
+                showAllCategories = false
+            }
+            
+            if !showAllCategories && value.translation.height > 150 {
+                if !showPicker {
+                    numberOfPicker = .both
+                    showPicker = true
+                }
+            }
+        }
+    }
+    
+    fileprivate func getCurrencies() {
+        NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (requestResult) in
+            DispatchQueue.main.async {
+                if let fetchingResult = requestResult {
+                    UnitType.allValues.append(fetchingResult.conversionRates)
+                    unit.objectWillChange.send()
+                }
+            }
+        }
+        
+        numberOfPicker = .both
+        showAllCategories = true
+        
+        isPresented = onboard
+    }
+    
     var body: some View {
         
         ZStack {
@@ -47,34 +96,8 @@ struct ContentView: View {
                     .environmentObject(unit)
                     
                 //SwapButton
-                if !showPicker {
-                    Button(action: {
-                        if unit.result != nil {
-                            unit.swapValues()
-                            numberOfPicker = .right
-                            showPicker.toggle()
-                        } else {
-                            unit.swapValues()
-                        }
-                    }, label: {
-                        HStack(spacing: -25, content: {
-                            Image("arrow")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Color("secondaryColor"))
-                                .frame(width: 35, height: 35)
-                            
-                            Image("arrow")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Color("primaryColor"))
-                                .frame(width: 35, height: 35)
-                                .rotationEffect(.degrees(180))
-                        })
-                    })
-                    .rotationEffect(.degrees(-45))
-                    .transition(.scale)
-                }
+                SwapButton(showPicker: $showPicker, numberOfPicker: $numberOfPicker)
+                    .environmentObject(unit)
                 
                 //input and output value fields
                 IOFieldsView(showAllCategories: $showAllCategories, showPicker: $showPicker, numberOfPicker: $numberOfPicker)
@@ -84,30 +107,7 @@ struct ContentView: View {
             .scaleEffect(showAllCategories ? 1.2 : 1)
             
             //info button
-            VStack {
-                Spacer()
-                HStack {
-                    if !showAllCategories, !showPicker {
-                        Button(action: {
-                            isPresented.toggle()
-                        }, label: {
-                            Image(systemName: "info")
-                                .font(.system(size: 46))
-                                .frame(width: 45, height: 45)
-                                .padding(10)
-                                .foregroundColor(Color("secondaryColor"))
-                                .background(Color("primaryColor"))
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color("secondaryColor"), lineWidth: 2))
-                                .padding(.leading, 30)
-                                .shadow(color: Color("shadowColor").opacity(0.7), radius: 10, x: 6, y: 6)
-                        })
-                        .padding(.bottom, 45)
-                        .transition(.move(edge: .leading))
-                        Spacer()
-                    }
-                }
-            }
+            InfoButton(showAllCategories: $showAllCategories, showPicker: $showPicker, isPresented: $isPresented)
             
             //dropdown menu button
             VStack {
@@ -122,51 +122,18 @@ struct ContentView: View {
         }
         .animation(.default)
         .onTapGesture {
-            if unit.amountInString == "" {
-                unit.amountInString = unit.temporaryValue
-            }
-            showAllCategories = false
-            if unit.isBothValuesSelected {
-                showPicker = false
-                numberOfPicker = .both
-            } else {
-                showPicker = true
-            }
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            onTap()
         }
         .gesture(
-            DragGesture().onChanged { value in
-                // hide and show dropdown menu by swipe
-                if value.translation.width < -100 && showAllCategories == false {
-                    showPicker = false
-                    showAllCategories = true
-                } else if value.translation.width > 100 && showAllCategories == true {
-                    showAllCategories = false
-                }
-                
-                if !showAllCategories && value.translation.height > 150 {
-                    if !showPicker {
-                        numberOfPicker = .both
-                        showPicker = true
-                    }
-                }
-            }
+            DragHandle()
         )
         .onAppear(perform: {
-            
-            NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (requestResult) in
-                DispatchQueue.main.async {
-                    if let fetchingResult = requestResult {
-                        UnitType.allValues.append(fetchingResult.conversionRates)
-                        unit.objectWillChange.send()
-                    }
-                }
+            getCurrencies()
+            if let _ = UIPasteboard.general.string {
+                guard let clipboardDouble = Double(UIPasteboard.general.string!) else {return}
+                print(">>> clipboardValue is \(clipboardDouble)")
+                unit.amountInString = String(clipboardDouble)
             }
-            
-            numberOfPicker = .both
-            showAllCategories = true
-            
-            isPresented = onboard
         })
         .sheet(isPresented: $isPresented) {
             OnBoardView()

@@ -153,3 +153,4 @@
 "Swipe from below copies the result into the input field" = "Свайп снизу копирует результат в поле ввода";
 "Double tap rounds the value to the nearest integer" = "Двойной тап округляет значение до целого";
 "Double tap on the result copies it to the clipboard" = "Двойной тап по результату копирует его в буфер обмена";
+"Copied to clipboard" = "Скопировано в буфер";

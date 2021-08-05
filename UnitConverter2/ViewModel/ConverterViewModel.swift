@@ -7,12 +7,12 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class ConverterViewModel: ObservableObject {
     
     @Published var type: UnitType = .length {
         didSet {
-            amountInString = "Value".localized()
             temporaryValue = ""
             selectedFrom = nil
             selectedTo = nil

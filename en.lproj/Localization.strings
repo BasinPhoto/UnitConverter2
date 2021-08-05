@@ -147,3 +147,4 @@
 "Swipe from below copies the result into the input field" = "Swipe from below copies the result into the input field";
 "Double tap rounds the value to the nearest integer" = "Double tap rounds the value to the nearest integer";
 "Double tap on the result copies it to the clipboard" = "Double tap on the result copies it to the clipboard";
+"Copied to clipboard" = "Copied to clipboard";
