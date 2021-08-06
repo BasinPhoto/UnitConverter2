@@ -40,6 +40,7 @@ struct ContentView: View {
             // hide and show dropdown menu by swipe
             if value.translation.width < -100 && showAllCategories == false {
                 showPicker = false
+                numberOfPicker = .both
                 showAllCategories = true
             } else if value.translation.width > 100 && showAllCategories == true {
                 showAllCategories = false

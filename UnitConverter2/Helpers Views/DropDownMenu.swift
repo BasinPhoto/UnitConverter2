@@ -20,6 +20,7 @@ struct DropDownMenu: View {
             withAnimation{
                 showAllCategories.toggle()
             }
+            showPicker = false
             generator.impactOccurred()
         }, label: {
             Image(unit.type.imageName)
@@ -46,12 +47,8 @@ struct DropDownMenu: View {
                 } else {
                     Button(action: {
                         if unit.type != type || unit.selectedFrom == nil || unit.selectedTo == nil {
-                            if type != .money {
-                                unit.type = type
-                                numberOfPicker = .both
-                                showPicker = true
-                            } else {
-                                unit.type = .money
+                            unit.type = type
+                            if unit.type == .money {
                                 unit.selectedFrom = unit.keysArray.firstIndex(where: {$0 == "USD"})
                                 if unit.localeCurrencyCode != nil {
                                     unit.selectedTo = unit.keysArray.firstIndex(where: {$0 == unit.localeCurrencyCode})
@@ -59,6 +56,9 @@ struct DropDownMenu: View {
                                     numberOfPicker = .right
                                     showPicker = true
                                 }
+                            } else {
+                                numberOfPicker = .both
+                                showPicker = true
                             }
                         }
                         self.showAllCategories.toggle()
