@@ -25,6 +25,9 @@
 		C253775525E151E900B7C806 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253775425E151E900B7C806 /* NetworkManager.swift */; };
 		C2935B3726AF42A800AA020B /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2935B3926AF42A800AA020B /* Localization.strings */; };
 		C2935B4226B5C41100AA020B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2935B4126B5C41100AA020B /* StringExtension.swift */; };
+		C2BF23A12856543500F8EC83 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A02856543500F8EC83 /* MainView.swift */; };
+		C2BF23A32856562500F8EC83 /* CurrencyRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A22856562500F8EC83 /* CurrencyRates.swift */; };
+		C2BF23A52856568A00F8EC83 /* ValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A42856568A00F8EC83 /* ValuePicker.swift */; };
 		C2E8A2FB25FD332F008C43D6 /* OnBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E8A2FA25FD332F008C43D6 /* OnBoardView.swift */; };
 		C2FA64E52643E5BD0022284C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA64E42643E5BD0022284C /* Utils.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +58,9 @@
 		C2935B3826AF42A800AA020B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localization.strings; sourceTree = "<group>"; };
 		C2935B3F26AF430500AA020B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localization.strings; sourceTree = "<group>"; };
 		C2935B4126B5C41100AA020B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		C2BF23A02856543500F8EC83 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		C2BF23A22856562500F8EC83 /* CurrencyRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRates.swift; sourceTree = "<group>"; };
+		C2BF23A42856568A00F8EC83 /* ValuePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePicker.swift; sourceTree = "<group>"; };
 		C2E8A2FA25FD332F008C43D6 /* OnBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardView.swift; sourceTree = "<group>"; };
 		C2FA64E42643E5BD0022284C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +101,7 @@
 			children = (
 				B9E6277B25757AD9000419A7 /* UnitConverter2App.swift */,
 				B9E6277D25757AD9000419A7 /* ContentView.swift */,
+				C2BF23A02856543500F8EC83 /* MainView.swift */,
 				C2B2BC3D25BCAEE400AE48E1 /* Model */,
 				C2B2BC3925BCAEC300AE48E1 /* Helpers Views */,
 				C2B2BC4125BCAEEE00AE48E1 /* ViewModel */,
@@ -153,6 +160,7 @@
 				C21204F626B6AAFA00F1D65A /* HUDView.swift */,
 				C2094CC726BB1A27005EA678 /* SwapButton.swift */,
 				C2094CC926BB1B24005EA678 /* InfoButton.swift */,
+				C2BF23A42856568A00F8EC83 /* ValuePicker.swift */,
 			);
 			path = "Helpers Views";
 			sourceTree = "<group>";
@@ -161,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				B9E627A925757B4B000419A7 /* ConverterModel.swift */,
+				C2BF23A22856562500F8EC83 /* CurrencyRates.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -246,6 +255,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2BF23A32856562500F8EC83 /* CurrencyRates.swift in Sources */,
+				C2BF23A52856568A00F8EC83 /* ValuePicker.swift in Sources */,
 				C21204F726B6AAFA00F1D65A /* HUDView.swift in Sources */,
 				C228C73525ED19640052BB12 /* TypePickerButtonsView.swift in Sources */,
 				B9E6277E25757AD9000419A7 /* ContentView.swift in Sources */,
@@ -257,6 +268,7 @@
 				C228C73025ED176A0052BB12 /* IOFieldsView.swift in Sources */,
 				C253775525E151E900B7C806 /* NetworkManager.swift in Sources */,
 				B93064A6257FA5490011228A /* DropDownMenu.swift in Sources */,
+				C2BF23A12856543500F8EC83 /* MainView.swift in Sources */,
 				B9E6277C25757AD9000419A7 /* UnitConverter2App.swift in Sources */,
 				B9E627AF25758A92000419A7 /* ConverterViewModel.swift in Sources */,
 				C2935B4226B5C41100AA020B /* StringExtension.swift in Sources */,
@@ -331,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -386,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -401,13 +413,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = primaryColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UnitConverter2/Preview Content\"";
 				DEVELOPMENT_TEAM = QUXUWH42GX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = UnitConverter2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -425,13 +438,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = primaryColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UnitConverter2/Preview Content\"";
 				DEVELOPMENT_TEAM = QUXUWH42GX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = UnitConverter2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

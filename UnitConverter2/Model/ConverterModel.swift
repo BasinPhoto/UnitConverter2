@@ -105,24 +105,36 @@ enum UnitType: Int, CaseIterable, Identifiable {
             return "money"
         }
     }
-}
-
-struct CurrencyRates: Codable {
-    let result: String
-    let timeLastUpdateUnix: Int
-    let timeLastUpdateUTC: String
-    let timeNextUpdateUnix: Int
-    let timeNextUpdateUTC, baseCode: String
-    let conversionRates: [String: Double]
-
-    enum CodingKeys: String, CodingKey {
-        case result
-        case timeLastUpdateUnix = "time_last_update_unix"
-        case timeLastUpdateUTC = "time_last_update_utc"
-        case timeNextUpdateUnix = "time_next_update_unix"
-        case timeNextUpdateUTC = "time_next_update_utc"
-        case baseCode = "base_code"
-        case conversionRates = "conversion_rates"
+    
+    var labels: [String] {
+        switch self {
+        case .length:
+            return Self.allValues[0].keys.sorted()
+        case .volume:
+            return Self.allValues[1].keys.sorted()
+        case .weight:
+            return Self.allValues[2].keys.sorted()
+        case .time:
+            return Self.allValues[3].keys.sorted()
+        case .pressure:
+            return Self.allValues[4].keys.sorted()
+        case .information:
+            return Self.allValues[5].keys.sorted()
+        case .flatAngle:
+            return Self.allValues[6].keys.sorted()
+        case .square:
+            return Self.allValues[7].keys.sorted()
+        case .speed:
+            return Self.allValues[8].keys.sorted()
+        case .energy:
+            return Self.allValues[9].keys.sorted()
+        case .money:
+            if Self.allValues.count > 10 {
+                return Self.allValues[10].keys.sorted()
+            } else {
+                return []
+            }
+        }
     }
 }
 
