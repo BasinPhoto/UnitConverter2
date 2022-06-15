@@ -28,6 +28,9 @@ struct ValuePicker: View {
         type.labels
     }
     
+    @State private var topItems: [String] = []
+    @State private var bottomItems: [String] = []
+    
     let itemHeight: CGFloat
     let padding: CGFloat
     
@@ -38,38 +41,68 @@ struct ValuePicker: View {
     }
     
     var body: some View {
-        ScrollViewReader { scrollReaderProxy in
-            GeometryReader { scrollProxy in
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
-                        ForEach(type.labels, id:\.self) { label in
-                            Text(label)
-                                .frame(height: itemHeight)
-                                .padding(padding)
-                                .background (
-                                    GeometryReader { proxy in
-                                        scrollObserver(scrollReaderProxy: scrollReaderProxy,
-                                                       itemProxy: proxy,
-                                                       scrollProxy: scrollProxy,
-                                                       selectedLabel: label)
-                                    }
-                                )
-                                .id(label)
-                        }
-                    }.frame(width: UIScreen.main.bounds.width / 2)
-                }
-                .onAppear {
-                    self.scrollReaderProxy = scrollReaderProxy
-                    subscribe()
+        ZStack {
+            VStack {
+                ForEach(topItems, id:\.self) { label in
+                    Text(label)
+                        .frame(height: itemHeight)
+                        .padding(padding)
+                        .foregroundColor(.gray)
+                        .id(label)
                 }
             }
-            .frame(width: UIScreen.main.bounds.width / 2,
-                   height: itemHeight + padding * 2)
-            .background(Color(uiColor: .systemBackground))
+            .offset(y: -CGFloat(topItems.count) * itemHeight)
+            
+            ScrollViewReader { scrollReaderProxy in
+                GeometryReader { scrollProxy in
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack {
+                            ForEach(type.labels, id:\.self) { label in
+                                Text(label)
+                                    .frame(height: itemHeight)
+                                    .padding(.vertical, padding)
+                                    .background (
+                                        GeometryReader { proxy in
+                                            scrollObserver(scrollReaderProxy: scrollReaderProxy,
+                                                           itemProxy: proxy,
+                                                           scrollProxy: scrollProxy,
+                                                           selectedLabel: label)
+                                        }
+                                    )
+                                    .id(label)
+                            }
+                        }
+                        .frame(width: UIScreen.main.bounds.width / 2)
+                    }
+                    .onAppear {
+                        self.scrollReaderProxy = scrollReaderProxy
+                        bottomItems = labels
+                        subscribe()
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width / 2,
+                       height: itemHeight + padding * 2)
+                .background(Color(uiColor: .secondarySystemBackground))
+                .clipShape(Capsule())
+            }
+            
+            VStack {
+                ForEach(bottomItems, id:\.self) { label in
+                    Text(label)
+                        .frame(height: itemHeight)
+                        .padding(padding)
+                        .foregroundColor(.gray)
+                        .id(label)
+                }
+            }
+            .offset(y: CGFloat(bottomItems.count) * itemHeight)
         }
     }
     
-    private func scrollObserver(scrollReaderProxy: ScrollViewProxy, itemProxy: GeometryProxy, scrollProxy: GeometryProxy, selectedLabel: String) -> some View {
+    private func scrollObserver(scrollReaderProxy: ScrollViewProxy,
+                                itemProxy: GeometryProxy,
+                                scrollProxy: GeometryProxy,
+                                selectedLabel: String) -> some View {
         let itemVerticalCenter = itemProxy.frame(in: .global).midY
         let inScroll = itemVerticalCenter >= scrollProxy.frame(in: .global).minY &&
         itemVerticalCenter <= scrollProxy.frame(in: .global).maxY
@@ -90,10 +123,14 @@ struct ValuePicker: View {
     
     private func subscribe() {
         labelPublisher
-            .debounce(for: 0.2, scheduler: RunLoop.main)
+            .debounce(for: 0.5, scheduler: RunLoop.main)
             .receive(on: RunLoop.main)
             .sink { label in
                 self.selectedLabel = label
+                if let index = labels.firstIndex(of: label) {
+                    topItems = Array(labels[0...index].dropLast())
+                    bottomItems = Array(labels[index...(labels.count - 1)].dropFirst())
+                }
                 withAnimation {
                     scrollReaderProxy!.scrollTo(label, anchor: .center)
                 }
@@ -104,6 +141,7 @@ struct ValuePicker: View {
 
 struct ValuePicker_Previews: PreviewProvider {
     static var previews: some View {
-        ValuePicker(type: .length)
+        Group {
+            ValuePicker(type: .length)        }
     }
 }

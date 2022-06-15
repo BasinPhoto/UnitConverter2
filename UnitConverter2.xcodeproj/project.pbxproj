@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		B9F77A3F2583883000859245 /* TypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F77A3E2583883000859245 /* TypePicker.swift */; };
 		C2094CC826BB1A27005EA678 /* SwapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2094CC726BB1A27005EA678 /* SwapButton.swift */; };
 		C2094CCA26BB1B24005EA678 /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2094CC926BB1B24005EA678 /* InfoButton.swift */; };
+		C20DF07E285A526D00BE9406 /* SimultaneouslyScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = C20DF07D285A526D00BE9406 /* SimultaneouslyScrollView */; };
 		C21204F726B6AAFA00F1D65A /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21204F626B6AAFA00F1D65A /* HUDView.swift */; };
 		C228C72B25ED166E0052BB12 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C72A25ED166E0052BB12 /* BackgroundView.swift */; };
 		C228C73025ED176A0052BB12 /* IOFieldsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228C72F25ED176A0052BB12 /* IOFieldsView.swift */; };
@@ -70,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C20DF07E285A526D00BE9406 /* SimultaneouslyScrollView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +201,9 @@
 			dependencies = (
 			);
 			name = UnitConverter2;
+			packageProductDependencies = (
+				C20DF07D285A526D00BE9406 /* SimultaneouslyScrollView */,
+			);
 			productName = UnitConverter2;
 			productReference = B9E6277825757AD9000419A7 /* UnitConverter2.app */;
 			productType = "com.apple.product-type.application";
@@ -227,6 +232,9 @@
 				ru,
 			);
 			mainGroup = B9E6276F25757AD9000419A7;
+			packageReferences = (
+				C20DF07C285A526D00BE9406 /* XCRemoteSwiftPackageReference "SimultaneouslyScrollView" */,
+			);
 			productRefGroup = B9E6277925757AD9000419A7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -480,6 +488,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C20DF07C285A526D00BE9406 /* XCRemoteSwiftPackageReference "SimultaneouslyScrollView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stonko1994/SimultaneouslyScrollView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C20DF07D285A526D00BE9406 /* SimultaneouslyScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C20DF07C285A526D00BE9406 /* XCRemoteSwiftPackageReference "SimultaneouslyScrollView" */;
+			productName = SimultaneouslyScrollView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9E6277025757AD9000419A7 /* Project object */;
 }
