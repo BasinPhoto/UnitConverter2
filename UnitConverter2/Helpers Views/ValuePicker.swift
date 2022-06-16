@@ -8,36 +8,34 @@
 import SwiftUI
 import Combine
 
-class ViewModel: ObservableObject {
+struct ValuePicker<Selection: Hashable & StringProtocol>: View {
+    @State private var labelPublisher = PassthroughSubject<Selection, Never>()
+    @State private var offsetCorrectionPublisher = PassthroughSubject<CGFloat, Never>()
     
-}
-
-struct ValuePicker: View {
-    let type: UnitType
-    
-    private var labelPublisher = PassthroughSubject<String, Never>()
-    @State var selectedLabel: String = ""
+    @Binding var selection: Selection
     @State private var subscriptions = Set<AnyCancellable>()
     
     @State private var dragLocation: CGFloat = 0
     @State private var offset: CGFloat = 0
     
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
+    let colorSelection: Color
     
-    private var labels: [String] {
-        type.labels
-    }
+    private var items: [Selection]
     
-    init(type: UnitType, itemHeight: CGFloat = 28, padding: CGFloat = 8) {
-        self.type = type
+    init(items: [Selection], selection: Binding<Selection>, colorSelection: Color) {
+        self.items = items
+        self._selection = selection
+        self.colorSelection = colorSelection
     }
     
     var body: some View {
         ZStack {
             GeometryReader { scrollGeo in
                 VStack {
-                    ForEach(labels, id:\.self) {
-                        Text($0).padding()
+                    ForEach(items, id:\.self) { item in
+                        Text(item)
+                            .padding(4)
                             .foregroundColor(.gray)
                     }
                 }
@@ -46,11 +44,11 @@ struct ValuePicker: View {
                 
                 ZStack {
                     VStack {
-                        ForEach(labels, id:\.self) { label in
+                        ForEach(items, id:\.self) { label in
                             Text(label)
                                 .bold()
-                                .foregroundColor(.primary)
-                                .padding()
+                                .foregroundColor(.white)
+                                .padding(4)
                                 .background(
                                     GeometryReader { itemGeo in
                                         scrollObserver(itemProxy: itemGeo,
@@ -62,13 +60,10 @@ struct ValuePicker: View {
                     }
                     .offset(y: dragLocation)
                 }
-                .frame(width: 200, height: 60)
-                .background(Color.white)
-                .clipShape(Capsule())
+                .frame(width: scrollGeo.size.width, height: 30)
+                .background(colorSelection)
+                .clipShape(Rectangle())
                 .position(x: scrollGeo.size.width / 2, y: scrollGeo.size.height / 2)
-                .shadow(color: .gray.opacity(0.5),
-                        radius: 5,
-                        y: 7)
             }
         }
         .coordinateSpace(name: "scroll")
@@ -88,21 +83,20 @@ struct ValuePicker: View {
     
     private func scrollObserver(itemProxy: GeometryProxy,
                                 scrollProxy: GeometryProxy,
-                                selectedLabel: String) -> some View {
+                                selectedLabel: Selection) -> some View {
         let itemCenter = itemProxy.frame(in: .named("scroll")).midY
         let selectionZoneMin = scrollProxy.frame(in: .named("scroll")).midY - 30
         let selectionZoneMax = scrollProxy.frame(in: .named("scroll")).midY + 30
         let inScroll = itemCenter > selectionZoneMin && itemCenter < selectionZoneMax
         
-//        let aligned = scrollProxy.frame(in: .global).midY == itemProxy.frame(in: .global).midY
-        
-        if selectedLabel != self.selectedLabel {
-            feedbackGenerator.prepare()
-            feedbackGenerator.impactOccurred()
-        }
-        
         if inScroll {
             labelPublisher.send(selectedLabel)
+            offsetCorrectionPublisher.send(scrollProxy.frame(in: .named("scroll")).midY - itemCenter)
+        }
+        
+        if (selectedLabel == items.first && itemCenter > selectionZoneMax) ||
+            (selectedLabel == items.last && itemCenter < selectionZoneMin) {
+            offsetCorrectionPublisher.send(scrollProxy.frame(in: .named("scroll")).midY - itemCenter)
         }
         
         return Rectangle().fill(Color.clear)
@@ -110,12 +104,30 @@ struct ValuePicker: View {
     
     private func subscribe() {
         labelPublisher
+            .debounce(for: 0.01, scheduler: RunLoop.main)
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { item in
+                if item != selection {
+                    if item == items.first || item == items.last {
+                        feedbackGenerator.impactOccurred(intensity: 1)
+                    } else {
+                        feedbackGenerator.impactOccurred(intensity: 0.7)
+                    }
+                    selection = item
+                }
+            }
+            .store(in: &subscriptions)
+        
+        offsetCorrectionPublisher
             .debounce(for: 0.5, scheduler: RunLoop.main)
             .removeDuplicates()
             .receive(on: RunLoop.main)
-            .sink { label in
-                self.selectedLabel = label
-                print(">>> selected:", label)
+            .sink { correctionValue in
+                withAnimation(.spring()) {
+                    dragLocation = dragLocation + correctionValue
+                    offset = offset + correctionValue
+                }
             }
             .store(in: &subscriptions)
     }
@@ -123,6 +135,6 @@ struct ValuePicker: View {
 
 struct ValuePicker_Previews: PreviewProvider {
     static var previews: some View {
-        ValuePicker(type: .length)
+        ValuePicker(items: ["one", "two", "three"], selection: .constant("two"), colorSelection: .blue)
     }
 }
