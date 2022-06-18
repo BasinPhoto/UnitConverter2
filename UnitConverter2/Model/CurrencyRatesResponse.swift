@@ -1,5 +1,5 @@
 //
-//  CurrencyRates.swift
+//  CurrencyRatesResponse.swift
 //  UnitConverter2
 //
 //  Created by Sergey Basin on 12.06.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CurrencyRates: Codable {
+struct CurrencyRatesResponse: Codable {
     let result: String
     let timeLastUpdateUnix: Int
     let timeLastUpdateUTC: String

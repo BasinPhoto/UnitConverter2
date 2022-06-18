@@ -12,7 +12,7 @@ final class NetworkManager {
     
     static let urlAPI = "https://v6.exchangerate-api.com/v6/83d18ab70ffc027d5021504d/latest/USD"
     
-    static func fetchData(urlAPI: String, complition: @escaping (CurrencyRates?) -> () ) {
+    static func fetchData(urlAPI: String, complition: @escaping (CurrencyRatesResponse?) -> () ) {
         guard let url = URL(string: urlAPI) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if error != nil {
@@ -27,7 +27,7 @@ final class NetworkManager {
             }
             
             do {
-                let result = try JSONDecoder().decode(CurrencyRates.self, from: safeData)
+                let result = try JSONDecoder().decode(CurrencyRatesResponse.self, from: safeData)
                 complition(result)
             } catch {
                 print(error.localizedDescription)

@@ -121,7 +121,6 @@ struct MainView: View {
                     ValuePicker(items: viewModel.labels, selection: $viewModel.selection1, colorSelection: Color("primaryColor"))
                     ValuePicker(items: viewModel.labels, selection: $viewModel.selection2, colorSelection: Color("primaryColor"))
                 }
-                .frame(height: UIScreen.main.bounds.height / 2)
                 .clipped()
                 
                 Button {
@@ -141,6 +140,7 @@ struct MainView: View {
                        resultValueDescription: viewModel.selection2)
         
             InputView(value: $viewModel.inputValue)
+                .padding(.horizontal)
         }
         .onAppear {
             viewModel.getCurrencies()

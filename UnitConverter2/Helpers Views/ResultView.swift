@@ -28,7 +28,7 @@ struct ResultView: View {
                 .font(.largeTitle)
                 .bold()
             VStack(alignment: .leading) {
-                Text("\(resultValue)")
+                Text("\(resultValue.removeZerosFromEnd())")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                 Text(resultValueDescription)

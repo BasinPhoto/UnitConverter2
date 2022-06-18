@@ -107,6 +107,47 @@ struct InputView: View {
                 .background(Color("primaryColor"))
                 .cornerRadius(16)
             }
+            
+            HStack {
+                Group {
+                    Button {
+                        print("+")
+                    } label: {
+                        Text("+")
+                    }
+                    
+                    Button {
+                        print("-")
+                    } label: {
+                        Text("-")
+                    }
+                    
+                    Button {
+                        print("*")
+                    } label: {
+                        Text("*")
+                    }
+                    
+                    Button {
+                        print("/")
+                    } label: {
+                        Text("/")
+                    }
+                    
+                    Button {
+                        print("=")
+                    } label: {
+                        Text("=")
+                    }
+                }
+                .font(.title)
+                .frame(height: 50)
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.white)
+                .background(Color("primaryColor"))
+                .cornerRadius(16)
+
+            }
         }
     }
 }
