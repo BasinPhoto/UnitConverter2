@@ -8,11 +8,11 @@
 import SwiftUI
 import Combine
 
-struct ValuePicker<Selection: Hashable & StringProtocol>: View {
-    @State private var labelPublisher = PassthroughSubject<Selection, Never>()
+struct ValuePicker: View {
+    @State private var labelPublisher = PassthroughSubject<String, Never>()
     @State private var offsetCorrectionPublisher = PassthroughSubject<CGFloat, Never>()
     
-    @Binding var selection: Selection
+    @Binding var selection: String
     @State private var subscriptions = Set<AnyCancellable>()
     
     @State private var dragLocation: CGFloat = 0
@@ -21,9 +21,9 @@ struct ValuePicker<Selection: Hashable & StringProtocol>: View {
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
     let colorSelection: Color
     
-    private var items: [Selection]
+    private var items: [String]
     
-    init(items: [Selection], selection: Binding<Selection>, colorSelection: Color) {
+    init(items: [String], selection: Binding<String>, colorSelection: Color) {
         self.items = items
         self._selection = selection
         self.colorSelection = colorSelection
@@ -34,9 +34,17 @@ struct ValuePicker<Selection: Hashable & StringProtocol>: View {
             GeometryReader { scrollGeo in
                 VStack {
                     ForEach(items, id:\.self) { item in
-                        Text(item)
-                            .padding(4)
-                            .foregroundColor(.gray)
+                        if let flag = UnitType.flags[item] {
+                            Text(flag + item)
+                                .lineLimit(1)
+                                .padding(4)
+                                .foregroundColor(.gray)
+                        } else {
+                            Text(item)
+                                .lineLimit(1)
+                                .padding(4)
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
                 .position(x: scrollGeo.size.width / 2, y: scrollGeo.size.height / 2)
@@ -44,18 +52,34 @@ struct ValuePicker<Selection: Hashable & StringProtocol>: View {
                 
                 ZStack {
                     VStack {
-                        ForEach(items, id:\.self) { label in
-                            Text(label)
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(
-                                    GeometryReader { itemGeo in
-                                        scrollObserver(itemProxy: itemGeo,
-                                                       scrollProxy: scrollGeo,
-                                                       selectedLabel: label)
-                                    }
-                                )
+                        ForEach(items, id:\.self) { item in
+                            if let flag = UnitType.flags[item] {
+                                Text(flag + item)
+                                    .bold()
+                                    .lineLimit(1)
+                                    .foregroundColor(.white)
+                                    .padding(4)
+                                    .background(
+                                        GeometryReader { itemGeo in
+                                            scrollObserver(itemProxy: itemGeo,
+                                                           scrollProxy: scrollGeo,
+                                                           selectedLabel: item)
+                                        }
+                                    )
+                            } else {
+                                Text(item)
+                                    .bold()
+                                    .lineLimit(1)
+                                    .foregroundColor(.white)
+                                    .padding(4)
+                                    .background(
+                                        GeometryReader { itemGeo in
+                                            scrollObserver(itemProxy: itemGeo,
+                                                           scrollProxy: scrollGeo,
+                                                           selectedLabel: item)
+                                        }
+                                    )
+                            }
                         }
                     }
                     .offset(y: dragLocation)
@@ -76,14 +100,14 @@ struct ValuePicker<Selection: Hashable & StringProtocol>: View {
                 }
                 .onEnded { offset += $0.translation.height}
         )
-        .onAppear {
+        .task {
             subscribe()
         }
     }
     
     private func scrollObserver(itemProxy: GeometryProxy,
                                 scrollProxy: GeometryProxy,
-                                selectedLabel: Selection) -> some View {
+                                selectedLabel: String) -> some View {
         let itemCenter = itemProxy.frame(in: .named("scroll")).midY
         let selectionZoneMin = scrollProxy.frame(in: .named("scroll")).midY - 30
         let selectionZoneMax = scrollProxy.frame(in: .named("scroll")).midY + 30
@@ -104,7 +128,7 @@ struct ValuePicker<Selection: Hashable & StringProtocol>: View {
     
     private func subscribe() {
         labelPublisher
-            .debounce(for: 0.01, scheduler: RunLoop.main)
+            .debounce(for: 0.3, scheduler: RunLoop.main)
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink { item in
@@ -120,7 +144,7 @@ struct ValuePicker<Selection: Hashable & StringProtocol>: View {
             .store(in: &subscriptions)
         
         offsetCorrectionPublisher
-            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .debounce(for: 0.3, scheduler: RunLoop.main)
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink { correctionValue in

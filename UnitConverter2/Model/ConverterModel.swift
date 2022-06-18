@@ -137,9 +137,3 @@ enum UnitType: Int, CaseIterable, Identifiable {
         }
     }
 }
-
-enum PickerSide: Int {
-    case both
-    case left
-    case right
-}
