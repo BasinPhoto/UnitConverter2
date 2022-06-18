@@ -90,6 +90,7 @@ struct ValuePicker: View {
                 .position(x: scrollGeo.size.width / 2, y: scrollGeo.size.height / 2)
             }
         }
+        .clipShape(Rectangle())
         .coordinateSpace(name: "scroll")
         .gesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .global)

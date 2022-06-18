@@ -8,13 +8,52 @@
 import SwiftUI
 
 struct InputView: View {
+    enum OperationType {
+        case plus
+        case minus
+        case multiply
+        case divide
+    }
+    
     @Binding var value: String
+    @State var operation: OperationType?
+    @State var operationValue: String = ""
     
     private func handleTap(value: String) {
-        if let tmpValue = Double(self.value), tmpValue != 0 {
-            self.value += value
+        if let _ = operation {
+            if let tmpValue = Double(self.value), tmpValue != 0 {
+                self.operationValue += value
+            } else {
+                self.operationValue = value
+            }
         } else {
-            self.value = value
+            if let tmpValue = Double(self.value), tmpValue != 0 {
+                self.value += value
+            } else {
+                self.value = value
+            }
+        }
+    }
+    
+    private func calculate() {
+        if let operationValue = Double(operationValue),
+            let valueNumber = Double(value) {
+            switch operation {
+            case .plus:
+                value = (valueNumber + operationValue).description
+            case .minus:
+                value = (valueNumber - operationValue).description
+            case .multiply:
+                value = (valueNumber * operationValue).description
+            case .divide:
+                guard operationValue != 0 else { return }
+                value = (valueNumber / operationValue).description
+            default:
+                return
+            }
+            
+            operation = nil
+            self.operationValue = ""
         }
     }
     
@@ -68,37 +107,49 @@ struct InputView: View {
                         handleTap(value: "6")
                     } label: {
                         Text("6")
-                            
                     }
+                    
                     Button {
                         handleTap(value: "7")
                     } label: {
                         Text("7")
                     }
+                    
                     Button {
                         handleTap(value: "8")
                     } label: {
                         Text("8")
                     }
+                    
                     Button {
                         handleTap(value: "9")
                     } label: {
                         Text("9")
                     }
+                    
                     Button {
                         handleTap(value: "0")
                     } label: {
                         Text("0")
                     }
-                    Button {
-                        if value.count > 1 {
-                            value = String(value.dropLast())
-                        } else {
+                    
+                    Image(systemName: "delete.left.fill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                        .background(Color.red)
+                        .cornerRadius(16)
+                        .onTapGesture {
+                            if value.count > 1 {
+                                value = String(value.dropLast())
+                            } else {
+                                value = "0"
+                            }
+                        }
+                        .onLongPressGesture {
                             value = "0"
                         }
-                    } label: {
-                        Image(systemName: "delete.left")
-                    }
 
                 }
                 .font(.title)
@@ -109,44 +160,73 @@ struct InputView: View {
             }
             
             HStack {
-                Group {
-                    Button {
-                        print("+")
-                    } label: {
-                        Text("+")
+                Button {
+                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                        operation = .plus
                     }
-                    
-                    Button {
-                        print("-")
-                    } label: {
-                        Text("-")
-                    }
-                    
-                    Button {
-                        print("*")
-                    } label: {
-                        Text("*")
-                    }
-                    
-                    Button {
-                        print("/")
-                    } label: {
-                        Text("/")
-                    }
-                    
-                    Button {
-                        print("=")
-                    } label: {
-                        Text("=")
-                    }
+                } label: {
+                    Text("+")
+                        .font(.title)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(operation == .plus ? Color("primaryColor") : Color.orange)
+                        .cornerRadius(16)
                 }
-                .font(.title)
-                .frame(height: 50)
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.white)
-                .background(Color("primaryColor"))
-                .cornerRadius(16)
-
+                
+                Button {
+                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                        operation = .minus
+                    }
+                } label: {
+                    Text("-")
+                        .font(.title)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(operation == .minus ? Color("primaryColor") : Color.orange)
+                        .cornerRadius(16)
+                }
+                
+                Button {
+                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                        operation = .multiply
+                    }
+                } label: {
+                    Text("*")
+                        .font(.title)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(operation == .multiply ? Color("primaryColor") : Color.orange)
+                        .cornerRadius(16)
+                }
+                
+                Button {
+                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                        operation = .divide
+                    }
+                } label: {
+                    Text("/")
+                        .font(.title)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(operation == .divide ? Color("primaryColor") : Color.orange)
+                        .cornerRadius(16)
+                }
+                
+                Button {
+                    self.calculate()
+                } label: {
+                    Text("=")
+                        .font(.title)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(Color.orange)
+                        .cornerRadius(16)
+                }
             }
         }
     }

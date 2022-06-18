@@ -18,8 +18,10 @@ struct ResultView: View {
         HStack {
             VStack(alignment: .trailing) {
                 Text("\(inputValue)")
+                    .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 Text(inputValueDescription)
+                    .lineLimit(1)
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
@@ -29,9 +31,11 @@ struct ResultView: View {
                 .bold()
             VStack(alignment: .leading) {
                 Text("\(resultValue.removeZerosFromEnd())")
+                    .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                 Text(resultValueDescription)
+                    .lineLimit(1)
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
