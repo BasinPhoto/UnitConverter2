@@ -10,46 +10,47 @@ import Combine
 
 struct MainView: View {
     @StateObject var viewModel = ViewModel()
+    @State var unitType: UnitType = .time
+    @State var selectedIndex1: Int = 0
+    @State var selectedIndex2: Int = 0
 
     var body: some View {
         VStack(spacing: 0) {
-            TypePickerView(items: UnitType.allCases, selection: $viewModel.type, colorSelection: Color("primaryColor"))
+            TypePickerView(selectedUnitType: $unitType)
                 .frame(height: 82)
-                .padding(.bottom)
+                .padding(.vertical)
             
             Divider()
                 .background(Color("primaryColor"))
             
-            ZStack {
-                HStack(spacing: 0) {
-                    ValuePicker(items: viewModel.labels, selection: $viewModel.selection1, colorSelection: Color("primaryColor"))
-                    ValuePicker(items: viewModel.labels, selection: $viewModel.selection2, colorSelection: Color("primaryColor"))
-                }
-                
-                Button {
-                    viewModel.leftToRight.toggle()
-                } label: {
-                    Image(systemName: viewModel.leftToRight ? "chevron.right" : "chevron.left")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
-                }
+            HStack(spacing: 0) {
+                ValuePicker(unitType: unitType, selectedIndex: $selectedIndex1)
+                ValuePicker(unitType: unitType, selectedIndex: $selectedIndex2)
             }
+            .clipped()
             
             Divider()
                 .background(Color("primaryColor"))
             
-            ResultView(inputValue: $viewModel.inputValue,
-                       inputValueDescription: viewModel.selection1,
-                       resultValue: $viewModel.resultValue,
-                       resultValueDescription: viewModel.selection2)
-        
-            InputView(value: $viewModel.inputValue)
-                .padding(.horizontal)
+            ResultView(viewModel: viewModel)
+            
+            InputView(value: $viewModel.inputValue,
+                      operation: $viewModel.operation,
+                      operationValue: $viewModel.operationValue)
+            .padding(.horizontal)
         }
         .onAppear {
-            viewModel.getCurrencies()
+            getCurrencies()
+        }
+    }
+    
+    private func getCurrencies()  {
+        NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (requestResult) in
+            DispatchQueue.main.async {
+                if let fetchingResult = requestResult {
+                    UnitType.allValues.append(fetchingResult.conversionRates)
+                }
+            }
         }
     }
 }

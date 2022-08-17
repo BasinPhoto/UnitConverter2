@@ -8,47 +8,52 @@
 import SwiftUI
 
 struct ResultView: View {
-    @Binding var inputValue: String
-    let inputValueDescription: String
-    
-    @Binding var resultValue: Double
-    let resultValueDescription: String
+    @ObservedObject var viewModel: ViewModel
     
     var body: some View {
-        HStack {
-            VStack(alignment: .trailing) {
-                Text("\(inputValue)")
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                Text(inputValueDescription)
-                    .lineLimit(1)
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-            }
-            
-            Text("=")
-                .font(.largeTitle)
-                .bold()
-            VStack(alignment: .leading) {
-                Text("\(resultValue.removeZerosFromEnd())")
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                if let operationType = viewModel.operation {
+                    VStack(alignment: .trailing) {
+                        Text("\(viewModel.inputValue) \(operationType.rawValue) \(viewModel.operationValue)")
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        Text(viewModel.selection1)
+                            .lineLimit(1)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                } else {
+                    VStack(alignment: .trailing) {
+                        Text("\(viewModel.inputValue)")
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        Text(viewModel.selection1)
+                            .lineLimit(1)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                }
+                
+                Text("=>")
+                    .font(.largeTitle)
+                    .bold()
+                VStack(alignment: .leading) {
+                    Text("\(viewModel.resultValue.removeZerosFromEnd())")
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     
-                Text(resultValueDescription)
-                    .lineLimit(1)
-                    .font(.footnote)
-                    .foregroundColor(.gray)
+                    Text(viewModel.selection2)
+                        .lineLimit(1)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
             }
-        }
-        .padding(.vertical)
+            .padding(.vertical)
     }
 }
 
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
-        ResultView(inputValue: .constant("100"),
-                   inputValueDescription: "meters",
-                   resultValue: .constant(30),
-                   resultValueDescription: "feets")
+        ResultView(viewModel: ViewModel())
     }
 }

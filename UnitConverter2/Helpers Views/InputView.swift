@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct InputView: View {
-    enum OperationType {
-        case plus
-        case minus
-        case multiply
-        case divide
-    }
     
     @Binding var value: String
-    @State var operation: OperationType?
-    @State var operationValue: String = ""
+    @Binding var operation: OperationType?
+    @Binding var operationValue: String
+    
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .soft)
     
     private func handleTap(value: String) {
+        feedbackGenerator.prepare()
         if let _ = operation {
             if let tmpValue = Double(self.value), tmpValue != 0 {
                 self.operationValue += value
@@ -33,6 +30,7 @@ struct InputView: View {
                 self.value = value
             }
         }
+        feedbackGenerator.impactOccurred()
     }
     
     private func calculate() {
@@ -40,20 +38,21 @@ struct InputView: View {
             let valueNumber = Double(value) {
             switch operation {
             case .plus:
-                value = (valueNumber + operationValue).description
+                value = (valueNumber + operationValue).removeZerosFromEnd().description
             case .minus:
-                value = (valueNumber - operationValue).description
+                value = (valueNumber - operationValue).removeZerosFromEnd().description
             case .multiply:
-                value = (valueNumber * operationValue).description
+                value = (valueNumber * operationValue).removeZerosFromEnd().description
             case .divide:
                 guard operationValue != 0 else { return }
-                value = (valueNumber / operationValue).description
+                value = (valueNumber / operationValue).removeZerosFromEnd().description
             default:
                 return
             }
             
             operation = nil
             self.operationValue = ""
+            feedbackGenerator.impactOccurred()
         }
     }
     
@@ -95,7 +94,8 @@ struct InputView: View {
 
                 }
                 .font(.title)
-                .frame(width: 50, height: 50)
+                .frame(height: 50)
+                .frame(maxWidth: .infinity)
                 .foregroundColor(.white)
                 .background(Color("primaryColor"))
                 .cornerRadius(16)
@@ -137,7 +137,8 @@ struct InputView: View {
                         .resizable()
                         .frame(width: 20, height: 20)
                         .scaledToFit()
-                        .frame(width: 50, height: 50)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
                         .background(Color.red)
                         .cornerRadius(16)
                         .onTapGesture {
@@ -146,14 +147,17 @@ struct InputView: View {
                             } else {
                                 value = "0"
                             }
+                            feedbackGenerator.impactOccurred()
                         }
                         .onLongPressGesture {
                             value = "0"
+                            feedbackGenerator.impactOccurred()
                         }
 
                 }
                 .font(.title)
-                .frame(width: 50, height: 50)
+                .frame(height: 50)
+                .frame(maxWidth: .infinity)
                 .foregroundColor(.white)
                 .background(Color("primaryColor"))
                 .cornerRadius(16)
@@ -163,6 +167,7 @@ struct InputView: View {
                 Button {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .plus
+                        feedbackGenerator.impactOccurred()
                     }
                 } label: {
                     Text("+")
@@ -177,6 +182,7 @@ struct InputView: View {
                 Button {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .minus
+                        feedbackGenerator.impactOccurred()
                     }
                 } label: {
                     Text("-")
@@ -191,6 +197,7 @@ struct InputView: View {
                 Button {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .multiply
+                        feedbackGenerator.impactOccurred()
                     }
                 } label: {
                     Text("*")
@@ -205,6 +212,7 @@ struct InputView: View {
                 Button {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .divide
+                        feedbackGenerator.impactOccurred()
                     }
                 } label: {
                     Text("/")
@@ -224,7 +232,7 @@ struct InputView: View {
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
-                        .background(Color.orange)
+                        .background(Color.green)
                         .cornerRadius(16)
                 }
             }
@@ -234,6 +242,8 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
     static var previews: some View {
-        InputView(value: .constant("12"))
+        InputView(value: .constant("12"),
+                  operation: .constant(nil),
+                  operationValue: .constant(""))
     }
 }

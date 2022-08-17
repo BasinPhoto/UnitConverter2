@@ -9,138 +9,109 @@ import SwiftUI
 import Combine
 
 struct TypePickerView: View {
-    @State private var labelPublisher = PassthroughSubject<UnitType, Never>()
-    @State private var offsetCorrectionPublisher = PassthroughSubject<CGFloat, Never>()
+    @Binding var selectedUnitType: UnitType {
+        willSet {
+            if newValue.rawValue > selectedUnitType.rawValue {
+                scrolledRight = true
+            } else {
+                scrolledRight = false
+            }
+        }
+    }
+    @State private var tempSelectedIndex: UnitType = .time
+    @State private var scrolledRight: Bool = true
     
-    @Binding var selection: UnitType
-    @State private var subscriptions = Set<AnyCancellable>()
+    var beforeSelectionLabels: [UnitType] {
+        Array(UnitType.allCases.prefix(selectedUnitType.rawValue))
+    }
     
-    @State private var dragLocation: CGFloat = 0
-    @State private var offset: CGFloat = 0
+    var afterSelectionLabels: [UnitType] {
+        Array(UnitType.allCases.suffix(UnitType.allCases.count - selectedUnitType.rawValue - 1))
+    }
     
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
-    let colorSelection: Color
-    
-    private var items: [UnitType]
-    
-    init(items: [UnitType], selection: Binding<UnitType>, colorSelection: Color) {
-        self.items = items
-        self._selection = selection
-        self.colorSelection = colorSelection
-    }
     
     var body: some View {
         VStack {
-            Text(selection.description)
+            Text(selectedUnitType.description)
             
-            ZStack {
-                GeometryReader { scrollGeo in
-                    HStack {
-                        ForEach(items, id:\.self) { item in
-                            Image(item.imageName)
-                                .renderingMode(.template)
-                                .foregroundColor(.gray)
-                                .padding(4)
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    .position(x: scrollGeo.size.width / 2, y: scrollGeo.size.height / 2)
-                    .offset(x: dragLocation)
-                    
-                    ZStack {
+            HStack(spacing: 0) {
+                Color.clear
+                    .frame(maxWidth: .infinity)
+                    .overlay(alignment: .trailing) {
                         HStack {
-                            ForEach(items, id:\.self) { item in
+                            ForEach(beforeSelectionLabels, id:\.self) { item in
                                 Image(item.imageName)
                                     .renderingMode(.template)
-                                    .foregroundColor(.white)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.accentColor)
                                     .padding(4)
-                                    .background(
-                                        GeometryReader { itemGeo in
-                                            scrollObserver(itemProxy: itemGeo,
-                                                           scrollProxy: scrollGeo,
-                                                           selectedLabel: item)
-                                        }
-                                    )
-                            }
+                                    .transition(.move(edge: .trailing))
                         }
-                        .offset(x: dragLocation)
                     }
-                    .frame(width: 60, height: 60)
-                    .background(colorSelection)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .position(x: scrollGeo.size.width / 2, y: scrollGeo.size.height / 2)
+                }
+                
+                ZStack {
+                    Color.accentColor
+                        .cornerRadius(16)
+                    
+                    Image(selectedUnitType.imageName)
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(.white)
+                        .padding()
+                        .transition(.asymmetric(insertion: scrolledRight ? .move(edge: .trailing) : .move(edge: .leading),
+                                                removal: .scale.combined(with: .opacity)))
+                        .id(selectedUnitType.imageName)
+                }
+                .zIndex(1)
+                
+                Color.clear
+                    .frame(maxWidth: .infinity)
+                    .overlay(alignment: .leading) {
+                        HStack {
+                            ForEach(afterSelectionLabels, id:\.self) { item in
+                                Image(item.imageName)
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.accentColor)
+                                    .padding(4)
+                                    .transition(.move(edge: .leading))
+                        }
+                    }
                 }
             }
-            .coordinateSpace(name: "scroll")
+            .fixedSize()
             .gesture(
-                DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                    .onChanged { value in
-                        withAnimation(.spring()) {
-                            dragLocation = value.translation.width + offset
+                DragGesture()
+                    .onChanged{ value in
+                        let preparedValue = Int(-value.translation.width / 10)
+                        let newIndex = tempSelectedIndex.rawValue + preparedValue
+                        
+                        if newIndex >= 0 &&
+                            newIndex <= (UnitType.allCases.count - 1) {
+                            withAnimation(.easeOut.speed(2)) {
+                                selectedUnitType = UnitType(rawValue: newIndex) ?? tempSelectedIndex
+                            }
+                            feedbackGenerator.impactOccurred()
                         }
                     }
-                    .onEnded { offset += $0.translation.width}
-            )
-            .task {
-                subscribe()
-            }
-        }
-    }
-    
-    private func scrollObserver(itemProxy: GeometryProxy,
-                                scrollProxy: GeometryProxy,
-                                selectedLabel: UnitType) -> some View {
-        let itemCenter = itemProxy.frame(in: .named("scroll")).midX
-        let selectionZoneMin = scrollProxy.frame(in: .named("scroll")).midX - 30
-        let selectionZoneMax = scrollProxy.frame(in: .named("scroll")).midX + 30
-        let inScroll = itemCenter > selectionZoneMin && itemCenter < selectionZoneMax
-        
-        if inScroll {
-            labelPublisher.send(selectedLabel)
-            offsetCorrectionPublisher.send(scrollProxy.frame(in: .named("scroll")).midX - itemCenter)
-        }
-        
-        if (selectedLabel == items.first && itemCenter > selectionZoneMax) ||
-            (selectedLabel == items.last && itemCenter < selectionZoneMin) {
-            offsetCorrectionPublisher.send(scrollProxy.frame(in: .named("scroll")).midX - itemCenter)
-        }
-        
-        return Rectangle().fill(Color("primaryColor"))
-    }
-    
-    private func subscribe() {
-        labelPublisher
-            .debounce(for: 0.3, scheduler: RunLoop.main)
-            .removeDuplicates()
-            .receive(on: RunLoop.main)
-            .sink { item in
-                if item != selection {
-                    if item == items.first || item == items.last {
-                        feedbackGenerator.impactOccurred(intensity: 1)
-                    } else {
-                        feedbackGenerator.impactOccurred(intensity: 0.7)
+                    .onEnded{ _ in
+                        tempSelectedIndex = selectedUnitType
                     }
-                    selection = item
-                }
-            }
-            .store(in: &subscriptions)
-        
-        offsetCorrectionPublisher
-            .debounce(for: 0.3, scheduler: RunLoop.main)
-            .removeDuplicates()
-            .receive(on: RunLoop.main)
-            .sink { correctionValue in
-                withAnimation(.spring()) {
-                    dragLocation = dragLocation + correctionValue
-                    offset = offset + correctionValue
-                }
-            }
-            .store(in: &subscriptions)
+            )
+        }
     }
 }
 
 struct TypePickerView_Previews: PreviewProvider {
     static var previews: some View {
-        TypePickerView(items: [.time, .energy, .flatAngle], selection: .constant(.time), colorSelection: .blue)
+        TypePickerView(selectedUnitType: .constant(.length))
     }
 }

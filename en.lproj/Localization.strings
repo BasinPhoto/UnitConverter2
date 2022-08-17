@@ -132,19 +132,3 @@
 "British Thermal Unit"        = "British thermal unit";
 "American Therm"             = "American therm"      ;
 "Feet-Pound"                 = "Feet-pound"          ;
-
-
-//Интерфейс
-"(from...)" = "(from...)";
-"(to...)" = "(to...)";
-"converting to" = "converting to";
-"Value" = "Value";
-
-//OnBoard
-"Swipe left to select a category" = "Swipe left to select a category";
-"Choose from what and what to convert" = "Choose from what and what to convert";
-"Enter the value at the top and the result will be displayed at the bottom" = "Enter the value at the top and the result will be displayed at the bottom";
-"Swipe from below copies the result into the input field" = "Swipe from below copies the result into the input field";
-"Double tap rounds the value to the nearest integer" = "Double tap rounds the value to the nearest integer";
-"Double tap on the result copies it to the clipboard" = "Double tap on the result copies it to the clipboard";
-"Copied to clipboard" = "Copied to clipboard";

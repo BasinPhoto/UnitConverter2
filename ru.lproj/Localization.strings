@@ -139,18 +139,3 @@
 "British Thermal Unit"        = "Брит. термальная единица";
 "American Therm"             = "Ам. терм"      ;
 "Feet-Pound"                 = "Футо-фунт"          ;
-
-//Interface
-"(from...)" = "(из...)";
-"(to...)" = "(в...)";
-"converting to" = "конвертируем в";
-"Value" = "Значение";
-
-//OnBoard
-"Swipe left to select a category" = "Свайп влево для выбора категории";
-"Choose from what and what to convert" = "Выберите из чего и во что конвертировать";
-"Enter the value at the top and the result will be displayed at the bottom" = "Вверху введите значение и внизу отобразится результат";
-"Swipe from below copies the result into the input field" = "Свайп снизу копирует результат в поле ввода";
-"Double tap rounds the value to the nearest integer" = "Двойной тап округляет значение до целого";
-"Double tap on the result copies it to the clipboard" = "Двойной тап по результату копирует его в буфер обмена";
-"Copied to clipboard" = "Скопировано в буфер";
