@@ -20,11 +20,13 @@ struct ResultView: View {
                 if let operationType = viewModel.operation {
                     VStack(alignment: .trailing) {
                         Text("\(viewModel.inputValue) \(operationType.rawValue) \(viewModel.operationValue)")
+                            .bold()
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .trailing)
+                            .foregroundColor(.white)
                         Text(keys[viewModel.selectedIndex1])
                             .lineLimit(1)
-                            .font(.footnote)
+                            .font(.caption)
                             .foregroundColor(.white)
                     }
                 } else {
