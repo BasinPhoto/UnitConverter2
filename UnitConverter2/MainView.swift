@@ -10,38 +10,48 @@ import Combine
 
 struct MainView: View {
     @StateObject var viewModel = ViewModel()
-    @State var unitType: UnitType = .time
-    @State var selectedIndex1: Int = 0
-    @State var selectedIndex2: Int = 0
 
     var body: some View {
         VStack(spacing: 0) {
-            TypePickerView(selectedUnitType: $unitType)
+            TypePickerView(selectedUnitType: $viewModel.unitType)
                 .frame(height: 82)
                 .padding(.vertical)
-            
-            Divider()
-                .background(Color("primaryColor"))
+                .zIndex(1)
             
             HStack(spacing: 0) {
-                ValuePicker(unitType: unitType, selectedIndex: $selectedIndex1)
-                ValuePicker(unitType: unitType, selectedIndex: $selectedIndex2)
+                ValuePicker(unitType: viewModel.unitType, selectedIndex: $viewModel.selectedIndex1)
+                ValuePicker(unitType: viewModel.unitType, selectedIndex: $viewModel.selectedIndex2)
             }
+            .overlay(content: {
+                Button {
+                    viewModel.spawValues()
+                } label: {
+                    Image(systemName: "arrow.left.arrow.right.circle.fill")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 32, height: 32)
+                        .foregroundColor(.white)
+                }
+
+            })
             .clipped()
             
-            Divider()
-                .background(Color("primaryColor"))
-            
-            ResultView(viewModel: viewModel)
-            
-            InputView(value: $viewModel.inputValue,
-                      operation: $viewModel.operation,
-                      operationValue: $viewModel.operationValue)
-            .padding(.horizontal)
+            Group {
+                Divider()
+                    .background(Color("primaryColor"))
+                
+                ResultView(viewModel: viewModel)
+                
+                InputView(value: $viewModel.inputValue,
+                          operation: $viewModel.operation,
+                          operationValue: $viewModel.operationValue)
+            }
+            .zIndex(2)
         }
         .onAppear {
             getCurrencies()
         }
+        .ignoresSafeArea()
     }
     
     private func getCurrencies()  {

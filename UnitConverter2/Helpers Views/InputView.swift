@@ -96,8 +96,8 @@ struct InputView: View {
                 .font(.title)
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)
-                .foregroundColor(.white)
-                .background(Color("primaryColor"))
+                .foregroundColor(.accentColor)
+                .background(Color.white)
                 .cornerRadius(16)
             }
             
@@ -140,6 +140,7 @@ struct InputView: View {
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .background(Color.red)
+                        .foregroundColor(.white)
                         .cornerRadius(16)
                         .onTapGesture {
                             if value.count > 1 {
@@ -158,8 +159,8 @@ struct InputView: View {
                 .font(.title)
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)
-                .foregroundColor(.white)
-                .background(Color("primaryColor"))
+                .foregroundColor(.accentColor)
+                .background(Color.white)
                 .cornerRadius(16)
             }
             
@@ -236,6 +237,11 @@ struct InputView: View {
                         .cornerRadius(16)
                 }
             }
+        }
+        .padding(.horizontal)
+        .padding(.bottom, 32)
+        .background {
+            Color.accentColor
         }
     }
 }

@@ -26,15 +26,43 @@ struct ValuePicker: View {
     @State private var scrolledDown: Bool = true
     
     var beforeSelectionLabels: [String] {
-        Array(unitType.labels[...(selectedIndex - 1)])
+        if unitType.labels.count - 1 >= selectedIndex {
+            switch unitType {
+            case .money:
+                return Array(unitType.labels[...(selectedIndex - 1)].map({ (UnitType.flags[$0] ?? "") + $0 }))
+            default:
+                return Array(unitType.labels[...(selectedIndex - 1)])
+            }
+        } else {
+            return []
+        }
     }
     
     var afterSelectionLabels: [String] {
-        Array(unitType.labels[(selectedIndex + 1)...])
+        if unitType.labels.count - 1 >= selectedIndex {
+            switch unitType {
+            case .money:
+                return Array(unitType.labels[(selectedIndex + 1)...].map({ (UnitType.flags[$0] ?? "") + $0 }))
+            default:
+                return Array(unitType.labels[(selectedIndex + 1)...])
+            }
+        } else {
+            return []
+        }
     }
     
     var selection: String {
-        unitType.labels[selectedIndex]
+        if unitType.labels.count - 1 >= selectedIndex {
+            switch unitType {
+            case .money:
+                let label = unitType.labels[selectedIndex]
+                return (UnitType.flags[label] ?? "") + label
+            default:
+                return unitType.labels[selectedIndex]
+            }
+        } else {
+            return ""
+        }
     }
     
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
@@ -46,6 +74,7 @@ struct ValuePicker: View {
                     VStack {
                         ForEach(beforeSelectionLabels, id:\.self) { label in
                             Text(label)
+                                .lineLimit(1)
                                 .padding(4)
                                 .transition(.asymmetric(
                                     insertion: .move(edge: .bottom)
@@ -79,6 +108,7 @@ struct ValuePicker: View {
                     VStack {
                         ForEach(afterSelectionLabels, id:\.self) { label in
                             Text(label)
+                                .lineLimit(1)
                                 .padding(4)
                                 .transition(.asymmetric(
                                     insertion: .move(edge: .top)
@@ -93,6 +123,10 @@ struct ValuePicker: View {
             .frame(maxHeight: .infinity)
             
 
+        }
+        .onAppear {
+            selectedIndex = 0
+            tempSelectedIndex = 0
         }
         .gesture(
             DragGesture()
