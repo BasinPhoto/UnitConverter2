@@ -21,18 +21,13 @@ struct ValuePicker: View {
         }
     }
     
-    @State private var tempSelectedIndex: Int = 0
+    @Binding var tempSelectedIndex: Int
     
     @State private var scrolledDown: Bool = true
     
     var beforeSelectionLabels: [String] {
         if unitType.labels.count - 1 >= selectedIndex {
-            switch unitType {
-            case .money:
-                return Array(unitType.labels[...(selectedIndex - 1)].map({ (UnitType.flags[$0] ?? "") + $0 }))
-            default:
-                return Array(unitType.labels[...(selectedIndex - 1)])
-            }
+            return Array(unitType.labels.prefix(selectedIndex))
         } else {
             return []
         }
@@ -40,12 +35,7 @@ struct ValuePicker: View {
     
     var afterSelectionLabels: [String] {
         if unitType.labels.count - 1 >= selectedIndex {
-            switch unitType {
-            case .money:
-                return Array(unitType.labels[(selectedIndex + 1)...].map({ (UnitType.flags[$0] ?? "") + $0 }))
-            default:
-                return Array(unitType.labels[(selectedIndex + 1)...])
-            }
+            return Array(unitType.labels.suffix(unitType.labels.count - selectedIndex - 1))
         } else {
             return []
         }
@@ -53,13 +43,7 @@ struct ValuePicker: View {
     
     var selection: String {
         if unitType.labels.count - 1 >= selectedIndex {
-            switch unitType {
-            case .money:
-                let label = unitType.labels[selectedIndex]
-                return (UnitType.flags[label] ?? "") + label
-            default:
-                return unitType.labels[selectedIndex]
-            }
+            return unitType.labels[selectedIndex]
         } else {
             return ""
         }
@@ -94,7 +78,7 @@ struct ValuePicker: View {
                 Text(selection)
                     .bold()
                     .foregroundColor(.white)
-                    .padding()
+                    .frame(height: 40)
                     .lineLimit(1)
                     .minimumScaleFactor(0.2)
                     .transition(scrolledDown ? .move(edge: .bottom).combined(with: .opacity) : .move(edge: .top).combined(with: .opacity))
@@ -124,10 +108,6 @@ struct ValuePicker: View {
             
 
         }
-        .onAppear {
-            selectedIndex = 0
-            tempSelectedIndex = 0
-        }
         .gesture(
             DragGesture()
                 .onChanged{ value in
@@ -151,6 +131,6 @@ struct ValuePicker: View {
 
 struct ValuePickerPreview: PreviewProvider {
     static var previews: some View {
-        ValuePicker(unitType: .time, selectedIndex: .constant(0))
+        ValuePicker(unitType: .time, selectedIndex: .constant(0), tempSelectedIndex: .constant(0))
     }
 }

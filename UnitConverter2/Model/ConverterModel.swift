@@ -130,7 +130,9 @@ enum UnitType: Int, CaseIterable, Identifiable {
             return Self.allValues[9].keys.sorted()
         case .money:
             if Self.allValues.count > 10 {
-                return Self.allValues[10].keys.sorted()
+                return Self.allValues[10].keys.sorted().map { element in
+                    return element + (Self.flags[element] ?? "")
+                }
             } else {
                 return []
             }

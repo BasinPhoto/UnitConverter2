@@ -16,6 +16,8 @@ class ViewModel: ObservableObject {
         didSet {
             selectedIndex1 = 0
             selectedIndex2 = 0
+            tempSelectedIndex1 = 0
+            tempSelectedIndex2 = 0
         }
     }
     
@@ -24,11 +26,14 @@ class ViewModel: ObservableObject {
             calc()
         }
     }
+    @Published var tempSelectedIndex1: Int = 0
+    
     @Published var selectedIndex2: Int = 0 {
         didSet {
             calc()
         }
     }
+    @Published var tempSelectedIndex2: Int = 0
     
     @Published var inputValue: String = "0" {
         didSet {
@@ -61,6 +66,8 @@ class ViewModel: ObservableObject {
             selectedIndex1 = selectedIndex2
             selectedIndex2 = tmpSelectedIndex1
         }
+        tempSelectedIndex1 = selectedIndex1
+        tempSelectedIndex2 = selectedIndex2
     }
     
     private func calc() {

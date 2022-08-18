@@ -18,7 +18,7 @@ struct TypePickerView: View {
             }
         }
     }
-    @State private var tempSelectedIndex: UnitType = .time
+    @State private var tempSelectedIndex: UnitType = .length
     @State private var scrolledRight: Bool = true
     
     var beforeSelectionLabels: [UnitType] {
@@ -51,7 +51,7 @@ struct TypePickerView: View {
                                     .renderingMode(.template)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 32, height: 32)
                                     .foregroundColor(.white)
                                     .padding(4)
                                     .transition(.move(edge: .trailing))
@@ -64,7 +64,7 @@ struct TypePickerView: View {
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 32, height: 32)
                         .foregroundColor(.accentColor)
                         .padding()
                         .transition(.asymmetric(insertion: scrolledRight ? .move(edge: .trailing) : .move(edge: .leading),
@@ -73,10 +73,6 @@ struct TypePickerView: View {
                 }
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(
-                            .shadow(.inner(color: Color.black.opacity(0.2),radius: 2, x:2, y: 2))
-                            .shadow(.inner(color: .white, radius: 2, x: -2, y: -2))
-                        )
                         .foregroundColor(Color.white))
                 .fixedSize()
                 .zIndex(1)
@@ -90,7 +86,7 @@ struct TypePickerView: View {
                                     .renderingMode(.template)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 32, height: 32)
                                     .foregroundColor(.white)
                                     .padding(4)
                                     .transition(.move(edge: .leading))
