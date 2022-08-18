@@ -17,6 +17,11 @@ struct InputView: View {
     
     private func handleTap(value: String) {
         feedbackGenerator.prepare()
+        
+        if value == "." && (operationValue.contains(".") || self.value.contains(".")) {
+            return
+        }
+        
         if let _ = operation {
             if let tmpValue = Double(self.value), tmpValue != 0 {
                 self.operationValue += value
