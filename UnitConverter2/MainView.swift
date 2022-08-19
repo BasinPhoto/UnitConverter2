@@ -26,27 +26,25 @@ struct MainView: View {
                 Button {
                     viewModel.spawValues()
                 } label: {
-                    Image(systemName: "arrow.left.arrow.right.circle.fill")
+                    Image(systemName: "arrow.left.arrow.right")
                         .resizable()
                         .renderingMode(.template)
-                        .frame(width: 32, height: 32)
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
                         .foregroundColor(.white)
                 }
 
             })
             .clipped()
+            .zIndex(-1)
             
-            Group {
-                Divider()
-                    .background(Color("primaryColor"))
-                
-                ResultView(viewModel: viewModel)
-                
-                InputView(value: $viewModel.inputValue,
-                          operation: $viewModel.operation,
-                          operationValue: $viewModel.operationValue)
-            }
-            .zIndex(2)
+            ResultView(viewModel: viewModel)
+                .shadow(radius: 12)
+            
+            InputView(value: $viewModel.inputValue,
+                      operation: $viewModel.operation,
+                      operationValue: $viewModel.operationValue)
+
         }
         .onAppear {
             getCurrencies()

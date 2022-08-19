@@ -103,7 +103,7 @@ struct InputView: View {
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.accentColor)
                 .background(Color.white)
-                .cornerRadius(16)
+                .cornerRadius(8)
             }
             
             HStack {
@@ -146,7 +146,7 @@ struct InputView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color.red)
                         .foregroundColor(.white)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                         .onTapGesture {
                             if value.count > 1 {
                                 value = String(value.dropLast())
@@ -166,7 +166,7 @@ struct InputView: View {
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.accentColor)
                 .background(Color.white)
-                .cornerRadius(16)
+                .cornerRadius(8)
             }
             
             HStack {
@@ -176,13 +176,12 @@ struct InputView: View {
                         feedbackGenerator.impactOccurred()
                     }
                 } label: {
-                    Text("+")
-                        .font(.title)
+                    Image(systemName: "plus")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .background(operation == .plus ? Color("primaryColor") : Color.orange)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                 }
                 
                 Button {
@@ -191,13 +190,12 @@ struct InputView: View {
                         feedbackGenerator.impactOccurred()
                     }
                 } label: {
-                    Text("-")
-                        .font(.title)
+                    Image(systemName: "minus")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .background(operation == .minus ? Color("primaryColor") : Color.orange)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                 }
                 
                 Button {
@@ -206,13 +204,12 @@ struct InputView: View {
                         feedbackGenerator.impactOccurred()
                     }
                 } label: {
-                    Text("*")
-                        .font(.title)
+                    Image(systemName: "multiply")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .background(operation == .multiply ? Color("primaryColor") : Color.orange)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                 }
                 
                 Button {
@@ -221,25 +218,23 @@ struct InputView: View {
                         feedbackGenerator.impactOccurred()
                     }
                 } label: {
-                    Text("/")
-                        .font(.title)
+                    Image(systemName: "divide")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .background(operation == .divide ? Color("primaryColor") : Color.orange)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                 }
                 
                 Button {
                     self.calculate()
                 } label: {
-                    Text("=")
-                        .font(.title)
+                    Image(systemName: "equal")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
                         .background(Color.green)
-                        .cornerRadius(16)
+                        .cornerRadius(8)
                 }
             }
         }
