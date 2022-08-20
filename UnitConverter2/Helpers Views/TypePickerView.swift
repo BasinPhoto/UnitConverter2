@@ -33,7 +33,7 @@ struct TypePickerView: View {
     
     var body: some View {
         VStack {
-            Text(selectedUnitType.description)
+            Text(LocalizedStringKey(selectedUnitType.description))
                 .bold()
                 .font(.title2)
                 .foregroundColor(.white)

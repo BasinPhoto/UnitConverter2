@@ -14,10 +14,18 @@ class ViewModel: ObservableObject {
     
     @Published var unitType: UnitType = .length {
         didSet {
-            selectedIndex1 = 0
-            selectedIndex2 = 0
-            tempSelectedIndex1 = 0
-            tempSelectedIndex2 = 0
+            var preparedIndex1: Int = 0
+            var preparedIndex2: Int = 0
+            
+            if unitType == .money, let localeIsoCode = Locale.current.currencyCode {
+                preparedIndex1 = unitType.labels.firstIndex(where: {$0.prefix(3) == "USD"}) ?? 0
+                preparedIndex2 = unitType.labels.firstIndex(where: {$0.prefix(3) == localeIsoCode}) ?? 0
+            }
+            
+            selectedIndex1 = preparedIndex1
+            selectedIndex2 = preparedIndex2
+            tempSelectedIndex1 = preparedIndex1
+            tempSelectedIndex2 = preparedIndex2
         }
     }
     

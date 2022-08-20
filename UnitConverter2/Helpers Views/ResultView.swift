@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ResultView: View {
     @ObservedObject var viewModel: ViewModel
+    let pasteboard = UIPasteboard.general
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    @State private var isShowCopyLabel: Bool = false
     
     private var keys: [String] {
         let dict = UnitType.allValues[viewModel.unitType.rawValue].sorted(by: {$0.key < $1.key})
@@ -29,6 +32,12 @@ struct ResultView: View {
                             .font(.caption)
                             .foregroundColor(.white)
                     }
+                    .onTapGesture(count: 2) {
+                        if let _ = Double(pasteboard.string ?? "") {
+                            viewModel.operationValue = pasteboard.string ?? "0"
+                            feedbackGenerator.impactOccurred()
+                        }
+                    }
                 } else {
                     VStack(alignment: .trailing) {
                         Text("\(viewModel.inputValue)")
@@ -43,24 +52,51 @@ struct ResultView: View {
                                 .foregroundColor(.white)
                         }
                     }
+                    .onTapGesture(count: 2) {
+                        if let _ = Double(pasteboard.string ?? "") {
+                            viewModel.inputValue = pasteboard.string ?? "0"
+                            feedbackGenerator.impactOccurred()
+                        }
+                    }
                 }
                 
-                Text("=")
-                    .font(.largeTitle)
-                    .bold()
+                Image(systemName: "equal")
                     .foregroundColor(.white)
-                VStack(alignment: .leading) {
-                    Text("\(viewModel.resultValue.removeZerosFromEnd())")
+                if isShowCopyLabel {
+                    Text("Copied")
                         .bold()
-                        .lineLimit(1)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.white)
-                    
-                    if keys.count - 1 >= viewModel.selectedIndex2 {
-                        Text(keys[viewModel.selectedIndex2])
+                        .frame(maxWidth: .infinity)
+                        .transition(.scale)
+                } else {
+                    VStack(alignment: .leading) {
+                        Text("\(viewModel.resultValue.removeZerosFromEnd())")
+                            .bold()
                             .lineLimit(1)
-                            .font(.caption)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(.white)
+                        
+                        if keys.count - 1 >= viewModel.selectedIndex2 {
+                            Text(keys[viewModel.selectedIndex2])
+                                .lineLimit(1)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                        }
+                    }
+                    .transition(.scale)
+                    .onLongPressGesture {
+                        if viewModel.resultValue.removeZerosFromEnd() != "0" {
+                            pasteboard.string = viewModel.resultValue.removeZerosFromEnd()
+                            feedbackGenerator.impactOccurred()
+                            withAnimation(.default) {
+                                isShowCopyLabel.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    withAnimation(.default) {
+                                        isShowCopyLabel.toggle()
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
