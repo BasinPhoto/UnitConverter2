@@ -31,21 +31,21 @@ class ViewModel: ObservableObject {
     
     @Published var selectedIndex1: Int = 0 {
         didSet {
-            calc()
+            resultValue = calc()
         }
     }
     @Published var tempSelectedIndex1: Int = 0
     
     @Published var selectedIndex2: Int = 0 {
         didSet {
-            calc()
+            resultValue = calc()
         }
     }
     @Published var tempSelectedIndex2: Int = 0
     
     @Published var inputValue: String = "0" {
         didSet {
-            calc()
+            resultValue = calc()
         }
     }
     @Published var resultValue: Double = 0
@@ -56,6 +56,14 @@ class ViewModel: ObservableObject {
     private var values: [Double] {
         let dict = UnitType.allValues[unitType.rawValue].sorted(by: {$0.key < $1.key})
         return dict.map({ $0.value })
+    }
+    
+    var oneLeft: Double {
+        calc(1, indexFrom: selectedIndex1, indexTo: selectedIndex2)
+    }
+    
+    var oneRight: Double {
+        calc(1, indexFrom: selectedIndex2, indexTo: selectedIndex1)
     }
     
     func getCurrencies() async {
@@ -81,23 +89,22 @@ class ViewModel: ObservableObject {
         tempSelectedIndex2 = selectedIndex2
     }
     
-    private func calc() {
-        var returnedRsult: Double = 0
+    private func calc(_ value: Double? = nil, indexFrom: Int? = nil, indexTo: Int? = nil) -> Double {
+        var returnedResult: Double = 0
 
-        if let value = Double(self.inputValue),
-            selectedIndex1 <= values.count - 1 &&
+        if selectedIndex1 <= values.count - 1 &&
             selectedIndex2 <= values.count - 1 {
-            let valueFrom = values[self.selectedIndex1]
-            let valueTo = values[self.selectedIndex2]
-
+            let valueFrom = values[indexFrom ?? selectedIndex1]
+            let valueTo = values[indexTo ?? selectedIndex2]
+            
             switch unitType {
             case .money:
-                returnedRsult = (value * valueTo / valueFrom)
+                returnedResult = ((value ?? Double(self.inputValue)!) * valueTo / valueFrom)
             default:
-                returnedRsult =  (value * valueFrom / valueTo)
+                returnedResult =  ((value ?? Double(self.inputValue)!) * valueFrom / valueTo)
             }
 
-            self.resultValue = returnedRsult
         }
+        return returnedResult
     }
 }

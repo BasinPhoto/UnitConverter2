@@ -24,6 +24,7 @@
 		C2BF23A12856543500F8EC83 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A02856543500F8EC83 /* MainView.swift */; };
 		C2BF23A32856562500F8EC83 /* CurrencyRatesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A22856562500F8EC83 /* CurrencyRatesResponse.swift */; };
 		C2BF23A52856568A00F8EC83 /* ValuePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A42856568A00F8EC83 /* ValuePicker.swift */; };
+		C2EB62F228B17B6600E16048 /* Formatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EB62F128B17B6600E16048 /* Formatter+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		C2BF23A02856543500F8EC83 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C2BF23A22856562500F8EC83 /* CurrencyRatesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRatesResponse.swift; sourceTree = "<group>"; };
 		C2BF23A42856568A00F8EC83 /* ValuePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePicker.swift; sourceTree = "<group>"; };
+		C2EB62F128B17B6600E16048 /* Formatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				C20DF086285E0B3100BE9406 /* Double+Extensions.swift */,
+				C2EB62F128B17B6600E16048 /* Formatter+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				C20DF08A285F11B400BE9406 /* OperationType.swift in Sources */,
 				C20DF082285DF34400BE9406 /* InputView.swift in Sources */,
 				C20DF084285DF5A300BE9406 /* ResultView.swift in Sources */,
+				C2EB62F228B17B6600E16048 /* Formatter+Extension.swift in Sources */,
 				C2BF23A52856568A00F8EC83 /* ValuePicker.swift in Sources */,
 				C20DF087285E0B3100BE9406 /* Double+Extensions.swift in Sources */,
 				B9E627AA25757B4B000419A7 /* ConverterModel.swift in Sources */,

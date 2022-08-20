@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct InputView: View {
     
@@ -36,6 +37,7 @@ struct InputView: View {
             }
         }
         feedbackGenerator.impactOccurred()
+        AudioServicesPlaySystemSound(1104)
     }
     
     private func calculate() {
@@ -148,16 +150,22 @@ struct InputView: View {
                         .foregroundColor(.white)
                         .cornerRadius(8)
                         .onTapGesture {
-                            if value.count > 1 {
+                            if operationValue.count >= 1 {
+                                operationValue = String(operationValue.dropLast())
+                            } else if operationValue.isEmpty && operation != nil {
+                                operation = nil
+                            } else if value.count > 1 {
                                 value = String(value.dropLast())
                             } else {
                                 value = "0"
                             }
                             feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1104)
                         }
                         .onLongPressGesture {
                             value = "0"
                             feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1104)
                         }
 
                 }
@@ -174,13 +182,14 @@ struct InputView: View {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .plus
                         feedbackGenerator.impactOccurred()
+                        AudioServicesPlaySystemSound(1104)
                     }
                 } label: {
                     Image(systemName: "plus")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
-                        .background(operation == .plus ? Color("primaryColor") : Color.orange)
+                        .background(operation == .plus ? Color.accentColor : Color.orange)
                         .cornerRadius(8)
                         .overlay {
                             if operation == .plus {
@@ -194,13 +203,14 @@ struct InputView: View {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .minus
                         feedbackGenerator.impactOccurred()
+                        AudioServicesPlaySystemSound(1104)
                     }
                 } label: {
                     Image(systemName: "minus")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
-                        .background(operation == .minus ? Color("primaryColor") : Color.orange)
+                        .background(operation == .minus ? Color.accentColor : Color.orange)
                         .cornerRadius(8)
                         .overlay {
                             if operation == .minus {
@@ -214,13 +224,14 @@ struct InputView: View {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .multiply
                         feedbackGenerator.impactOccurred()
+                        AudioServicesPlaySystemSound(1104)
                     }
                 } label: {
                     Image(systemName: "multiply")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
-                        .background(operation == .multiply ? Color("primaryColor") : Color.orange)
+                        .background(operation == .multiply ? Color.accentColor : Color.orange)
                         .cornerRadius(8)
                         .overlay {
                             if operation == .multiply {
@@ -234,13 +245,14 @@ struct InputView: View {
                     if let unwrappedValue = Double(value), unwrappedValue > 0 {
                         operation = .divide
                         feedbackGenerator.impactOccurred()
+                        AudioServicesPlaySystemSound(1104)
                     }
                 } label: {
                     Image(systemName: "divide")
                         .frame(height: 50)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(.white)
-                        .background(operation == .divide ? Color("primaryColor") : Color.orange)
+                        .background(operation == .divide ? Color.accentColor : Color.orange)
                         .cornerRadius(8)
                         .overlay {
                             if operation == .divide {
@@ -252,6 +264,8 @@ struct InputView: View {
                 
                 Button {
                     self.calculate()
+                    feedbackGenerator.impactOccurred()
+                    AudioServicesPlaySystemSound(1104)
                 } label: {
                     Image(systemName: "equal")
                         .frame(height: 50)

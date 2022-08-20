@@ -17,3 +17,7 @@ extension Double {
         return String(formatter.string(from: number) ?? "")
     }
 }
+
+extension Numeric {
+    var formattedWithSeparator: String { Formatter.withSeparator.string(for: self) ?? "" }
+}

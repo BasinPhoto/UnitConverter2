@@ -70,7 +70,7 @@ struct ResultView: View {
                         .transition(.scale)
                 } else {
                     VStack(alignment: .leading) {
-                        Text("\(viewModel.resultValue.removeZerosFromEnd())")
+                        Text("\(viewModel.resultValue.formattedWithSeparator)")
                             .bold()
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .leading)

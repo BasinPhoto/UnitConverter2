@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import AVFoundation
 
 struct TypePickerView: View {
     @Binding var selectedUnitType: UnitType {
@@ -58,6 +59,7 @@ struct TypePickerView: View {
                                     .onTapGesture {
                                         withAnimation(.linear.speed(2)) {
                                             selectedUnitType = item
+                                            AudioServicesPlaySystemSound(1103)
                                         }
                                     }
                         }
@@ -98,6 +100,7 @@ struct TypePickerView: View {
                                     .onTapGesture {
                                         withAnimation(.linear.speed(2)) {
                                             selectedUnitType = item
+                                            AudioServicesPlaySystemSound(1103)
                                         }
                                     }
                         }
@@ -112,14 +115,16 @@ struct TypePickerView: View {
                         let newIndex = tempSelectedIndex.rawValue + preparedValue
                         
                         if newIndex >= 0 &&
-                            newIndex <= (UnitType.allCases.count - 1) {
+                            newIndex <= (UnitType.allCases.count - 1) &&
+                            selectedUnitType.rawValue != newIndex {
                             withAnimation(.linear.speed(2)) {
                                 selectedUnitType = UnitType(rawValue: newIndex) ?? tempSelectedIndex
                             }
                             feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1103)
                         }
                     }
-                    .onEnded{ _ in
+                    .onEnded { _ in
                         tempSelectedIndex = selectedUnitType
                     }
             )

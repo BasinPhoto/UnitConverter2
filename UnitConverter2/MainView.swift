@@ -19,8 +19,8 @@ struct MainView: View {
                 .zIndex(1)
             
             HStack(spacing: 0) {
-                ValuePicker(unitType: viewModel.unitType, selectedIndex: $viewModel.selectedIndex1, tempSelectedIndex: $viewModel.tempSelectedIndex1)
-                ValuePicker(unitType: viewModel.unitType, selectedIndex: $viewModel.selectedIndex2, tempSelectedIndex: $viewModel.tempSelectedIndex2)
+                ValuePicker(unitType: viewModel.unitType, selectedIndex: $viewModel.selectedIndex1, tempSelectedIndex: $viewModel.tempSelectedIndex1, oneElement: viewModel.oneLeft)
+                ValuePicker(unitType: viewModel.unitType, selectedIndex: $viewModel.selectedIndex2, tempSelectedIndex: $viewModel.tempSelectedIndex2, oneElement: viewModel.oneRight)
             }
             .overlay(content: {
                 Button {

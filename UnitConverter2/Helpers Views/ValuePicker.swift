@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import AVFoundation
 
 struct ValuePicker: View {
     let unitType: UnitType
@@ -22,6 +23,8 @@ struct ValuePicker: View {
     }
     
     @Binding var tempSelectedIndex: Int
+    
+    let oneElement: Double
     
     @State private var scrolledDown: Bool = true
     
@@ -59,6 +62,7 @@ struct ValuePicker: View {
                         ForEach(beforeSelectionLabels, id:\.self) { label in
                             Text(label)
                                 .lineLimit(1)
+                                .foregroundColor(.accentColor.opacity(0.5))
                                 .padding(4)
                                 .transition(.asymmetric(
                                     insertion: .move(edge: .bottom)
@@ -75,15 +79,24 @@ struct ValuePicker: View {
             ZStack {
                 Color.accentColor
                 
-                Text(selection)
-                    .bold()
-                    .foregroundColor(.white)
-                    .frame(height: 40)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.2)
-                    .padding(.horizontal)
-                    .transition(scrolledDown ? .move(edge: .bottom).combined(with: .opacity) : .move(edge: .top).combined(with: .opacity))
-                    .id(selection)
+                VStack(spacing: 0) {
+                    Text(selection)
+                        .bold()
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.2)
+                        .padding(.horizontal)
+                        
+                    Text("1 = \(oneElement.formattedWithSeparator)")
+                        .font(.caption2)
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.2)
+                        .padding(.horizontal)
+                }
+                .frame(height: 40)
+                .transition(scrolledDown ? .move(edge: .bottom).combined(with: .opacity) : .move(edge: .top).combined(with: .opacity))
+                .id(selection)
             }
             .fixedSize(horizontal: false, vertical: true)
             .zIndex(1)
@@ -94,6 +107,7 @@ struct ValuePicker: View {
                         ForEach(afterSelectionLabels, id:\.self) { label in
                             Text(label)
                                 .lineLimit(1)
+                                .foregroundColor(.accentColor.opacity(0.5))
                                 .padding(4)
                                 .transition(.asymmetric(
                                     insertion: .move(edge: .top)
@@ -116,11 +130,13 @@ struct ValuePicker: View {
                     let newIndex = tempSelectedIndex + preparedValue
                     
                     if newIndex >= 0 &&
-                        newIndex <= (unitType.labels.count - 1) {
+                        newIndex <= (unitType.labels.count - 1) &&
+                        newIndex != selectedIndex {
                         withAnimation(.easeOut.speed(2)) {
                             selectedIndex = newIndex
                         }
                         feedbackGenerator.impactOccurred()
+                        AudioServicesPlaySystemSound(1105)
                     }
                 }
                 .onEnded{ _ in
@@ -132,6 +148,6 @@ struct ValuePicker: View {
 
 struct ValuePickerPreview: PreviewProvider {
     static var previews: some View {
-        ValuePicker(unitType: .time, selectedIndex: .constant(0), tempSelectedIndex: .constant(0))
+        ValuePicker(unitType: .time, selectedIndex: .constant(0), tempSelectedIndex: .constant(0), oneElement: 123334445)
     }
 }
