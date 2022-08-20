@@ -182,6 +182,12 @@ struct InputView: View {
                         .foregroundColor(.white)
                         .background(operation == .plus ? Color("primaryColor") : Color.orange)
                         .cornerRadius(8)
+                        .overlay {
+                            if operation == .plus {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.white, lineWidth: 4)
+                            }
+                        }
                 }
                 
                 Button {
@@ -196,6 +202,12 @@ struct InputView: View {
                         .foregroundColor(.white)
                         .background(operation == .minus ? Color("primaryColor") : Color.orange)
                         .cornerRadius(8)
+                        .overlay {
+                            if operation == .minus {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.white, lineWidth: 4)
+                            }
+                        }
                 }
                 
                 Button {
@@ -210,6 +222,12 @@ struct InputView: View {
                         .foregroundColor(.white)
                         .background(operation == .multiply ? Color("primaryColor") : Color.orange)
                         .cornerRadius(8)
+                        .overlay {
+                            if operation == .multiply {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.white, lineWidth: 4)
+                            }
+                        }
                 }
                 
                 Button {
@@ -224,6 +242,12 @@ struct InputView: View {
                         .foregroundColor(.white)
                         .background(operation == .divide ? Color("primaryColor") : Color.orange)
                         .cornerRadius(8)
+                        .overlay {
+                            if operation == .divide {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(.white, lineWidth: 4)
+                            }
+                        }
                 }
                 
                 Button {
