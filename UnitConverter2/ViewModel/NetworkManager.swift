@@ -7,32 +7,24 @@
 
 import Foundation
 import Combine
+import os
 
 final class NetworkManager {
+    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: NetworkManager.self))
+    static let shared: NetworkManager = NetworkManager()
     
-    static let urlAPI = "https://v6.exchangerate-api.com/v6/83d18ab70ffc027d5021504d/latest/USD"
+    let url = URL(string: "https://v6.exchangerate-api.com/v6/83d18ab70ffc027d5021504d/latest/USD")!
     
-    static func fetchData(urlAPI: String, complition: @escaping (CurrencyRatesResponse?) -> () ) {
-        guard let url = URL(string: urlAPI) else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if error != nil {
-                print(error!)
-                complition(nil)
-                return
-            }
-            
-            guard let safeData = data else {
-                complition(nil)
-                return
-            }
-            
-            do {
-                let result = try JSONDecoder().decode(CurrencyRatesResponse.self, from: safeData)
-                complition(result)
-            } catch {
-                print(error.localizedDescription)
-                complition(nil)
-            }
-        }.resume()
+    func fetchData() async -> CurrencyRatesResponse? {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            logger.debug("\(#function) Get data from server")
+            let result = try JSONDecoder().decode(CurrencyRatesResponse.self, from: data)
+            logger.debug("\(#function) Data decoded")
+            return result
+        } catch {
+            logger.error("\(#function) Error: \(error)")
+            return nil
+        }
     }
 }

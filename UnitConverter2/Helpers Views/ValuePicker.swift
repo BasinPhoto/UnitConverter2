@@ -80,6 +80,7 @@ struct ValuePicker: View {
                     .foregroundColor(.white)
                     .frame(height: 40)
                     .lineLimit(1)
+                    .padding(.horizontal)
                     .minimumScaleFactor(0.2)
                     .transition(scrolledDown ? .move(edge: .bottom).combined(with: .opacity) : .move(edge: .top).combined(with: .opacity))
                     .id(selection)

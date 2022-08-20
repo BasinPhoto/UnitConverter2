@@ -50,14 +50,17 @@ class ViewModel: ObservableObject {
         return dict.map({ $0.value })
     }
     
-    func getCurrencies() {
-        NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (requestResult) in
-            DispatchQueue.main.async {
-                if let fetchingResult = requestResult {
-                    UnitType.allValues.append(fetchingResult.conversionRates)
-                }
-            }
+    func getCurrencies() async {
+        guard let currencies = await NetworkManager.shared.fetchData() else {
+            return
         }
+        
+        var result: [String: Double] = [:]
+        for (key, value) in currencies.conversionRates {
+            result[key + (UnitType.flags[key] ?? "")] = value
+        }
+        
+        UnitType.allValues.append(result)
     }
     
     func spawValues() {

@@ -55,6 +55,11 @@ struct TypePickerView: View {
                                     .foregroundColor(.white)
                                     .padding(4)
                                     .transition(.move(edge: .trailing))
+                                    .onTapGesture {
+                                        withAnimation(.linear.speed(2)) {
+                                            selectedUnitType = item
+                                        }
+                                    }
                         }
                     }
                 }
@@ -90,6 +95,11 @@ struct TypePickerView: View {
                                     .foregroundColor(.white)
                                     .padding(4)
                                     .transition(.move(edge: .leading))
+                                    .onTapGesture {
+                                        withAnimation(.linear.speed(2)) {
+                                            selectedUnitType = item
+                                        }
+                                    }
                         }
                     }
                 }

@@ -46,20 +46,10 @@ struct MainView: View {
                       operationValue: $viewModel.operationValue)
 
         }
-        .onAppear {
-            getCurrencies()
+        .task {
+            await viewModel.getCurrencies()
         }
         .ignoresSafeArea()
-    }
-    
-    private func getCurrencies()  {
-        NetworkManager.fetchData(urlAPI: NetworkManager.urlAPI) { (requestResult) in
-            DispatchQueue.main.async {
-                if let fetchingResult = requestResult {
-                    UnitType.allValues.append(fetchingResult.conversionRates)
-                }
-            }
-        }
     }
 }
 
