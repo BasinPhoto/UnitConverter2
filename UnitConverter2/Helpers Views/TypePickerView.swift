@@ -111,7 +111,7 @@ struct TypePickerView: View {
             .gesture(
                 DragGesture()
                     .onChanged{ value in
-                        let preparedValue = Int(-value.translation.width / 10)
+                        let preparedValue = Int(-value.translation.width / 30)
                         let newIndex = tempSelectedIndex.rawValue + preparedValue
                         
                         if newIndex >= 0 &&

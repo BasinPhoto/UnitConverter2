@@ -126,7 +126,7 @@ struct ValuePicker: View {
         .gesture(
             DragGesture()
                 .onChanged{ value in
-                    let preparedValue = Int(-value.translation.height / 10)
+                    let preparedValue = Int(-value.translation.height / 30)
                     let newIndex = tempSelectedIndex + preparedValue
                     
                     if newIndex >= 0 &&
