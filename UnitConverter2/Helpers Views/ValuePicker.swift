@@ -60,7 +60,7 @@ struct ValuePicker: View {
                 .overlay(alignment: .bottom) {
                     VStack {
                         ForEach(beforeSelectionLabels, id:\.self) { label in
-                            Text(label)
+                            Text(LocalizedStringKey(label))
                                 .lineLimit(1)
                                 .foregroundColor(.accentColor.opacity(0.5))
                                 .padding(4)
@@ -80,7 +80,7 @@ struct ValuePicker: View {
                 Color.accentColor
                 
                 VStack(spacing: 0) {
-                    Text(selection)
+                    Text(LocalizedStringKey(selection))
                         .bold()
                         .foregroundColor(.white)
                         .lineLimit(1)
@@ -105,7 +105,7 @@ struct ValuePicker: View {
                 .overlay(alignment: .top) {
                     VStack {
                         ForEach(afterSelectionLabels, id:\.self) { label in
-                            Text(label)
+                            Text(LocalizedStringKey(label))
                                 .lineLimit(1)
                                 .foregroundColor(.accentColor.opacity(0.5))
                                 .padding(4)

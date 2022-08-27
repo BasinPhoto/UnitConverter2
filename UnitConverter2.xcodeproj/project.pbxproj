@@ -19,7 +19,7 @@
 		C20DF08A285F11B400BE9406 /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20DF089285F11B400BE9406 /* OperationType.swift */; };
 		C251278E25D29D4400F0B32B /* Exo2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C251278D25D29D4400F0B32B /* Exo2.ttf */; };
 		C253775525E151E900B7C806 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C253775425E151E900B7C806 /* NetworkManager.swift */; };
-		C2935B3726AF42A800AA020B /* Localization.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2935B3926AF42A800AA020B /* Localization.strings */; };
+		C2935B3726AF42A800AA020B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2935B3926AF42A800AA020B /* Localizable.strings */; };
 		C2935B4226B5C41100AA020B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2935B4126B5C41100AA020B /* StringExtension.swift */; };
 		C2BF23A12856543500F8EC83 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A02856543500F8EC83 /* MainView.swift */; };
 		C2BF23A32856562500F8EC83 /* CurrencyRatesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF23A22856562500F8EC83 /* CurrencyRatesResponse.swift */; };
@@ -46,8 +46,8 @@
 		C20DF089285F11B400BE9406 /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
 		C251278D25D29D4400F0B32B /* Exo2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Exo2.ttf; sourceTree = "<group>"; };
 		C253775425E151E900B7C806 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		C2935B3826AF42A800AA020B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localization.strings; sourceTree = "<group>"; };
-		C2935B3F26AF430500AA020B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localization.strings; sourceTree = "<group>"; };
+		C2935B3826AF42A800AA020B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2935B3F26AF430500AA020B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2935B4126B5C41100AA020B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C2BF23A02856543500F8EC83 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C2BF23A22856562500F8EC83 /* CurrencyRatesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRatesResponse.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		B9E6276F25757AD9000419A7 = {
 			isa = PBXGroup;
 			children = (
-				C2935B3926AF42A800AA020B /* Localization.strings */,
+				C2935B3926AF42A800AA020B /* Localizable.strings */,
 				B9E6277A25757AD9000419A7 /* UnitConverter2 */,
 				C2935B4026B5C3E400AA020B /* Extensions */,
 				B9E6278C25757ADC000419A7 /* UnitConverter2Tests */,
@@ -247,7 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9E6278325757ADC000419A7 /* Preview Assets.xcassets in Resources */,
-				C2935B3726AF42A800AA020B /* Localization.strings in Resources */,
+				C2935B3726AF42A800AA020B /* Localizable.strings in Resources */,
 				B9E6278025757ADC000419A7 /* Assets.xcassets in Resources */,
 				C251278E25D29D4400F0B32B /* Exo2.ttf in Resources */,
 			);
@@ -280,13 +280,13 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		C2935B3926AF42A800AA020B /* Localization.strings */ = {
+		C2935B3926AF42A800AA020B /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C2935B3826AF42A800AA020B /* en */,
 				C2935B3F26AF430500AA020B /* ru */,
 			);
-			name = Localization.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -27,7 +27,7 @@ struct ResultView: View {
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .foregroundColor(.white)
-                        Text(keys[viewModel.selectedIndex1])
+                        Text(LocalizedStringKey(keys[viewModel.selectedIndex1]))
                             .lineLimit(1)
                             .font(.caption)
                             .foregroundColor(.white)
@@ -46,7 +46,7 @@ struct ResultView: View {
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .foregroundColor(.white)
                         if keys.count - 1 >= viewModel.selectedIndex1 {
-                            Text(keys[viewModel.selectedIndex1])
+                            Text(LocalizedStringKey(keys[viewModel.selectedIndex1]))
                                 .lineLimit(1)
                                 .font(.caption)
                                 .foregroundColor(.white)
@@ -77,7 +77,7 @@ struct ResultView: View {
                             .foregroundColor(.white)
                         
                         if keys.count - 1 >= viewModel.selectedIndex2 {
-                            Text(keys[viewModel.selectedIndex2])
+                            Text(LocalizedStringKey(keys[viewModel.selectedIndex2]))
                                 .lineLimit(1)
                                 .font(.caption)
                                 .foregroundColor(.white)
