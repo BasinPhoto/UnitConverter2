@@ -31,21 +31,21 @@ class ViewModel: ObservableObject {
     
     @Published var selectedIndex1: Int = 0 {
         didSet {
-            resultValue = calc()
+            resultValue = calc(Double(inputValue) ?? 0)
         }
     }
     @Published var tempSelectedIndex1: Int = 0
     
     @Published var selectedIndex2: Int = 0 {
         didSet {
-            resultValue = calc()
+            resultValue = calc(Double(inputValue) ?? 0)
         }
     }
     @Published var tempSelectedIndex2: Int = 0
     
     @Published var inputValue: String = "0" {
         didSet {
-            resultValue = calc()
+            resultValue = calc(Double(inputValue) ?? 0)
         }
     }
     @Published var resultValue: Double = 0
@@ -89,7 +89,7 @@ class ViewModel: ObservableObject {
         tempSelectedIndex2 = selectedIndex2
     }
     
-    private func calc(_ value: Double? = nil, indexFrom: Int? = nil, indexTo: Int? = nil) -> Double {
+    private func calc(_ value: Double, indexFrom: Int? = nil, indexTo: Int? = nil) -> Double {
         var returnedResult: Double = 0
 
         if selectedIndex1 <= values.count - 1 &&
@@ -99,9 +99,9 @@ class ViewModel: ObservableObject {
             
             switch unitType {
             case .money:
-                returnedResult = ((value ?? Double(self.inputValue)!) * valueTo / valueFrom)
+                returnedResult = (value * valueTo / valueFrom)
             default:
-                returnedResult =  ((value ?? Double(self.inputValue)!) * valueFrom / valueTo)
+                returnedResult =  (value * valueFrom / valueTo)
             }
 
         }

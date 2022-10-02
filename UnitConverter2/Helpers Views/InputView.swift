@@ -66,12 +66,11 @@ struct InputView: View {
     var body: some View {
         VStack {
             HStack {
-                Group{
+                Group {
                     Button {
                         handleTap(value: "1")
                     } label: {
                         Text("1")
-                            
                     }
                     Button {
                         handleTap(value: "2")
@@ -106,10 +105,11 @@ struct InputView: View {
                 .foregroundColor(.accentColor)
                 .background(Color.white)
                 .cornerRadius(8)
+                .contentShape(Rectangle())
             }
             
             HStack {
-                Group{
+                Group {
                     Button {
                         handleTap(value: "6")
                     } label: {
@@ -175,106 +175,110 @@ struct InputView: View {
                 .foregroundColor(.accentColor)
                 .background(Color.white)
                 .cornerRadius(8)
+                .contentShape(Rectangle())
             }
             
-            HStack {
-                Button {
-                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
-                        operation = .plus
+            Group {
+                HStack {
+                    Button {
+                        if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                            operation = .plus
+                            feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1104)
+                        }
+                    } label: {
+                        Image(systemName: "plus")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .background(operation == .plus ? Color.accentColor : Color.orange)
+                            .cornerRadius(8)
+                            .overlay {
+                                if operation == .plus {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.white, lineWidth: 4)
+                                }
+                            }
+                    }
+                    
+                    Button {
+                        if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                            operation = .minus
+                            feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1104)
+                        }
+                    } label: {
+                        Image(systemName: "minus")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .background(operation == .minus ? Color.accentColor : Color.orange)
+                            .cornerRadius(8)
+                            .overlay {
+                                if operation == .minus {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.white, lineWidth: 4)
+                                }
+                            }
+                    }
+                    
+                    Button {
+                        if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                            operation = .multiply
+                            feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1104)
+                        }
+                    } label: {
+                        Image(systemName: "multiply")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .background(operation == .multiply ? Color.accentColor : Color.orange)
+                            .cornerRadius(8)
+                            .overlay {
+                                if operation == .multiply {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.white, lineWidth: 4)
+                                }
+                            }
+                    }
+                    
+                    Button {
+                        if let unwrappedValue = Double(value), unwrappedValue > 0 {
+                            operation = .divide
+                            feedbackGenerator.impactOccurred()
+                            AudioServicesPlaySystemSound(1104)
+                        }
+                    } label: {
+                        Image(systemName: "divide")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .background(operation == .divide ? Color.accentColor : Color.orange)
+                            .cornerRadius(8)
+                            .overlay {
+                                if operation == .divide {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(.white, lineWidth: 4)
+                                }
+                            }
+                    }
+                    
+                    Button {
+                        self.calculate()
                         feedbackGenerator.impactOccurred()
                         AudioServicesPlaySystemSound(1104)
+                    } label: {
+                        Image(systemName: "equal")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.white)
+                            .background(Color.green)
+                            .cornerRadius(8)
                     }
-                } label: {
-                    Image(systemName: "plus")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(operation == .plus ? Color.accentColor : Color.orange)
-                        .cornerRadius(8)
-                        .overlay {
-                            if operation == .plus {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.white, lineWidth: 4)
-                            }
-                        }
-                }
-                
-                Button {
-                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
-                        operation = .minus
-                        feedbackGenerator.impactOccurred()
-                        AudioServicesPlaySystemSound(1104)
-                    }
-                } label: {
-                    Image(systemName: "minus")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(operation == .minus ? Color.accentColor : Color.orange)
-                        .cornerRadius(8)
-                        .overlay {
-                            if operation == .minus {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.white, lineWidth: 4)
-                            }
-                        }
-                }
-                
-                Button {
-                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
-                        operation = .multiply
-                        feedbackGenerator.impactOccurred()
-                        AudioServicesPlaySystemSound(1104)
-                    }
-                } label: {
-                    Image(systemName: "multiply")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(operation == .multiply ? Color.accentColor : Color.orange)
-                        .cornerRadius(8)
-                        .overlay {
-                            if operation == .multiply {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.white, lineWidth: 4)
-                            }
-                        }
-                }
-                
-                Button {
-                    if let unwrappedValue = Double(value), unwrappedValue > 0 {
-                        operation = .divide
-                        feedbackGenerator.impactOccurred()
-                        AudioServicesPlaySystemSound(1104)
-                    }
-                } label: {
-                    Image(systemName: "divide")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(operation == .divide ? Color.accentColor : Color.orange)
-                        .cornerRadius(8)
-                        .overlay {
-                            if operation == .divide {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(.white, lineWidth: 4)
-                            }
-                        }
-                }
-                
-                Button {
-                    self.calculate()
-                    feedbackGenerator.impactOccurred()
-                    AudioServicesPlaySystemSound(1104)
-                } label: {
-                    Image(systemName: "equal")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(Color.green)
-                        .cornerRadius(8)
                 }
             }
+            .contentShape(Rectangle())
         }
         .padding(.horizontal)
         .padding(.bottom, 32)
