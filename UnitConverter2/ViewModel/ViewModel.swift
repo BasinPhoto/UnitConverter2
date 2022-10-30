@@ -109,8 +109,22 @@ class ViewModel: ObservableObject {
     }
     
     func setupQuickActions() {
+        
         if UnitType.allValues.count > 10 {
             UIApplication.shared.shortcutItems = QuickActions.allShortcutItems
+            
+            guard let localeIsoCode = Locale.current.currencyCode,
+                  let localeCurrency = UnitType.allValues[10].first(where: { $0.key.prefix(3) == localeIsoCode}) else {
+                return
+            }
+            
+            let toUsdItem = UIApplicationShortcutItem(type: "1USD",
+                                                      localizedTitle: "1 USD = \(localeCurrency.value) \(localeCurrency.key)",
+                                                      localizedSubtitle: nil,
+                                                      icon: UIApplicationShortcutIcon(templateImageName: "money"),
+                                                      userInfo: ["type" : "money" as NSSecureCoding])
+
+            UIApplication.shared.shortcutItems?.append(toUsdItem)
         }
     }
 }
@@ -125,8 +139,8 @@ enum QuickActions {
     static var allShortcutItems: [UIApplicationShortcutItem] {
         [
         UIApplicationShortcutItem(type: "MoneyConvert",
-                                  localizedTitle: "Currency",
-                                  localizedSubtitle: "open.currency.convertion",
+                                  localizedTitle: NSLocalizedString("Currency", comment: "name of currency converter"),
+                                  localizedSubtitle: NSLocalizedString("open.currency.convertion", comment: "quick action description"),
                                   icon: UIApplicationShortcutIcon(templateImageName: "money"),
                                   userInfo: ["type" : "money" as NSSecureCoding])
         ]
