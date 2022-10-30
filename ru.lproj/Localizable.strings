@@ -139,3 +139,6 @@
 "British Thermal Unit"        = "Брит. термальная единица";
 "American Therm"             = "Ам. терм"      ;
 "Feet-Pound"                 = "Футо-фунт"          ;
+
+//UI
+"open.currency.convertion" = "Конвертация валюты";

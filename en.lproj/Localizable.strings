@@ -132,3 +132,6 @@
 "British Thermal Unit"        = "British thermal unit";
 "American Therm"             = "American therm"      ;
 "Feet-Pound"                 = "Feet-pound"          ;
+
+//UI
+"open.currency.convertion" = "Open currency";

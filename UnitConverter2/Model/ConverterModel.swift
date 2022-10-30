@@ -52,6 +52,15 @@ enum UnitType: Int, CaseIterable, Identifiable {
     case energy
     case money
     
+    init?(name: String) {
+        switch name {
+        case "money":
+            self = .money
+        default:
+            return nil
+        }
+    }
+    
     var description: String {
         switch self {
         case .length:

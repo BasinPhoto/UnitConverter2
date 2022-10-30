@@ -107,4 +107,28 @@ class ViewModel: ObservableObject {
         }
         return returnedResult
     }
+    
+    func setupQuickActions() {
+        if UnitType.allValues.count > 10 {
+            UIApplication.shared.shortcutItems = QuickActions.allShortcutItems
+        }
+    }
+}
+
+enum QuickActions {
+    static var selectedAction: UIApplicationShortcutItem?
+    
+    static var money: [String: NSSecureCoding] {
+        ["type" : "money" as NSSecureCoding]
+    }
+    
+    static var allShortcutItems: [UIApplicationShortcutItem] {
+        [
+        UIApplicationShortcutItem(type: "MoneyConvert",
+                                  localizedTitle: "Currency",
+                                  localizedSubtitle: "open.currency.convertion",
+                                  icon: UIApplicationShortcutIcon(templateImageName: "money"),
+                                  userInfo: ["type" : "money" as NSSecureCoding])
+        ]
+    }
 }

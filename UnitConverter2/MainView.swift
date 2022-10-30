@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct MainView: View {
-    @StateObject var viewModel = ViewModel()
+    @EnvironmentObject var viewModel: ViewModel
 
     var body: some View {
         VStack(spacing: 0) {
