@@ -23,19 +23,20 @@ struct InputView: View {
             return
         }
         
-        if let _ = operation {
-            if let tmpValue = Double(self.value), tmpValue != 0 {
-                self.operationValue += value
-            } else {
+        if self.value.count == 1 && self.value == "0" {
+            if let _ = operation {
                 self.operationValue = value
-            }
-        } else {
-            if let tmpValue = Double(self.value), tmpValue != 0 {
-                self.value += value
             } else {
                 self.value = value
             }
+        } else {
+            if let _ = operation {
+                self.operationValue += value
+            } else {
+                self.value += value
+            }
         }
+        
         feedbackGenerator.impactOccurred()
         AudioServicesPlaySystemSound(1104)
     }
